@@ -11,6 +11,6 @@ module com.example.organizerclients {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.organizerclients to javafx.fxml;
-    exports com.example.organizerclients;
+    opens com.example.organizerclients to javafx.fxml, javafx.graphics;
+    exports com.example.organizerclients to javafx.fxml, javafx.graphics;
 }
