@@ -25,5 +25,13 @@ public class OrganizerProperties {
     public static final String MAIN_VIEW_TITLE = properties.getProperty("main.view.title");
     public static final String LOGIN_BUTTON_TEXT = properties.getProperty("login.button.text");
     public static final String REGISTER_BUTTON_TEXT = properties.getProperty("register.button.text");
-}
 
+    public static final String PASSWORD_TEXTFIELD_PROMPT_TEXT = properties.getProperty("password.textField.prompt.text");
+    public static final String EMAIL_TEXTFIELD_PROMPT_TEXT = properties.getProperty("email.textField.prompt.text");
+
+    public static final String REGISTER_WRONG_CODE_TEXT = properties.getProperty("register.wrongCode.text");
+    public static final String REGISTER_CORRECT_CODE_TEXT = properties.getProperty("register.correctCode.text");
+    public static final String REGISTER_WRONG_EMAIL_FORMAT_TEXT = properties.getProperty("register.wrongEmailFormat.text");
+    public static final String LOGIN_WRONG_CREDENTIALS_TEXT = properties.getProperty("login.wrongCredentials.text");
+    public static final String LOGIN_CORRECT_CREDENTIALS_TEXT = properties.getProperty("login.correctCredentials.text");
+}
