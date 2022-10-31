@@ -13,6 +13,12 @@ public class LoginViewController {
     private Label loginText;
 
     @FXML
+    private TextField emailTextField;
+
+    @FXML
+    private TextField passwordTextField;
+
+    @FXML
     private Label informationText;
 
     @FXML
@@ -22,28 +28,29 @@ public class LoginViewController {
     private Button registerButton;
 
     @FXML
-    private TextField emailTextField;
-
-    @FXML
-    private TextField passwordTextField;
-
-    @FXML
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
     }
 
     @FXML
-    protected void onLoginButtonClick() {
-        showCredentialsMessage(checkCredentials());
+    public void onLoginButtonClick() {
+        String emailAddress = emailTextField.getText();
+        String password = passwordTextField.getText();
+
+        if (emailAddress.length() > 0 && password.length() > 0){
+            showCredentialsMessage(checkCredentials(emailAddress,password));
+        }else {
+            informationText.setText(OrganizerProperties.LOGIN_EMPTY_FIELD_TEXT);
+            informationText.setTextFill(Color.RED);
+        }
     }
 
     @FXML
-    protected void onRegisterButtonClick() {
+    public void onRegisterButtonClick() {
         sceneController.setRegisterScene();
     }
 
-    @FXML
     private void setFieldParameters(){
         loginText.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         informationText.setText("");
@@ -68,8 +75,9 @@ public class LoginViewController {
 
     /**
      * Tutaj będzie wrzucony call do bazy sprawdzający dane pobrane z textfieldów
+
      */
-    private Boolean checkCredentials(){
+    private Boolean checkCredentials(String email, String password){
         System.out.println("email: " + emailTextField.getText());
         System.out.println("password: " + emailTextField.getText());
         return false;

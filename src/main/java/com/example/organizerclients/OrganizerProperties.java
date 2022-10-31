@@ -32,6 +32,8 @@ public class OrganizerProperties {
     public static final String REGISTER_WRONG_CODE_TEXT = properties.getProperty("register.wrongCode.text");
     public static final String REGISTER_CORRECT_CODE_TEXT = properties.getProperty("register.correctCode.text");
     public static final String REGISTER_WRONG_EMAIL_FORMAT_TEXT = properties.getProperty("register.wrongEmailFormat.text");
+    public static final String REGISTER_RETURN_BUTTON_TEXT = properties.getProperty("register.returnButton.text");
     public static final String LOGIN_WRONG_CREDENTIALS_TEXT = properties.getProperty("login.wrongCredentials.text");
     public static final String LOGIN_CORRECT_CREDENTIALS_TEXT = properties.getProperty("login.correctCredentials.text");
+    public static final String LOGIN_EMPTY_FIELD_TEXT = properties.getProperty("login.emptyField.text");
 }
