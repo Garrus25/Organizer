@@ -22,9 +22,9 @@ public class SceneController {
         return sceneController;
     }
 
-    SceneController(){
-        createLoginScene();
+    public void prepareScenes(){
         createRegisterScene();
+        createLoginScene();
     }
 
     private void createLoginScene(){

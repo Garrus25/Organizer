@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
 public class LoginViewController {
+    private final SceneController sceneController = SceneController.getInstance();
 
     @FXML
     private Label loginText;
@@ -39,6 +40,7 @@ public class LoginViewController {
 
     @FXML
     protected void onRegisterButtonClick() {
+        sceneController.setRegisterScene();
     }
 
     @FXML
@@ -58,7 +60,7 @@ public class LoginViewController {
         if (correct){
             informationText.setText(OrganizerProperties.LOGIN_CORRECT_CREDENTIALS_TEXT);
             informationText.setTextFill(Color.GREEN);
-        }else {
+        }else{
             informationText.setText(OrganizerProperties.LOGIN_WRONG_CREDENTIALS_TEXT);
             informationText.setTextFill(Color.RED);
         }
