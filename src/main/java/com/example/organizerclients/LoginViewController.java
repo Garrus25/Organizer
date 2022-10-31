@@ -6,9 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class LoginViewController {
-    private final SceneController sceneController = SceneController.getInstance();
-
+public class LoginViewController extends ViewController{
     @FXML
     private Label loginText;
 
@@ -28,6 +26,7 @@ public class LoginViewController {
     private Button registerButton;
 
     @FXML
+    @Override
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
@@ -51,14 +50,16 @@ public class LoginViewController {
         sceneController.setRegisterScene();
     }
 
-    private void setFieldParameters(){
+    @Override
+    protected void setFieldParameters(){
         loginText.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         informationText.setText("");
         emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
     }
 
-    private void setButtonParameters(){
+    @Override
+    protected void setButtonParameters(){
         loginButton.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         registerButton.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);
     }

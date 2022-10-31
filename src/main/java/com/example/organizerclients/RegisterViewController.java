@@ -8,9 +8,7 @@ import javafx.scene.paint.Color;
 
 import java.util.regex.Pattern;
 
-public class RegisterViewController {
-    private final SceneController sceneController = SceneController.getInstance();
-
+public class RegisterViewController extends ViewController{
     @FXML
     private Label registerText;
 
@@ -31,6 +29,7 @@ public class RegisterViewController {
 
 
     @FXML
+    @Override
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
@@ -61,14 +60,16 @@ public class RegisterViewController {
         sceneController.setLoginScene();
     }
 
-    private void setFieldParameters(){
+    @Override
+    protected void setFieldParameters(){
         registerText.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);
         informationText.setText("");
         emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
     }
 
-    private void setButtonParameters(){
+    @Override
+    protected void setButtonParameters(){
         registerButton.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);
         returnButton.setText(OrganizerProperties.REGISTER_RETURN_BUTTON_TEXT);
     }
