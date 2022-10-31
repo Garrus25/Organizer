@@ -5,5 +5,5 @@ public abstract class ViewController {
 
     protected abstract void setFieldParameters();
     protected abstract void setButtonParameters();
-    protected abstract void initialize();
+
 }

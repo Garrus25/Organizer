@@ -29,7 +29,6 @@ public class RegisterViewController extends ViewController{
 
 
     @FXML
-    @Override
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
@@ -45,6 +44,8 @@ public class RegisterViewController extends ViewController{
             Boolean result = checkEmailAddress(emailAddress);
             if (result){
                 sendEmailMessage();
+                sceneController.setUserData(emailAddress);
+                sceneController.setConfirmationScene();
             }else {
                 informationText.setText(OrganizerProperties.REGISTER_WRONG_EMAIL_FORMAT_TEXT);
                 informationText.setTextFill(Color.RED);
@@ -82,7 +83,8 @@ public class RegisterViewController extends ViewController{
                 .matches();
     }
 
+    //TODO
     private void sendEmailMessage(){
-
+        String address = emailTextField.getText();
     }
 }

@@ -39,4 +39,10 @@ public class OrganizerProperties {
     public static final String LOGIN_EMPTY_FIELD_TEXT = properties.getProperty("login.emptyField.text");
 
     public static final String CODE_CONFIRMATION_TEXT = properties.getProperty("codeConfirmation.confirm.text");
+    public static final String CODE_CONFIRMATION_PROMPT_TEXT = properties.getProperty("codeConfirmation.prompt.text");
+    public static final String CODE_CONFIRMATION_CONFIRM_BUTTON_TEXT = properties.getProperty("codeConfirmation.button.confirm.text");
+    public static final String CODE_CONFIRMATION_RETURN_BUTTON_TEXT = properties.getProperty("codeConfirmation.return.button.text");
+    public static final String CODE_CONFIRMATION_EMAIL_INFO_TEXT = properties.getProperty("codeConfirmation.email.info.text");
+    public static final String CODE_CONFIRMATION_RESEND_TEXT = properties.getProperty("codeConfirmation.resend.text");
+    public static final String CODE_CONFIRMATION_MESSAGE_RESENT_TEXT = properties.getProperty("codeConfirmation.messageResent.text");
 }

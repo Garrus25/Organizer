@@ -14,6 +14,7 @@ public class SceneController {
 
     private Scene loginScene;
     private Scene registerScene;
+    private Scene confirmationScene;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -45,6 +46,15 @@ public class SceneController {
         }
     }
 
+    private void createConfirmationScene(){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("code-confirmation-view.fxml"));
+        try {
+            confirmationScene = new Scene(fxmlLoader.load(), STAGE_WIDTH, STAGE_HEIGHT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setLoginScene(){
         stage.setScene(loginScene);
     }
@@ -53,7 +63,20 @@ public class SceneController {
         stage.setScene(registerScene);
     }
 
+    public void setConfirmationScene(){
+        createConfirmationScene();
+        stage.setScene(confirmationScene);
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setUserData(Object object){
+        stage.setUserData(object);
+    }
+
+    public Object getUserData(){
+        return stage.getUserData();
     }
 }

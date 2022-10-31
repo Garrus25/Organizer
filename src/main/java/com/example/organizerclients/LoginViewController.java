@@ -26,7 +26,6 @@ public class LoginViewController extends ViewController{
     private Button registerButton;
 
     @FXML
-    @Override
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
@@ -75,6 +74,7 @@ public class LoginViewController extends ViewController{
     }
 
     /**
+     * TODO
      * Tutaj będzie wrzucony call do bazy sprawdzający dane pobrane z textfieldów
 
      */
