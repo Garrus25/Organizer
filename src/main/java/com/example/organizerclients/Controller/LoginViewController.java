@@ -1,12 +1,15 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.OrganizerProperties;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class LoginViewController extends ViewController{
+public class LoginViewController{
+    private final SceneController sceneController = SceneController.getInstance();
+
     @FXML
     private Label loginText;
 
@@ -49,7 +52,6 @@ public class LoginViewController extends ViewController{
         sceneController.setRegisterScene();
     }
 
-    @Override
     protected void setFieldParameters(){
         loginText.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         informationText.setText("");
@@ -57,7 +59,6 @@ public class LoginViewController extends ViewController{
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
     }
 
-    @Override
     protected void setButtonParameters(){
         loginButton.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         registerButton.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);

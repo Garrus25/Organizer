@@ -1,4 +1,4 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Model;
 
 import java.io.FileInputStream;
 import java.io.IOException;

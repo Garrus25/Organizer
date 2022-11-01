@@ -1,5 +1,6 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.MainApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ public class SceneController {
     private Scene loginScene;
     private Scene registerScene;
     private Scene confirmationScene;
+    private Scene singleUserScene;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -26,6 +28,7 @@ public class SceneController {
     public void prepareScenes(){
         createRegisterScene();
         createLoginScene();
+        createSingleUserScene();
     }
 
     private void createLoginScene(){
@@ -55,6 +58,15 @@ public class SceneController {
         }
     }
 
+    private void createSingleUserScene(){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("single-user-view.fxml"));
+        try {
+            singleUserScene = new Scene(fxmlLoader.load(), STAGE_WIDTH, STAGE_HEIGHT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setLoginScene(){
         stage.setScene(loginScene);
     }
@@ -66,6 +78,10 @@ public class SceneController {
     public void setConfirmationScene(){
         createConfirmationScene();
         stage.setScene(confirmationScene);
+    }
+
+    public void setSingleUserScene(){
+        stage.setScene(singleUserScene);
     }
 
     public void setStage(Stage stage) {

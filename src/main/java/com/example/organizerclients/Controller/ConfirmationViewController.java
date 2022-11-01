@@ -1,5 +1,7 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.EmailSender;
+import com.example.organizerclients.Model.OrganizerProperties;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -8,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class ConfirmationViewController extends ViewController{
-
+public class ConfirmationViewController{
+    private final SceneController sceneController = SceneController.getInstance();
     private final EmailSender emailSender = new EmailSender();
 
     @FXML
@@ -84,7 +86,6 @@ public class ConfirmationViewController extends ViewController{
         }
     }
 
-    @Override
     protected void setFieldParameters(){
         informationText.setText("");
         codeTextField.setPromptText(OrganizerProperties.CODE_CONFIRMATION_PROMPT_TEXT);
@@ -92,7 +93,6 @@ public class ConfirmationViewController extends ViewController{
         emailInformation.setText(OrganizerProperties.CODE_CONFIRMATION_EMAIL_INFO_TEXT);
     }
 
-    @Override
     protected void setButtonParameters(){
         confirmButton.setText(OrganizerProperties.CODE_CONFIRMATION_CONFIRM_BUTTON_TEXT);
         returnButton.setText(OrganizerProperties.CODE_CONFIRMATION_RETURN_BUTTON_TEXT);
@@ -106,8 +106,7 @@ public class ConfirmationViewController extends ViewController{
         codeTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(
-                    ObservableValue<? extends String> observable,
-                    String oldValue, String newValue) {
+                    ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d*")) {
                     codeTextField.setText(newValue.replaceAll("[^\\d]", ""));
                 }
@@ -116,7 +115,8 @@ public class ConfirmationViewController extends ViewController{
 
         codeTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+            public void changed(
+                    final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
                 if (codeTextField.getText().length() > maxLength) {
                     String s = codeTextField.getText().substring(0, maxLength);
                     codeTextField.setText(s);
