@@ -40,7 +40,12 @@ public class LoginViewController{
         String password = passwordTextField.getText();
 
         if (emailAddress.length() > 0 && password.length() > 0){
-            showCredentialsMessage(checkCredentials(emailAddress,password));
+            if (checkCredentials(emailAddress,password)){
+                showCredentialsMessage(true);
+                sceneController.setSingleUserScene();
+            }else {
+                showCredentialsMessage(false);
+            }
         }else {
             informationText.setText(OrganizerProperties.LOGIN_EMPTY_FIELD_TEXT);
             informationText.setTextFill(Color.RED);
@@ -82,6 +87,6 @@ public class LoginViewController{
     private Boolean checkCredentials(String email, String password){
         System.out.println("email: " + emailTextField.getText());
         System.out.println("password: " + emailTextField.getText());
-        return false;
+        return true;
     }
 }

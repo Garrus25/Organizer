@@ -3,6 +3,7 @@ package com.example.organizerclients.Controller;
 import com.example.organizerclients.Model.OrganizerProperties;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -30,6 +31,17 @@ public class RegisterViewController{
     @FXML
     private Button returnButton;
 
+    @FXML
+    private TextField nameTextField;
+
+    @FXML
+    private TextField surnameTextField;
+
+    @FXML
+    private Label colorLabel;
+
+    @FXML
+    ColorPicker colorPicker;
 
     @FXML
     public void initialize(){
@@ -69,6 +81,7 @@ public class RegisterViewController{
         informationText.setText("");
         emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
+        colorLabel.setText("Choose color:");
     }
 
     protected void setButtonParameters(){

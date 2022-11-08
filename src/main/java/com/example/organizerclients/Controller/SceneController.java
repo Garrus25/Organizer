@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneController {
-    private static final Integer STAGE_WIDTH = 1280;
-    private static final Integer STAGE_HEIGHT = 768;
+    private static final Integer STAGE_WIDTH = 1600;
+    private static final Integer STAGE_HEIGHT = 900;
     private static SceneController sceneController;
     private Stage stage;
 
@@ -65,6 +65,7 @@ public class SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        setStylesheet(singleUserScene);
     }
 
     public void setLoginScene(){
@@ -94,5 +95,9 @@ public class SceneController {
 
     public Object getUserData(){
         return stage.getUserData();
+    }
+
+    public void setStylesheet(Scene scene) {
+        scene.getStylesheets().add("styles.css");
     }
 }
