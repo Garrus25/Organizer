@@ -1,5 +1,6 @@
 package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.CustomCell;
 import com.example.organizerclients.Model.Event;
 import com.example.organizerclients.Model.EventStringConverter;
 import com.example.organizerclients.Model.Model;
@@ -23,8 +24,8 @@ import javafx.util.converter.DefaultStringConverter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
 public class SingleUserViewController{
 
     private final SceneController sceneController = SceneController.getInstance();
@@ -77,18 +78,19 @@ public class SingleUserViewController{
         initialColumnSetup();
         setCalendar();
         disableTimeColumn();
-        //setCellColor("Test2");
         addCellClickListener();
     }
 
-    public void setColumns(TableColumn tableColumn, String propertyValue, String tableName){
+    public <T> void setColumns(TableColumn<T, String> tableColumn, String propertyValue, String tableName){
         tableColumn.setCellValueFactory(new PropertyValueFactory<>(propertyValue));
+        tableColumn.setCellFactory(cell -> new CustomCell<>());
         tableColumn.setText(tableName);
         tableColumn.setResizable(false);
         tableColumn.setReorderable(false);
         tableColumn.setSortable(false);
         tableColumn.setMinWidth(163.5);
     }
+
 
     public void setTableView(){
         mainTable.setItems(tableContent);
@@ -101,8 +103,6 @@ public class SingleUserViewController{
             model.add(new Model(Integer.toString(i)));
         }
 
-        model.get(4).getEvent1().setEventName("Test2");
-        model.get(22).getEvent5().setEventName("Test1");
 
         tableContent = FXCollections.observableArrayList(
                 model
@@ -133,6 +133,9 @@ public class SingleUserViewController{
         setColumns(sundayColumn, "event7", "Sunday");
 
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        mainTable.getItems().get(4).setEvent1(new Event("soem", "dsa", new Date()));
+        mainTable.getItems().get(23).setEvent3(new Event("soem", "dsa", new Date()));
 
         mainTable.getColumns().forEach(item -> {
             if (!item.getText().equals("")) {
@@ -167,47 +170,5 @@ public class SingleUserViewController{
                 }
             }
         });
-    }
-
-    private void setCellColor(String name){
-        mondayColumn.setCellFactory(new Callback<TableColumn<Event, String>, TableCell<Event, String>>() {
-            @Override
-            public TableCell<Event, String> call(TableColumn<Event, String> eventStringTableColumn) {
-                return new TextFieldTableCell<Event,String>(new EventStringConverter<String>()){
-                    @Override
-                    public void updateItem(String s, boolean b) {
-                        super.updateItem(s, b);
-                        if (s.equals(name)){
-                        }
-                    }
-                };
-            }
-        });
-    }
-
-    public class EditCell<S, T> extends TableCell<S, T> {
-
-        private final StringConverter<T> converter;
-
-        public EditCell(StringConverter<T> converter) {
-            this.converter = converter;
-
-            itemProperty().addListener((obx, oldItem, newItem) -> {
-                if (newItem == null) {
-                    setText(null);
-                } else {
-                    setText(converter.toString(newItem));
-                }
-            });
-        }
-
-        @Override
-        protected void updateItem(T t, boolean b) {
-            super.updateItem(t, b);
-            System.out.println("A: " + t);
-            if (t.equals("Test2")){
-                setId("test");
-            }
-        }
     }
 }
