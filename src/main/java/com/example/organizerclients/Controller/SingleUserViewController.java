@@ -134,8 +134,8 @@ public class SingleUserViewController{
 
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        mainTable.getItems().get(4).setEvent1(new Event("soem", "dsa", new Date()));
-        mainTable.getItems().get(23).setEvent3(new Event("soem", "dsa", new Date()));
+        mainTable.getItems().get(4).setEvent1(new Event("1", "dsa", new Date()));
+        mainTable.getItems().get(23).setEvent3(new Event("2", "dsa", new Date()));
 
         mainTable.getColumns().forEach(item -> {
             if (!item.getText().equals("")) {
