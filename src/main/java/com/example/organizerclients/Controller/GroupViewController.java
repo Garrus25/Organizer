@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SingleUserViewController{
+public class GroupViewController{
 
     private final SceneController sceneController = SceneController.getInstance();
     private ObservableList<Model> tableContent;
@@ -68,7 +68,7 @@ public class SingleUserViewController{
     Button showGroupsButton;
 
     @FXML
-    Button switchToGroupViewButton;
+    Button switchToSingleButton;
 
     @FXML
     public void initialize(){
@@ -107,7 +107,7 @@ public class SingleUserViewController{
 
         tableContent = FXCollections.observableArrayList(
                 model
-            );
+        );
     }
 
     public void setCalendar(){
@@ -115,7 +115,7 @@ public class SingleUserViewController{
         Node popupContent = datePickerSkin.getPopupContent();
         VBox leftPane = new VBox();
 
-        leftPane.getChildren().addAll(popupContent,addGroupButton,showGroupsButton,switchToGroupViewButton);
+        leftPane.getChildren().addAll(popupContent,addGroupButton,showGroupsButton,switchToSingleButton);
         leftPane.setAlignment(Pos.TOP_CENTER);
         leftPane.setPadding(new Insets(0,8,8,8));
 
@@ -171,7 +171,7 @@ public class SingleUserViewController{
         addGroupButton.setId("menuButton");
         addGroupButton.setText(OrganizerProperties.MAINVIEW_ADDGROUP_TEXT);
         showGroupsButton.setId(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
-        switchToGroupViewButton.setId(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
+        switchToSingleButton.setId(OrganizerProperties.MAINVIEW_SWITCHTOSINGLE_TEXT);
     }
 
     private void setButtonListeners(){
@@ -183,8 +183,8 @@ public class SingleUserViewController{
 
         });
 
-        switchToGroupViewButton.setOnAction(actionEvent -> {
-            sceneController.setGroupScene();
+        switchToSingleButton.setOnAction(actionEvent -> {
+            sceneController.setSingleUserScene();
         });
     }
 }

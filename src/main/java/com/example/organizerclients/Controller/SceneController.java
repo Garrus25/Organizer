@@ -17,6 +17,7 @@ public class SceneController {
     private Scene registerScene;
     private Scene confirmationScene;
     private Scene singleUserScene;
+    private Scene groupScene;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -68,6 +69,16 @@ public class SceneController {
         setStylesheet(singleUserScene);
     }
 
+    private void createGroupView(){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("single-user-view.fxml"));
+        try {
+            groupScene = new Scene(fxmlLoader.load(), STAGE_WIDTH, STAGE_HEIGHT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        setStylesheet(singleUserScene);
+    }
+
     public void setLoginScene(){
         stage.setScene(loginScene);
     }
@@ -83,6 +94,10 @@ public class SceneController {
 
     public void setSingleUserScene(){
         stage.setScene(singleUserScene);
+    }
+    public void setGroupScene(){
+        createGroupView();
+        stage.setScene(groupScene);
     }
 
     public void setStage(Stage stage) {
