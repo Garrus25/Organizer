@@ -8,20 +8,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
+import jfxtras.scene.control.CalendarPicker;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -68,18 +66,21 @@ public class GroupViewController{
     Button showGroupsButton;
 
     @FXML
-    Button switchToSingleButton;
+    Button switchToSingleViewButton;
+
+    @FXML CalendarPicker calendarPicker;
 
     @FXML
     public void initialize(){
         setObservableList();
         setTableView();
         initialColumnSetup();
-        setCalendar();
         disableTimeColumn();
         addCellClickListener();
         setBasicButtonParameters();
         setButtonListeners();
+        setCalendarListener();
+
     }
 
     public <T> void setColumns(TableColumn<T, String> tableColumn, String propertyValue, String tableName){
@@ -92,7 +93,6 @@ public class GroupViewController{
         tableColumn.setMinWidth(163.5);
     }
 
-
     public void setTableView(){
         mainTable.setItems(tableContent);
         mainTable.setFixedCellSize(55.0);
@@ -104,23 +104,9 @@ public class GroupViewController{
             model.add(new Model(Integer.toString(i)));
         }
 
-
         tableContent = FXCollections.observableArrayList(
                 model
         );
-    }
-
-    public void setCalendar(){
-        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-        Node popupContent = datePickerSkin.getPopupContent();
-        VBox leftPane = new VBox();
-
-        leftPane.getChildren().addAll(popupContent,addGroupButton,showGroupsButton,switchToSingleButton);
-        leftPane.setAlignment(Pos.TOP_CENTER);
-        leftPane.setPadding(new Insets(0,8,8,8));
-
-        mainContentBox.getChildren().clear();
-        mainContentBox.getChildren().addAll(leftPane,mainTable);
     }
 
     private void initialColumnSetup() {
@@ -134,9 +120,6 @@ public class GroupViewController{
         setColumns(sundayColumn, "event7", "Sunday");
 
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        mainTable.getItems().get(4).setEvent1(new Event("1", "dsa", new Date()));
-        mainTable.getItems().get(23).setEvent3(new Event("2", "dsa", new Date()));
     }
 
     private void disableTimeColumn(){
@@ -171,7 +154,7 @@ public class GroupViewController{
         addGroupButton.setId("menuButton");
         addGroupButton.setText(OrganizerProperties.MAINVIEW_ADDGROUP_TEXT);
         showGroupsButton.setId(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
-        switchToSingleButton.setId(OrganizerProperties.MAINVIEW_SWITCHTOSINGLE_TEXT);
+        switchToSingleViewButton.setId(OrganizerProperties.MAINVIEW_SWITCHTOSINGLE_TEXT);
     }
 
     private void setButtonListeners(){
@@ -183,8 +166,19 @@ public class GroupViewController{
 
         });
 
-        switchToSingleButton.setOnAction(actionEvent -> {
+        switchToSingleViewButton.setOnAction(actionEvent -> {
             sceneController.setSingleUserScene();
+        });
+    }
+
+    private void setCalendarListener(){
+        calendarPicker.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println(calendarPicker.getCalendar().getTime());
+                LocalDateTime ldt = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                System.out.println(ldt.getDayOfYear());
+            }
         });
     }
 }

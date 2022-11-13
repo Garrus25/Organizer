@@ -20,8 +20,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
+import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -71,15 +74,18 @@ public class SingleUserViewController{
     Button switchToGroupViewButton;
 
     @FXML
+    CalendarPicker calendarPicker;
+
+    @FXML
     public void initialize(){
         setObservableList();
         setTableView();
         initialColumnSetup();
-        setCalendar();
         disableTimeColumn();
         addCellClickListener();
         setBasicButtonParameters();
         setButtonListeners();
+        setCalendarListener();
     }
 
     public <T> void setColumns(TableColumn<T, String> tableColumn, String propertyValue, String tableName){
@@ -104,23 +110,9 @@ public class SingleUserViewController{
             model.add(new Model(Integer.toString(i)));
         }
 
-
         tableContent = FXCollections.observableArrayList(
                 model
             );
-    }
-
-    public void setCalendar(){
-        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-        Node popupContent = datePickerSkin.getPopupContent();
-        VBox leftPane = new VBox();
-
-        leftPane.getChildren().addAll(popupContent,addGroupButton,showGroupsButton,switchToGroupViewButton);
-        leftPane.setAlignment(Pos.TOP_CENTER);
-        leftPane.setPadding(new Insets(0,8,8,8));
-
-        mainContentBox.getChildren().clear();
-        mainContentBox.getChildren().addAll(leftPane,mainTable);
     }
 
     private void initialColumnSetup() {
@@ -168,7 +160,10 @@ public class SingleUserViewController{
     }
 
     private void setBasicButtonParameters(){
-        addGroupButton.setId("menuButton");
+        addGroupButton.getStyleClass().add("menuButton");
+        showGroupsButton.getStyleClass().add("menuButton");
+        switchToGroupViewButton.getStyleClass().add("menuButton");
+
         addGroupButton.setText(OrganizerProperties.MAINVIEW_ADDGROUP_TEXT);
         showGroupsButton.setId(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
         switchToGroupViewButton.setId(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
@@ -185,6 +180,17 @@ public class SingleUserViewController{
 
         switchToGroupViewButton.setOnAction(actionEvent -> {
             sceneController.setGroupScene();
+        });
+    }
+
+    private void setCalendarListener(){
+        calendarPicker.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println(calendarPicker.getCalendar().getTime());
+                LocalDateTime ldt = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                System.out.println(ldt.getDayOfYear());
+            }
         });
     }
 }

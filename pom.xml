@@ -106,6 +106,18 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-controls</artifactId>
+            <version>17-r1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfxtras/jfxtras-agenda -->
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-agenda</artifactId>
+            <version>17-r1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

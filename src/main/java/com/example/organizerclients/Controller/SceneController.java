@@ -70,13 +70,13 @@ public class SceneController {
     }
 
     private void createGroupView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("single-user-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("group-view.fxml"));
         try {
             groupScene = new Scene(fxmlLoader.load(), STAGE_WIDTH, STAGE_HEIGHT);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        setStylesheet(singleUserScene);
+        setStylesheet(groupScene);
     }
 
     public void setLoginScene(){
