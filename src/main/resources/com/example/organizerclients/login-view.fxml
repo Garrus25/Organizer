@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #4D57AF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.LoginViewController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #4D57AF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.LoginViewController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: #d5dde8;">
+    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: #d5dde8;">
       <children>
          <Label fx:id="loginText" alignment="CENTER_RIGHT" text="Test">
             <font>
@@ -18,7 +18,7 @@
          <TextField fx:id="emailTextField" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Login:" />
          <TextField fx:id="passwordTextField" layoutX="18.0" layoutY="144.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Email address:" />
          <Label fx:id="informationText" alignment="CENTER_RIGHT" layoutX="199.0" layoutY="82.0" text="Test" />
-         <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginButtonClick"  prefWidth="110.0" style="-fx-background-color: #5559C9;" text="Log in" />
+         <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginButtonClick" prefWidth="110.0" style="-fx-background-color: #5559C9;" text="Log in" />
          <Button fx:id="registerButton" alignment="CENTER" layoutX="186.0" layoutY="196.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefWidth="110.0" style="-fx-background-color: #1BB30E;" text="Register" />
       </children>
       <VBox.margin>

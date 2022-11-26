@@ -1,12 +1,15 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.OrganizerProperties;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class LoginViewController extends ViewController{
+public class LoginViewController{
+    private final SceneController sceneController = SceneController.getInstance();
+
     @FXML
     private Label loginText;
 
@@ -37,7 +40,12 @@ public class LoginViewController extends ViewController{
         String password = passwordTextField.getText();
 
         if (emailAddress.length() > 0 && password.length() > 0){
-            showCredentialsMessage(checkCredentials(emailAddress,password));
+            if (checkCredentials(emailAddress,password)){
+                showCredentialsMessage(true);
+                sceneController.setSingleUserScene();
+            }else {
+                showCredentialsMessage(false);
+            }
         }else {
             informationText.setText(OrganizerProperties.LOGIN_EMPTY_FIELD_TEXT);
             informationText.setTextFill(Color.RED);
@@ -49,7 +57,6 @@ public class LoginViewController extends ViewController{
         sceneController.setRegisterScene();
     }
 
-    @Override
     protected void setFieldParameters(){
         loginText.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         informationText.setText("");
@@ -57,7 +64,6 @@ public class LoginViewController extends ViewController{
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
     }
 
-    @Override
     protected void setButtonParameters(){
         loginButton.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         registerButton.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);
@@ -81,6 +87,6 @@ public class LoginViewController extends ViewController{
     private Boolean checkCredentials(String email, String password){
         System.out.println("email: " + emailTextField.getText());
         System.out.println("password: " + emailTextField.getText());
-        return false;
+        return true;
     }
 }

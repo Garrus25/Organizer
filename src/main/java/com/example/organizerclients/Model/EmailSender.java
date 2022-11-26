@@ -1,4 +1,4 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Model;
 
 import java.util.regex.Pattern;
 

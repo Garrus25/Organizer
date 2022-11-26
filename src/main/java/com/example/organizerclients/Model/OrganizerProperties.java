@@ -1,4 +1,4 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Model;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,7 +13,6 @@ public class OrganizerProperties {
     }
 
     public static void load(){
-        InputStream is = null;
         try {
             properties = new Properties();
             properties.load(new FileInputStream("src/main/resources/organizer.properties"));
@@ -45,4 +44,9 @@ public class OrganizerProperties {
     public static final String CODE_CONFIRMATION_EMAIL_INFO_TEXT = properties.getProperty("codeConfirmation.email.info.text");
     public static final String CODE_CONFIRMATION_RESEND_TEXT = properties.getProperty("codeConfirmation.resend.text");
     public static final String CODE_CONFIRMATION_MESSAGE_RESENT_TEXT = properties.getProperty("codeConfirmation.messageResent.text");
+
+    public static final String MAINVIEW_ADDGROUP_TEXT = properties.getProperty("mainview.addgroup.text");
+    public static final String MAINVIEW_SHOWGROUP_TEXT = properties.getProperty("mainview.showgroups.text");
+    public static final String MAINVIEW_SWITCHGROUP_TEXT = properties.getProperty("mainview.switchtogroup.text");
+    public static final String MAINVIEW_SWITCHTOSINGLE_TEXT = properties.getProperty("mainview.switchtosingle.text");
 }

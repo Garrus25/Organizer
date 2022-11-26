@@ -1,14 +1,18 @@
-package com.example.organizerclients;
+package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.OrganizerProperties;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
 import java.util.regex.Pattern;
 
-public class RegisterViewController extends ViewController{
+public class RegisterViewController{
+    private final SceneController sceneController = SceneController.getInstance();
+
     @FXML
     private Label registerText;
 
@@ -27,6 +31,17 @@ public class RegisterViewController extends ViewController{
     @FXML
     private Button returnButton;
 
+    @FXML
+    private TextField nameTextField;
+
+    @FXML
+    private TextField surnameTextField;
+
+    @FXML
+    private Label colorLabel;
+
+    @FXML
+    ColorPicker colorPicker;
 
     @FXML
     public void initialize(){
@@ -61,15 +76,14 @@ public class RegisterViewController extends ViewController{
         sceneController.setLoginScene();
     }
 
-    @Override
     protected void setFieldParameters(){
         registerText.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);
         informationText.setText("");
         emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
+        colorLabel.setText("Choose color:");
     }
 
-    @Override
     protected void setButtonParameters(){
         registerButton.setText(OrganizerProperties.REGISTER_BUTTON_TEXT);
         returnButton.setText(OrganizerProperties.REGISTER_RETURN_BUTTON_TEXT);
