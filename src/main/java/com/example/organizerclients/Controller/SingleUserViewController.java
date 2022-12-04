@@ -8,21 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 import jfxtras.scene.control.CalendarPicker;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -101,7 +95,7 @@ public class SingleUserViewController{
 
     public void setTableView(){
         mainTable.setItems(tableContent);
-        mainTable.setFixedCellSize(55.0);
+        mainTable.setFixedCellSize(35.65);
         mainTable.getSelectionModel().setCellSelectionEnabled(true);
     }
 
@@ -115,20 +109,44 @@ public class SingleUserViewController{
             );
     }
 
+    private void setData(int x, int y, String eventName, String eventDesc, Date date){
+        switch (x){
+            case 1 :
+                mainTable.getItems().get(y).setMondayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 2 :
+                mainTable.getItems().get(y).setTuesdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 3 :
+                mainTable.getItems().get(y).setWednesdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 4 :
+                mainTable.getItems().get(y).setThursdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 5 :
+                mainTable.getItems().get(y).setFridayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 6 :
+                mainTable.getItems().get(y).setSaturdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 7 :
+                mainTable.getItems().get(y).setSundayColumn(new Event(eventName, eventDesc,date));
+                break;
+
+        }
+    }
+
     private void initialColumnSetup() {
-        setColumns(timeColumn, "time", "");
-        setColumns(mondayColumn, "event1", "Monday");
-        setColumns(tuesdayColumn, "event2", "Tuesday");
-        setColumns(wednesdayColumn, "event3", "Wednesday");
-        setColumns(thursdayColumn, "event4", "Thursday");
-        setColumns(fridayColumn, "event5", "Friday");
-        setColumns(saturdayColumn, "event6", "Saturday");
-        setColumns(sundayColumn, "event7", "Sunday");
+        setColumns(timeColumn, "timeColumn", "");
+        setColumns(mondayColumn, "mondayColumn", "Monday");
+        setColumns(tuesdayColumn, "tuesdayColumn", "Tuesday");
+        setColumns(wednesdayColumn, "wednesdayColumn", "Wednesday");
+        setColumns(thursdayColumn, "thursdayColumn", "Thursday");
+        setColumns(fridayColumn, "fridayColumn", "Friday");
+        setColumns(saturdayColumn, "saturdayColumn", "Saturday");
+        setColumns(sundayColumn, "sundayColumn", "Sunday");
 
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        mainTable.getItems().get(4).setEvent1(new Event("1", "dsa", new Date()));
-        mainTable.getItems().get(23).setEvent3(new Event("2", "dsa", new Date()));
     }
 
     private void disableTimeColumn(){
@@ -152,8 +170,13 @@ public class SingleUserViewController{
         mainTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getTarget() instanceof TextFieldTableCell){
-                    ((TextFieldTableCell<?, ?>) event.getTarget()).setId("test");
+                if (event.getTarget() instanceof CustomCell){
+                    sceneController.showMeetingStage();
+                    int y = ((CustomCell<?, ?>) event.getTarget()).getY();
+                    int x = ((CustomCell<?, ?>) event.getTarget()).getX();
+                    System.out.println(x);
+                    System.out.println(y);
+                    setData(x+1,y,"sa","test",new Date());
                 }
             }
         });
@@ -165,17 +188,17 @@ public class SingleUserViewController{
         switchToGroupViewButton.getStyleClass().add("menuButton");
 
         addGroupButton.setText(OrganizerProperties.MAINVIEW_ADDGROUP_TEXT);
-        showGroupsButton.setId(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
-        switchToGroupViewButton.setId(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
+        showGroupsButton.setText(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
+        switchToGroupViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
     }
 
     private void setButtonListeners(){
         addGroupButton.setOnAction(actionEvent -> {
-
+            sceneController.setAddGroupStage();
         });
 
         showGroupsButton.setOnAction(actionEvent -> {
-
+            sceneController.setShowGroupListStage();
         });
 
         switchToGroupViewButton.setOnAction(actionEvent -> {

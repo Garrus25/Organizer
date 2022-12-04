@@ -4,126 +4,112 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Model {
-    private SimpleStringProperty time;
-    private final SimpleObjectProperty<Event> event1 = new SimpleObjectProperty<>(new Event("","",null));
-    private final SimpleObjectProperty<Event> event2 = new SimpleObjectProperty<>(new Event("","",null));
-    private final SimpleObjectProperty<Event> event3 = new SimpleObjectProperty<>(new Event("","",null));
-    private final SimpleObjectProperty<Event> event4 = new SimpleObjectProperty<>(new Event("","",null));
-    private final SimpleObjectProperty<Event> event5 = new SimpleObjectProperty<>(new Event("","",null));
-    private final SimpleObjectProperty<Event> event6 = new SimpleObjectProperty<>(new Event("","",null));
-    private final SimpleObjectProperty<Event> event7 = new SimpleObjectProperty<>(new Event("","",null));
+    private SimpleStringProperty timeColumn;
+    private final SimpleObjectProperty<Event> mondayColumn = new SimpleObjectProperty<>(new Event("","",null));
+    private final SimpleObjectProperty<Event> tuesdayColumn = new SimpleObjectProperty<>(new Event("","",null));
+    private final SimpleObjectProperty<Event> wednesdayColumn = new SimpleObjectProperty<>(new Event("","",null));
+    private final SimpleObjectProperty<Event> thursdayColumn = new SimpleObjectProperty<>(new Event("","",null));
+    private final SimpleObjectProperty<Event> fridayColumn = new SimpleObjectProperty<>(new Event("","",null));
+    private final SimpleObjectProperty<Event> saturdayColumn = new SimpleObjectProperty<>(new Event("","",null));
+    private final SimpleObjectProperty<Event> sundayColumn = new SimpleObjectProperty<>(new Event("","",null));
 
     public Model(String time){
-        this.time = new SimpleStringProperty(time + " : 00" );
+        this.timeColumn = new SimpleStringProperty(time + " : 00" );
     }
 
-    public String getTime() {
-        return time.get();
+    public String getTimeColumn() {
+        return timeColumn.get();
     }
 
-    public SimpleStringProperty timeProperty() {
-        return time;
+    public SimpleStringProperty timeColumnProperty() {
+        return timeColumn;
     }
 
-    public void setTime(String time) {
-        this.time.set(time);
+    public void setTimeColumn(String timeColumn) {
+        this.timeColumn.set(timeColumn);
     }
 
-    public Event getEvent1() {
-        return event1.get();
+    public Event getMondayColumn() {
+        return mondayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event1Property() {
-        return event1;
+    public SimpleObjectProperty<Event> mondayColumnProperty() {
+        return mondayColumn;
     }
 
-    public void setEvent1(Event event1) {
-        this.event1.set(event1);
+    public void setMondayColumn(Event mondayColumn) {
+        this.mondayColumn.set(mondayColumn);
     }
 
-    public Event getEvent2() {
-        return event2.get();
+    public Event getTuesdayColumn() {
+        return tuesdayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event2Property() {
-        return event2;
+    public SimpleObjectProperty<Event> tuesdayColumnProperty() {
+        return tuesdayColumn;
     }
 
-    public void setEvent2(Event event2) {
-        this.event2.set(event2);
+    public void setTuesdayColumn(Event tuesdayColumn) {
+        this.tuesdayColumn.set(tuesdayColumn);
     }
 
-    public Event getEvent3() {
-        return event3.get();
+    public Event getWednesdayColumn() {
+        return wednesdayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event3Property() {
-        return event3;
+    public SimpleObjectProperty<Event> wednesdayColumnProperty() {
+        return wednesdayColumn;
     }
 
-    public void setEvent3(Event event3) {
-        this.event3.set(event3);
+    public void setWednesdayColumn(Event wednesdayColumn) {
+        this.wednesdayColumn.set(wednesdayColumn);
     }
 
-    public Event getEvent4() {
-        return event4.get();
+    public Event getThursdayColumn() {
+        return thursdayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event4Property() {
-        return event4;
+    public SimpleObjectProperty<Event> thursdayColumnProperty() {
+        return thursdayColumn;
     }
 
-    public void setEvent4(Event event4) {
-        this.event4.set(event4);
+    public void setThursdayColumn(Event thursdayColumn) {
+        this.thursdayColumn.set(thursdayColumn);
     }
 
-    public Event getEvent5() {
-        return event5.get();
+    public Event getFridayColumn() {
+        return fridayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event5Property() {
-        return event5;
+    public SimpleObjectProperty<Event> fridayColumnProperty() {
+        return fridayColumn;
     }
 
-    public void setEvent5(Event event5) {
-        this.event5.set(event5);
+    public void setFridayColumn(Event fridayColumn) {
+        this.fridayColumn.set(fridayColumn);
     }
 
-    public Event getEvent6() {
-        return event6.get();
+    public Event getSaturdayColumn() {
+        return saturdayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event6Property() {
-        return event6;
+    public SimpleObjectProperty<Event> saturdayColumnProperty() {
+        return saturdayColumn;
     }
 
-    public void setEvent6(Event event6) {
-        this.event6.set(event6);
+    public void setSaturdayColumn(Event saturdayColumn) {
+        this.saturdayColumn.set(saturdayColumn);
     }
 
-    public Event getEvent7() {
-        return event7.get();
+    public Event getSundayColumn() {
+        return sundayColumn.get();
     }
 
-    public SimpleObjectProperty<Event> event7Property() {
-        return event7;
+    public SimpleObjectProperty<Event> sundayColumnProperty() {
+        return sundayColumn;
     }
 
-    public void setEvent7(Event event7) {
-        this.event7.set(event7);
-    }
-
-    @Override
-    public String toString() {
-        return "Model{" +
-                "time=" + time +
-                ", event1=" + event1 +
-                ", event2=" + event2 +
-                ", event3=" + event3 +
-                ", event4=" + event4 +
-                ", event5=" + event5 +
-                ", event6=" + event6 +
-                ", event7=" + event7 +
-                '}';
+    public void setSundayColumn(Event sundayColumn) {
+        this.sundayColumn.set(sundayColumn);
     }
 }

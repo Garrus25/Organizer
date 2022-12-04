@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 import jfxtras.scene.control.CalendarPicker;
@@ -95,7 +94,7 @@ public class GroupViewController{
 
     public void setTableView(){
         mainTable.setItems(tableContent);
-        mainTable.setFixedCellSize(55.0);
+        mainTable.setFixedCellSize(35.65);
         mainTable.getSelectionModel().setCellSelectionEnabled(true);
     }
 
@@ -109,15 +108,42 @@ public class GroupViewController{
         );
     }
 
+    private void setData(int x, int y, String eventName, String eventDesc, Date date){
+        switch (x){
+            case 1 :
+                mainTable.getItems().get(y).setMondayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 2 :
+                mainTable.getItems().get(y).setTuesdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 3 :
+                mainTable.getItems().get(y).setWednesdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 4 :
+                mainTable.getItems().get(y).setThursdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 5 :
+                mainTable.getItems().get(y).setFridayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 6 :
+                mainTable.getItems().get(y).setSaturdayColumn(new Event(eventName, eventDesc,date));
+                break;
+            case 7 :
+                mainTable.getItems().get(y).setSundayColumn(new Event(eventName, eventDesc,date));
+                break;
+
+        }
+    }
+
     private void initialColumnSetup() {
-        setColumns(timeColumn, "time", "");
-        setColumns(mondayColumn, "event1", "Monday");
-        setColumns(tuesdayColumn, "event2", "Tuesday");
-        setColumns(wednesdayColumn, "event3", "Wednesday");
-        setColumns(thursdayColumn, "event4", "Thursday");
-        setColumns(fridayColumn, "event5", "Friday");
-        setColumns(saturdayColumn, "event6", "Saturday");
-        setColumns(sundayColumn, "event7", "Sunday");
+        setColumns(timeColumn, "timeColumn", "");
+        setColumns(mondayColumn, "mondayColumn", "Monday");
+        setColumns(tuesdayColumn, "tuesdayColumn", "Tuesday");
+        setColumns(wednesdayColumn, "wednesdayColumn", "Wednesday");
+        setColumns(thursdayColumn, "thursdayColumn", "Thursday");
+        setColumns(fridayColumn, "fridayColumn", "Friday");
+        setColumns(saturdayColumn, "saturdayColumn", "Saturday");
+        setColumns(sundayColumn, "sundayColumn", "Sunday");
 
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
@@ -159,11 +185,11 @@ public class GroupViewController{
 
     private void setButtonListeners(){
         addGroupButton.setOnAction(actionEvent -> {
-
+            sceneController.setAddGroupStage();
         });
 
         showGroupsButton.setOnAction(actionEvent -> {
-
+            sceneController.setShowGroupListStage();
         });
 
         switchToSingleViewButton.setOnAction(actionEvent -> {

@@ -43,6 +43,7 @@ public class ConfirmationViewController{
         setFieldParameters();
         setButtonParameters();
         setCodeTextField();
+        emailTextField.setDisable(true);
     }
 
     @FXML
