@@ -194,11 +194,11 @@ public class SingleUserViewController{
 
     private void setButtonListeners(){
         addGroupButton.setOnAction(actionEvent -> {
-
+            sceneController.setAddGroupStage();
         });
 
         showGroupsButton.setOnAction(actionEvent -> {
-
+            sceneController.setShowGroupListStage();
         });
 
         switchToGroupViewButton.setOnAction(actionEvent -> {

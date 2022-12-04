@@ -185,11 +185,11 @@ public class GroupViewController{
 
     private void setButtonListeners(){
         addGroupButton.setOnAction(actionEvent -> {
-
+            sceneController.setAddGroupStage();
         });
 
         showGroupsButton.setOnAction(actionEvent -> {
-
+            sceneController.setShowGroupListStage();
         });
 
         switchToSingleViewButton.setOnAction(actionEvent -> {
