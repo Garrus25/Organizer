@@ -71,16 +71,6 @@ public class SceneController {
         }
     }
 
-    private void createGroupView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("group-view.fxml"));
-        try {
-            groupScene = new Scene(fxmlLoader.load(), MAIN_STAGE_WIDTH, MAIN_STAGE_HEIGTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        setStylesheet(groupScene);
-    }
-
     public void setAddGroupStage(){
         Scene addGroupScene;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
@@ -148,10 +138,6 @@ public class SceneController {
 
     public void setSingleUserScene(){
         stage.setScene(singleUserScene);
-    }
-    public void setGroupScene(){
-        createGroupView();
-        stage.setScene(groupScene);
     }
 
     public void setStage(Stage stage) {
