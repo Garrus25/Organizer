@@ -50,4 +50,22 @@ public class OrganizerProperties {
     public static final String MAINVIEW_SWITCHGROUP_TEXT = properties.getProperty("mainview.switchtogroup.text");
     public static final String MAINVIEW_SWITCHTOSINGLE_TEXT = properties.getProperty("mainview.switchtosingle.text");
     public static final String MAINVIEW_USER_PANEL_BUTTON_TEXT = properties.getProperty("mainview.userPanelButton.text");
+
+
+    public static final String ADD_GROUP_VIEW_GROUP_CREATE_BUTTON_TEXT = properties.getProperty("addGroupView.groupCreateButton.text");
+    public static final String ADD_GROUP_VIEW_VIEW_TITLE_TEXT = properties.getProperty("addGroupView.viewTitle.text");
+    public static final String ADD_GROUP_VIEW_GROUP_NAME_TEXT_FIELD_PROMPT_TEXT = properties.getProperty("addGroupView.groupNameTextField.prompt.text");
+
+    public static final String GROUP_INFORMATION_VIEW_GROUP_NAME_TEXT = properties.getProperty("groupInformationView.groupName.text");
+    public static final String GROUP_INFORMATION_VIEW_GROUP_CODE_TEXT = properties.getProperty("groupInformationView.groupCode.text");
+    public static final String GROUP_INFORMATION_VIEW_BUTTON_ADD_TO_GROUP_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.text");
+
+    public static final String SHOW_GROUP_LIST_VIEW_TITLE_TEXT = properties.getProperty("showGroupListView.title.text");
+
+    public static final String USER_PANEL_VIEW_NAME_TEXT = properties.getProperty("userPanelView.name.text");
+    public static final String USER_PANEL_VIEW_SURNAME_TEXT = properties.getProperty("userPanelView.surname.text");
+    public static final String USER_PANEL_VIEW_EMAIL_TEXT = properties.getProperty("userPanelView.email.text");
+    public static final String USER_PANEL_VIEW_LOGIN_TEXT = properties.getProperty("userPanelView.login.text");
+
+
 }

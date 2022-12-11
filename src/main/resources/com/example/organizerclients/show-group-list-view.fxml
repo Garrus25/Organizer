@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane prefHeight="300.0" prefWidth="551.0" style="-fx-background-color: #4D57AF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.ShowGroupListViewController">
+   <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="551.0" style="-fx-background-color: #d5dde8;">
+     <content>
+       <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="543.0" style="-fx-background-color: #d5dde8;">
+           <Label fx:id="title" text="LIST OF GROUPS" textAlignment="CENTER">
+               <font>
+                   <Font name="System Bold" size="18.0" />
+               </font>
+               <padding>
+                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+           </Label>
+            <VBox fx:id="listGroups" prefHeight="200.0" prefWidth="100.0" />
+       </VBox>
+     </content>
+      <StackPane.margin>
+         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+      </StackPane.margin>
+   </ScrollPane>
+</StackPane>
