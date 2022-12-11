@@ -13,6 +13,7 @@
              <Button fx:id="addGroupButton" mnemonicParsing="false" text="Button" />
             <Button fx:id="showGroupsButton" mnemonicParsing="false" text="Button" />
             <Button fx:id="switchViewButton" mnemonicParsing="false" text="Button" />
+            <Button fx:id="userPanelButton" mnemonicParsing="false" text="Button" />
          </children>
           <padding>
               <Insets bottom="16.0" left="-36.0" top="16.0" right="16.0" />

@@ -49,4 +49,5 @@ public class OrganizerProperties {
     public static final String MAINVIEW_SHOWGROUP_TEXT = properties.getProperty("mainview.showgroups.text");
     public static final String MAINVIEW_SWITCHGROUP_TEXT = properties.getProperty("mainview.switchtogroup.text");
     public static final String MAINVIEW_SWITCHTOSINGLE_TEXT = properties.getProperty("mainview.switchtosingle.text");
+    public static final String MAINVIEW_USER_PANEL_BUTTON_TEXT = properties.getProperty("mainview.userPanelButton.text");
 }

@@ -71,6 +71,9 @@ public class ChartController {
     Button switchViewButton;
 
     @FXML
+    Button userPanelButton;
+
+    @FXML
     CalendarPicker calendarPicker;
 
     @FXML
@@ -92,9 +95,9 @@ public class ChartController {
 
     private void setChangeViewButtonName(){
         if (!groupModelSet){
-            switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
-        }else {
             switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHTOSINGLE_TEXT);
+        }else {
+            switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
         }
     }
 
@@ -253,10 +256,12 @@ public class ChartController {
         addGroupButton.getStyleClass().add("menuButton");
         showGroupsButton.getStyleClass().add("menuButton");
         switchViewButton.getStyleClass().add("menuButton");
+        userPanelButton.getStyleClass().add("menuButton");
 
         addGroupButton.setText(OrganizerProperties.MAINVIEW_ADDGROUP_TEXT);
         showGroupsButton.setText(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
         switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
+        userPanelButton.setText(OrganizerProperties.MAINVIEW_USER_PANEL_BUTTON_TEXT);
     }
 
     private void setButtonListeners(){
@@ -270,6 +275,10 @@ public class ChartController {
 
         switchViewButton.setOnAction(actionEvent -> {
             changeViewType();
+        });
+
+        userPanelButton.setOnAction(actionEvent -> {
+            sceneController.showUserPanelStage();
         });
     }
 
