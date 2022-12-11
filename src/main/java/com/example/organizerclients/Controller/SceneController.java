@@ -68,6 +68,7 @@ public class SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        setStylesheet(singleUserScene);
     }
 
     public void setAddGroupStage(){
