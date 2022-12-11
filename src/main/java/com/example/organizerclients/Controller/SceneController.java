@@ -73,9 +73,9 @@ public class SceneController {
 
     public void setAddGroupStage(){
         Scene addGroupScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-group-view.fxml"));
         try {
-            addGroupScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_WIDTH, CUSTOM_STAGE_HEIGTH);
+            addGroupScene = new Scene(fxmlLoader.load());
             setCustomStage(addGroupScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -84,9 +84,9 @@ public class SceneController {
 
     public void setShowGroupListStage(){
         Scene showGroupListScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("show-group-list-view.fxml"));
         try {
-            showGroupListScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_HEIGTH, CUSTOM_STAGE_HEIGTH);
+            showGroupListScene = new Scene(fxmlLoader.load());
             setCustomStage(showGroupListScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -95,9 +95,9 @@ public class SceneController {
 
     public void showUserPanelStage(){
         Scene userPanelScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("user-panel-view.fxml"));
         try {
-            userPanelScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_HEIGTH, CUSTOM_STAGE_HEIGTH);
+            userPanelScene = new Scene(fxmlLoader.load());
             setCustomStage(userPanelScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -108,7 +108,7 @@ public class SceneController {
         Scene meetingScene;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
         try {
-            meetingScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_HEIGTH, CUSTOM_STAGE_HEIGTH);
+            meetingScene = new Scene(fxmlLoader.load());
             setCustomStage(meetingScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -122,8 +122,6 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
-
-
 
     public void setLoginScene(){
         stage.setScene(loginScene);

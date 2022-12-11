@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #4D57AF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.UserPanelViewController">
+<StackPane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.UserPanelViewController">
     <VBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="80.0" style="-fx-background-color: #d5dde8;" stylesheets="@../../../styles.css" StackPane.alignment="CENTER">
         <Label text="USER PANEL">
             <font>
                 <Font size="18.0" />
             </font>
             <VBox.margin>
-                <Insets top="40.0" />
+                <Insets top="5.0" />
             </VBox.margin>
       </Label>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">

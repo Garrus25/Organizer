@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane prefHeight="300.0" prefWidth="551.0" style="-fx-background-color: #4D57AF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.ShowGroupListViewController">
+<StackPane prefHeight="300.0" prefWidth="551.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.ShowGroupListViewController">
    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="551.0" style="-fx-background-color: #d5dde8;">
      <content>
        <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="543.0" style="-fx-background-color: #d5dde8;">
