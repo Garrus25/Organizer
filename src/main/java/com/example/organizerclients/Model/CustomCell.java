@@ -36,8 +36,14 @@ public class CustomCell<String, Event> extends TableCell<String, Event>{
 
     private void setValues(){
         checkIfIndexesAreInRange();
+        if (yIterator>23){
+            int a = yIterator/24;
+            this.y = yIterator-(a*24);
+        }else {
+            this.y = yIterator;
+        }
+
         this.x = xIterator;
-        this.y = yIterator;
 
         xIterator++;
 
@@ -53,5 +59,4 @@ public class CustomCell<String, Event> extends TableCell<String, Event>{
             xIterator = 0;
         }
     }
-
 }
