@@ -20,7 +20,6 @@ public class SceneController {
     private Scene registerScene;
     private Scene confirmationScene;
     private Scene singleUserScene;
-    private Scene groupScene;
 
     public static SceneController getInstance() {
         if (sceneController == null) {

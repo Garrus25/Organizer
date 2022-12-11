@@ -29,7 +29,7 @@ public class ChartController {
     private final ArrayList<Model> singleUserModel = new ArrayList<>();
     private final ArrayList<Model> groupModel = new ArrayList<>();
 
-    boolean modelFlag = false;
+    boolean groupModelSet = false;
 
     @FXML
     public HBox mainContentBox;
@@ -85,30 +85,53 @@ public class ChartController {
         setCalendarListener();
     }
 
-    private void setModel(){
-        if (!modelFlag){
-            tableContent = FXCollections.observableArrayList(
-                    groupModel
-            );
-            mainTable.getItems().clear();
-            mainTable.setItems(tableContent);
-            modelFlag = true;
+    private void changeUIElements(){
+        setChangeViewButtonName();
+        setTableColumnNames();
+    }
+
+    private void setChangeViewButtonName(){
+        if (!groupModelSet){
+            switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
         }else {
-            tableContent = FXCollections.observableArrayList(
-                    singleUserModel
-            );
-            mainTable.getItems().clear();
-            mainTable.setItems(tableContent);
-            modelFlag = false;
+            switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHTOSINGLE_TEXT);
         }
+    }
+
+    private void setTableColumnNames(){
+        if (!groupModelSet){
+            setGroupColumns();
+        }else {
+            setSingleUserColumns();
+        }
+    }
+
+    private void changeViewType(){
+        setModel();
+        changeUIElements();
+        groupModelSet = !groupModelSet;
+    }
+
+    private void changeModel(ArrayList<Model> model){
+        tableContent = FXCollections.observableArrayList(
+                model
+        );
+        mainTable.getItems().clear();
+        mainTable.setItems(tableContent);
+    }
+
+    private void setModel(){
+        if (!groupModelSet){
+            changeModel(groupModel);
+        }else {
+            changeModel(singleUserModel);
+        }
+        mainTable.refresh();
     }
 
     public <T> void setColumns(TableColumn<T, String> tableColumn, String propertyValue, String tableName){
         tableColumn.setCellValueFactory(new PropertyValueFactory<>(propertyValue));
-        tableColumn.setCellFactory(cell -> {
-            System.out.println("XD");
-            return new CustomCell<>();
-        });
+        tableColumn.setCellFactory(cell -> new CustomCell<>());
         tableColumn.setText(tableName);
         tableColumn.setResizable(false);
         tableColumn.setReorderable(false);
@@ -170,8 +193,27 @@ public class ChartController {
         setColumns(fridayColumn, "fridayColumn", "Friday");
         setColumns(saturdayColumn, "saturdayColumn", "Saturday");
         setColumns(sundayColumn, "sundayColumn", "Sunday");
-
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    }
+
+    private void setSingleUserColumns(){
+        mainTable.getColumns().get(1).setText("Monday");
+        mainTable.getColumns().get(2).setText("Tuesday");
+        mainTable.getColumns().get(3).setText("Wednesday");
+        mainTable.getColumns().get(4).setText("Thursday");
+        mainTable.getColumns().get(5).setText("Friday");
+        mainTable.getColumns().get(6).setText("Saturday");
+        mainTable.getColumns().get(7).setText("Sunday");
+    }
+
+    private void setGroupColumns(){
+        mainTable.getColumns().get(1).setText("Test1");
+        mainTable.getColumns().get(2).setText("TEST");
+        mainTable.getColumns().get(3).setText("f");
+        mainTable.getColumns().get(4).setText("g");
+        mainTable.getColumns().get(5).setText("h");
+        mainTable.getColumns().get(6).setText("j");
+        mainTable.getColumns().get(7).setText("j");
     }
 
     private void disableTimeColumn(){
@@ -202,7 +244,6 @@ public class ChartController {
                     System.out.println(x);
                     System.out.println(y);
                     setData(x + 1,y,"sa","test",new Date());
-                    ((CustomCell<?, ?>) event.getTarget()).setId("test");
                 }
             }
         });
@@ -228,8 +269,7 @@ public class ChartController {
         });
 
         switchViewButton.setOnAction(actionEvent -> {
-            setModel();
-            mainTable.refresh();
+            changeViewType();
         });
     }
 
