@@ -22,11 +22,14 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SingleUserViewController{
+public class ChartController {
 
     private final SceneController sceneController = SceneController.getInstance();
     private ObservableList<Model> tableContent;
-    private final ArrayList<Model> model = new ArrayList<>();
+    private final ArrayList<Model> singleUserModel = new ArrayList<>();
+    private final ArrayList<Model> groupModel = new ArrayList<>();
+
+    boolean modelFlag = false;
 
     @FXML
     public HBox mainContentBox;
@@ -65,7 +68,7 @@ public class SingleUserViewController{
     Button showGroupsButton;
 
     @FXML
-    Button switchToGroupViewButton;
+    Button switchViewButton;
 
     @FXML
     CalendarPicker calendarPicker;
@@ -82,9 +85,30 @@ public class SingleUserViewController{
         setCalendarListener();
     }
 
+    private void setModel(){
+        if (!modelFlag){
+            tableContent = FXCollections.observableArrayList(
+                    groupModel
+            );
+            mainTable.getItems().clear();
+            mainTable.setItems(tableContent);
+            modelFlag = true;
+        }else {
+            tableContent = FXCollections.observableArrayList(
+                    singleUserModel
+            );
+            mainTable.getItems().clear();
+            mainTable.setItems(tableContent);
+            modelFlag = false;
+        }
+    }
+
     public <T> void setColumns(TableColumn<T, String> tableColumn, String propertyValue, String tableName){
         tableColumn.setCellValueFactory(new PropertyValueFactory<>(propertyValue));
-        tableColumn.setCellFactory(cell -> new CustomCell<>());
+        tableColumn.setCellFactory(cell -> {
+            System.out.println("XD");
+            return new CustomCell<>();
+        });
         tableColumn.setText(tableName);
         tableColumn.setResizable(false);
         tableColumn.setReorderable(false);
@@ -92,21 +116,22 @@ public class SingleUserViewController{
         tableColumn.setMinWidth(163.5);
     }
 
-
     public void setTableView(){
         mainTable.setItems(tableContent);
-        mainTable.setFixedCellSize(35.65);
+        mainTable.setFixedCellSize(35.75);
         mainTable.getSelectionModel().setCellSelectionEnabled(true);
     }
 
     private void setObservableList() {
         for (int i = 0; i < 24; i++) {
-            model.add(new Model(Integer.toString(i)));
+            singleUserModel.add(new Model(Integer.toString(i)));
+            groupModel.add(new Model(Integer.toString(i)));
         }
 
         tableContent = FXCollections.observableArrayList(
-                model
+                singleUserModel
             );
+
     }
 
     private void setData(int x, int y, String eventName, String eventDesc, Date date){
@@ -171,12 +196,13 @@ public class SingleUserViewController{
             @Override
             public void handle(MouseEvent event) {
                 if (event.getTarget() instanceof CustomCell){
-                    sceneController.showMeetingStage();
+                    //sceneController.showMeetingStage();
                     int y = ((CustomCell<?, ?>) event.getTarget()).getY();
                     int x = ((CustomCell<?, ?>) event.getTarget()).getX();
                     System.out.println(x);
                     System.out.println(y);
-                    setData(x+1,y,"sa","test",new Date());
+                    setData(x + 1,y,"sa","test",new Date());
+                    ((CustomCell<?, ?>) event.getTarget()).setId("test");
                 }
             }
         });
@@ -185,11 +211,11 @@ public class SingleUserViewController{
     private void setBasicButtonParameters(){
         addGroupButton.getStyleClass().add("menuButton");
         showGroupsButton.getStyleClass().add("menuButton");
-        switchToGroupViewButton.getStyleClass().add("menuButton");
+        switchViewButton.getStyleClass().add("menuButton");
 
         addGroupButton.setText(OrganizerProperties.MAINVIEW_ADDGROUP_TEXT);
         showGroupsButton.setText(OrganizerProperties.MAINVIEW_SHOWGROUP_TEXT);
-        switchToGroupViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
+        switchViewButton.setText(OrganizerProperties.MAINVIEW_SWITCHGROUP_TEXT);
     }
 
     private void setButtonListeners(){
@@ -201,8 +227,9 @@ public class SingleUserViewController{
             sceneController.setShowGroupListStage();
         });
 
-        switchToGroupViewButton.setOnAction(actionEvent -> {
-            sceneController.setGroupScene();
+        switchViewButton.setOnAction(actionEvent -> {
+            setModel();
+            mainTable.refresh();
         });
     }
 
