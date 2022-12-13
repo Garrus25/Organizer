@@ -11,8 +11,6 @@ import java.io.IOException;
 public class SceneController {
     private static final Integer MAIN_STAGE_WIDTH = 1600;
     private static final Integer MAIN_STAGE_HEIGTH = 900;
-    private static final Integer CUSTOM_STAGE_WIDTH = 300;
-    private static final Integer CUSTOM_STAGE_HEIGTH = 400;
     private static SceneController sceneController;
     private Stage stage;
 

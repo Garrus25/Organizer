@@ -1,13 +1,15 @@
 package com.example.organizerclients.Model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Event {
     private String eventName;
     private String group;
-    private Date date;
+    private LocalDateTime date;
 
-    public Event(String eventName, String group, Date date) {
+    public Event(String eventName, String group, LocalDateTime date) {
         this.eventName = eventName;
         this.group = group;
         this.date = date;
@@ -29,11 +31,11 @@ public class Event {
         this.group = group;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

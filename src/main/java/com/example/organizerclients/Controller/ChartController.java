@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 import jfxtras.scene.control.CalendarPicker;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -157,10 +158,9 @@ public class ChartController {
         tableContent = FXCollections.observableArrayList(
                 singleUserModel
             );
-
     }
 
-    private void setData(int x, int y, String eventName, String eventDesc, Date date){
+    private void setData(int x, int y, String eventName, String eventDesc, LocalDateTime date){
         switch (x){
             case 1 :
                 mainTable.getItems().get(y).setMondayColumn(new Event(eventName, eventDesc,date));
@@ -213,10 +213,6 @@ public class ChartController {
         mainTable.getColumns().get(1).setText("Test1");
         mainTable.getColumns().get(2).setText("TEST");
         mainTable.getColumns().get(3).setText("f");
-        mainTable.getColumns().get(4).setText("g");
-        mainTable.getColumns().get(5).setText("h");
-        mainTable.getColumns().get(6).setText("j");
-        mainTable.getColumns().get(7).setText("j");
     }
 
     private void disableTimeColumn(){
@@ -246,7 +242,7 @@ public class ChartController {
                     int x = ((CustomCell<?, ?>) event.getTarget()).getX();
                     System.out.println(x);
                     System.out.println(y);
-                    setData(x + 1,y,"sa","test",new Date());
+                    setData(x + 1,y,"sa","test", LocalDateTime.now());
                 }
             }
         });
