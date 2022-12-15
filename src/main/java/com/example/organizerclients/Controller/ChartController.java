@@ -136,7 +136,7 @@ public class ChartController {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getTarget() instanceof CustomCell){
-                    //sceneController.showMeetingStage();
+                    sceneController.showMeetingStage();
                     int y = ((CustomCell<?, ?>) event.getTarget()).getY();
                     int x = ((CustomCell<?, ?>) event.getTarget()).getX();
                     System.out.println(x);

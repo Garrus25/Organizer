@@ -104,7 +104,7 @@ public class SceneController {
 
     public void showMeetingStage(){
         Scene meetingScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-task-view.fxml"));
         try {
             meetingScene = new Scene(fxmlLoader.load());
             setCustomStage(meetingScene);

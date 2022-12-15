@@ -67,5 +67,14 @@ public class OrganizerProperties {
     public static final String USER_PANEL_VIEW_EMAIL_TEXT = properties.getProperty("userPanelView.email.text");
     public static final String USER_PANEL_VIEW_LOGIN_TEXT = properties.getProperty("userPanelView.login.text");
 
+    public static final String ADD_TASK_VIEW_TITLE_VIEW_TEXT = properties.getProperty("addTaskView.titleView.text");
+    public static final String ADD_TASK_VIEW_TASK_NAME_TEXT = properties.getProperty("addTaskView.taskName.text");
+    public static final String ADD_TASK_VIEW_DESCRIPTION_TEXT = properties.getProperty("addTaskView.description.text");
+    public static final String ADD_TASK_VIEW_BUTTON_CREATE_TASK_TEXT = properties.getProperty("addTaskView.buttonCreateTask.text");
+    public static final String ADD_TASK_VIEW_HEADER_FOR_CHOICE_BOX_TEXT = properties.getProperty("addTaskView.headerForChoiceBox.text");
+    public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE1_TEXT = properties.getProperty("addTaskView.chooseTaskType.value1.text");
+    public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE2_TEXT = properties.getProperty("addTaskView.chooseTaskType.value2.text");
+    public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE3_TEXT = properties.getProperty("addTaskView.chooseTaskType.value3.text");
+
 
 }
