@@ -1,34 +1,29 @@
 package com.example.organizerclients.Controller;
 
-import com.example.organizerclients.Model.CustomCell;
-import com.example.organizerclients.Model.Event;
-import com.example.organizerclients.Model.Model;
-import com.example.organizerclients.Model.OrganizerProperties;
-import javafx.collections.FXCollections;
+import com.example.organizerclients.Model.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.util.Callback;
-import javafx.util.converter.DefaultStringConverter;
 import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class ChartController {
 
     private final SceneController sceneController = SceneController.getInstance();
-    private ObservableList<Model> tableContent;
-    private final ArrayList<Model> singleUserModel = new ArrayList<>();
-    private final ArrayList<Model> groupModel = new ArrayList<>();
+    private final CreateTable singleUserModel = new CreateSingleUserTable();
+    private final CreateTable groupModel = new CreateGroupTable();
+    private CreateTable createTable = singleUserModel;
+    private LocalDate currentSelectedDate = LocalDate.now();
 
     boolean groupModelSet = false;
 
@@ -36,31 +31,7 @@ public class ChartController {
     public HBox mainContentBox;
 
     @FXML
-    TableView<Model> mainTable;
-
-    @FXML
-    TableColumn<String,String> timeColumn;
-
-    @FXML
-    TableColumn<Event,String> mondayColumn;
-
-    @FXML
-    TableColumn<Event,String> tuesdayColumn;
-
-    @FXML
-    TableColumn<Event,String> wednesdayColumn;
-
-    @FXML
-    TableColumn<Event,String> thursdayColumn;
-
-    @FXML
-    TableColumn<Event,String> fridayColumn;
-
-    @FXML
-    TableColumn<Event,String> saturdayColumn;
-
-    @FXML
-    TableColumn<Event,String> sundayColumn;
+    TableView<Map<String, Event>> mainTable;
 
     @FXML
     Button addGroupButton;
@@ -79,10 +50,8 @@ public class ChartController {
 
     @FXML
     public void initialize(){
-        setObservableList();
         setTableView();
-        initialColumnSetup();
-        disableTimeColumn();
+        createTable(currentSelectedDate);
         addCellClickListener();
         setBasicButtonParameters();
         setButtonListeners();
@@ -91,7 +60,6 @@ public class ChartController {
 
     private void changeUIElements(){
         setChangeViewButtonName();
-        setTableColumnNames();
     }
 
     private void setChangeViewButtonName(){
@@ -102,12 +70,9 @@ public class ChartController {
         }
     }
 
-    private void setTableColumnNames(){
-        if (!groupModelSet){
-            setGroupColumns();
-        }else {
-            setSingleUserColumns();
-        }
+    public void setTableView(){
+        mainTable.setFixedCellSize(35.75);
+        mainTable.getSelectionModel().setCellSelectionEnabled(true);
     }
 
     private void changeViewType(){
@@ -116,12 +81,9 @@ public class ChartController {
         groupModelSet = !groupModelSet;
     }
 
-    private void changeModel(ArrayList<Model> model){
-        tableContent = FXCollections.observableArrayList(
-                model
-        );
-        mainTable.getItems().clear();
-        mainTable.setItems(tableContent);
+    private void changeModel(CreateTable model){
+        createTable = model;
+        createTable(currentSelectedDate);
     }
 
     private void setModel(){
@@ -133,35 +95,17 @@ public class ChartController {
         mainTable.refresh();
     }
 
-    public <T> void setColumns(TableColumn<T, String> tableColumn, String propertyValue, String tableName){
-        tableColumn.setCellValueFactory(new PropertyValueFactory<>(propertyValue));
-        tableColumn.setCellFactory(cell -> new CustomCell<>());
-        tableColumn.setText(tableName);
-        tableColumn.setResizable(false);
-        tableColumn.setReorderable(false);
-        tableColumn.setSortable(false);
-        tableColumn.setMinWidth(163.5);
-    }
-
-    public void setTableView(){
-        mainTable.setItems(tableContent);
-        mainTable.setFixedCellSize(35.75);
-        mainTable.getSelectionModel().setCellSelectionEnabled(true);
-    }
-
-    private void setObservableList() {
-        for (int i = 0; i < 24; i++) {
-            singleUserModel.add(new Model(Integer.toString(i)));
-            groupModel.add(new Model(Integer.toString(i)));
-        }
-
-        tableContent = FXCollections.observableArrayList(
-                singleUserModel
-            );
+    private void createTable(LocalDate localDate) {
+        mainTable.getColumns().clear();
+        mainTable.getColumns().add(createTable.createTimeColumn());
+        List<TableColumn<Map<String, Event>, String>> columns = createTable.createColumns(localDate);
+        CustomCell.numberOfColumns = columns.size();
+        mainTable.getColumns().addAll(columns);
+        mainTable.setItems(createTable.createModel());
     }
 
     private void setData(int x, int y, String eventName, String eventDesc, LocalDateTime date){
-        switch (x){
+      /*  switch (x){
             case 1 :
                 mainTable.getItems().get(y).setMondayColumn(new Event(eventName, eventDesc,date));
                 break;
@@ -184,52 +128,7 @@ public class ChartController {
                 mainTable.getItems().get(y).setSundayColumn(new Event(eventName, eventDesc,date));
                 break;
 
-        }
-    }
-
-    private void initialColumnSetup() {
-        setColumns(timeColumn, "timeColumn", "");
-        setColumns(mondayColumn, "mondayColumn", "Monday");
-        setColumns(tuesdayColumn, "tuesdayColumn", "Tuesday");
-        setColumns(wednesdayColumn, "wednesdayColumn", "Wednesday");
-        setColumns(thursdayColumn, "thursdayColumn", "Thursday");
-        setColumns(fridayColumn, "fridayColumn", "Friday");
-        setColumns(saturdayColumn, "saturdayColumn", "Saturday");
-        setColumns(sundayColumn, "sundayColumn", "Sunday");
-        timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-    }
-
-    private void setSingleUserColumns(){
-        mainTable.getColumns().get(1).setText("Monday");
-        mainTable.getColumns().get(2).setText("Tuesday");
-        mainTable.getColumns().get(3).setText("Wednesday");
-        mainTable.getColumns().get(4).setText("Thursday");
-        mainTable.getColumns().get(5).setText("Friday");
-        mainTable.getColumns().get(6).setText("Saturday");
-        mainTable.getColumns().get(7).setText("Sunday");
-    }
-
-    private void setGroupColumns(){
-        mainTable.getColumns().get(1).setText("Test1");
-        mainTable.getColumns().get(2).setText("TEST");
-        mainTable.getColumns().get(3).setText("f");
-    }
-
-    private void disableTimeColumn(){
-        timeColumn.setCellFactory(
-                new Callback<TableColumn<String, String>, TableCell<String, String>>() {
-                    @Override
-                    public TableCell<String, String> call(TableColumn<String, String> paramTableColumn) {
-                        return new TextFieldTableCell<String, String>(new DefaultStringConverter()) {
-                            @Override
-                            public void updateItem(String s, boolean b) {
-                                super.updateItem(s, b);
-                                setDisable(true);
-                                setEditable(false);
-                            }
-                        };
-                    }
-                });
+        }*/
     }
 
     private void addCellClickListener(){
@@ -282,9 +181,9 @@ public class ChartController {
         calendarPicker.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println(calendarPicker.getCalendar().getTime());
-                LocalDateTime ldt = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-                System.out.println(ldt.getDayOfYear());
+                currentSelectedDate = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                createTable(currentSelectedDate);
+                mainTable.refresh();
             }
         });
     }

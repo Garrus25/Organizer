@@ -21,14 +21,7 @@
       </VBox>
       <TableView fx:id="mainTable" prefHeight="200.0" prefWidth="1330.0">
         <columns>
-            <TableColumn fx:id="timeColumn" minWidth="150.0" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="timezone" />
-            <TableColumn fx:id="mondayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
-            <TableColumn fx:id="tuesdayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
-            <TableColumn fx:id="wednesdayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
-            <TableColumn fx:id="thursdayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
-            <TableColumn fx:id="fridayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
-            <TableColumn fx:id="saturdayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
-            <TableColumn fx:id="sundayColumn" prefWidth="95.0" style="-fx-alignment: CENTER; -fx-cell-size: 70px;" text="C1" />
+
         </columns>
       </TableView>
    </children>
