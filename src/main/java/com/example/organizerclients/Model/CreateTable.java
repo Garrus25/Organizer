@@ -34,7 +34,7 @@ public abstract class CreateTable {
         tableColumn.setMinWidth(163.5);
     }
 
-    protected  <T> ObservableList<Map<String, Event>> setObservableList(HashMap<T, TreeMap<LocalTime, Event>> hashMapTasks) {
+    protected <T> ObservableList<Map<String, Event>> setObservableList(HashMap<T, TreeMap<LocalTime, Event>> hashMapTasks) {
         model.clear();
         for (int i = 0; i < 24; i++) {
             LocalTime time = LocalTime.of(i, 0);

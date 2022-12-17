@@ -104,33 +104,6 @@ public class ChartController {
         mainTable.setItems(createTable.createModel());
     }
 
-    private void setData(int x, int y, String eventName, String eventDesc, LocalDateTime date){
-      /*  switch (x){
-            case 1 :
-                mainTable.getItems().get(y).setMondayColumn(new Event(eventName, eventDesc,date));
-                break;
-            case 2 :
-                mainTable.getItems().get(y).setTuesdayColumn(new Event(eventName, eventDesc,date));
-                break;
-            case 3 :
-                mainTable.getItems().get(y).setWednesdayColumn(new Event(eventName, eventDesc,date));
-                break;
-            case 4 :
-                mainTable.getItems().get(y).setThursdayColumn(new Event(eventName, eventDesc,date));
-                break;
-            case 5 :
-                mainTable.getItems().get(y).setFridayColumn(new Event(eventName, eventDesc,date));
-                break;
-            case 6 :
-                mainTable.getItems().get(y).setSaturdayColumn(new Event(eventName, eventDesc,date));
-                break;
-            case 7 :
-                mainTable.getItems().get(y).setSundayColumn(new Event(eventName, eventDesc,date));
-                break;
-
-        }*/
-    }
-
     private void addCellClickListener(){
         mainTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -141,7 +114,6 @@ public class ChartController {
                     int x = ((CustomCell<?, ?>) event.getTarget()).getX();
                     System.out.println(x);
                     System.out.println(y);
-                    setData(x + 1,y,"sa","test", LocalDateTime.now());
                 }
             }
         });
