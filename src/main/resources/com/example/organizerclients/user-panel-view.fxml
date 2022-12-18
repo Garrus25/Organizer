@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.UserPanelViewController">
+    <VBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="80.0" style="-fx-background-color: #d5dde8;" stylesheets="@../../../styles.css" StackPane.alignment="CENTER">
+        <Label text="USER PANEL">
+            <font>
+                <Font size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
+      </Label>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="nameProperties" styleClass="header" text="Name" textAlignment="CENTER">
+               <font>
+                  <Font name="Tahoma Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></Label>
+            <Label fx:id="name" layoutX="174.0" layoutY="10.0" text="Name" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="77.0" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="surnameProperties" styleClass="header" text="Surname" />
+            <Label fx:id="surname" layoutX="174.0" layoutY="10.0" text="Name" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="174.0" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="emailProperties" styleClass="header" text="Email" />
+            <Label fx:id="email" layoutX="174.0" layoutY="10.0" text="Name" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="205.0" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="loginProperties" styleClass="header" text="Login" />
+            <Label fx:id="login" layoutX="174.0" layoutY="10.0" text="Name">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></Label>
+         </children>
+      </VBox>
+        <StackPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </StackPane.margin>
+    </VBox>
+
+</StackPane>

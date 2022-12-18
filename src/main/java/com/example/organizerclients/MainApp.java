@@ -18,9 +18,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage){
         sceneController.setStage(stage);
-        //sceneController.setLoginScene();
-        //sceneController.setSingleUserScene();
-        sceneController.setGroupScene();
+        sceneController.setSingleUserScene();
+
         stage.setTitle(OrganizerProperties.MAIN_VIEW_TITLE);
         stage.setResizable(false);
         stage.show();

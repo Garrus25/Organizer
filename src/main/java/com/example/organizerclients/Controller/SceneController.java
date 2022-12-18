@@ -11,8 +11,6 @@ import java.io.IOException;
 public class SceneController {
     private static final Integer MAIN_STAGE_WIDTH = 1600;
     private static final Integer MAIN_STAGE_HEIGTH = 900;
-    private static final Integer CUSTOM_STAGE_WIDTH = 300;
-    private static final Integer CUSTOM_STAGE_HEIGTH = 400;
     private static SceneController sceneController;
     private Stage stage;
 
@@ -20,7 +18,6 @@ public class SceneController {
     private Scene registerScene;
     private Scene confirmationScene;
     private Scene singleUserScene;
-    private Scene groupScene;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -69,23 +66,14 @@ public class SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void createGroupView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("group-view.fxml"));
-        try {
-            groupScene = new Scene(fxmlLoader.load(), MAIN_STAGE_WIDTH, MAIN_STAGE_HEIGTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        setStylesheet(groupScene);
+        setStylesheet(singleUserScene);
     }
 
     public void setAddGroupStage(){
         Scene addGroupScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-group-view.fxml"));
         try {
-            addGroupScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_WIDTH, CUSTOM_STAGE_HEIGTH);
+            addGroupScene = new Scene(fxmlLoader.load());
             setCustomStage(addGroupScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -94,9 +82,9 @@ public class SceneController {
 
     public void setShowGroupListStage(){
         Scene showGroupListScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("show-group-list-view.fxml"));
         try {
-            showGroupListScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_HEIGTH, CUSTOM_STAGE_HEIGTH);
+            showGroupListScene = new Scene(fxmlLoader.load());
             setCustomStage(showGroupListScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -105,9 +93,9 @@ public class SceneController {
 
     public void showUserPanelStage(){
         Scene userPanelScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("user-panel-view.fxml"));
         try {
-            userPanelScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_HEIGTH, CUSTOM_STAGE_HEIGTH);
+            userPanelScene = new Scene(fxmlLoader.load());
             setCustomStage(userPanelScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -116,9 +104,9 @@ public class SceneController {
 
     public void showMeetingStage(){
         Scene meetingScene;
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-task-view.fxml"));
         try {
-            meetingScene = new Scene(fxmlLoader.load(), CUSTOM_STAGE_HEIGTH, CUSTOM_STAGE_HEIGTH);
+            meetingScene = new Scene(fxmlLoader.load());
             setCustomStage(meetingScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -148,10 +136,6 @@ public class SceneController {
 
     public void setSingleUserScene(){
         stage.setScene(singleUserScene);
-    }
-    public void setGroupScene(){
-        createGroupView();
-        stage.setScene(groupScene);
     }
 
     public void setStage(Stage stage) {
