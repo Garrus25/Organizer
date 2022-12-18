@@ -1,12 +1,17 @@
 package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.Event;
 import com.example.organizerclients.Model.OrganizerProperties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.LocalDateTime;
+
 public class AddTaskViewController {
+    SceneController sceneController = SceneController.getInstance();
+
     @FXML
     private Label titleView;
 
@@ -25,10 +30,10 @@ public class AddTaskViewController {
     @FXML
     private ChoiceBox<String> chooseTaskType;
 
-
     @FXML
     public void initialize() {
         setFieldParameters();
+        setListeners();
     }
 
     private void setFieldParameters(){
@@ -45,5 +50,22 @@ public class AddTaskViewController {
         ));
 
         chooseTaskType.setValue(OrganizerProperties.ADD_TASK_VIEW_CHOOSE_TASK_VALUE1_TEXT);
+    }
+
+    private void setListeners(){
+        buttonCreateTask.setOnAction(actionEvent -> {
+            updateModel();
+            sceneController.getStage().close();
+        });
+    }
+
+    private Event getMeetingData(){
+        String eventName = taskName.getText();
+        String description;
+        return new Event(eventName,"", LocalDateTime.now());
+    }
+
+    private void updateModel(){
+        sceneController.getChartController().updateModel(getMeetingData());
     }
 }

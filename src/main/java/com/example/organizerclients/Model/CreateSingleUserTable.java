@@ -5,11 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class CreateSingleUserTable extends CreateTable {
+    private final TestModelSingleUserView testModelSingleUserView = new TestModelSingleUserView();
 
     @Override
     public List<TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
@@ -29,7 +32,14 @@ public class CreateSingleUserTable extends CreateTable {
 
     @Override
     public ObservableList<Map<String, Event>> createModel() {
-        TestModelSingleUserView testModelSingleUserView = new TestModelSingleUserView();
         return setObservableList(testModelSingleUserView.testContent);
+    }
+
+    @Override
+    public void insertData(Event event, LocalDate selectedDate, LocalTime selectedTime) {
+        TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
+        temp.put(selectedTime,event);
+
+        testModelSingleUserView.addData(selectedDate,temp);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.*;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,8 +11,10 @@ import javafx.scene.layout.HBox;
 import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +23,13 @@ public class ChartController {
     private final SceneController sceneController = SceneController.getInstance();
     private final CreateTable singleUserModel = new CreateSingleUserTable();
     private final CreateTable groupModel = new CreateGroupTable();
-    private CreateTable createTable = singleUserModel;
+    private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
 
-    boolean groupModelSet = false;
+    private LocalTime selectedTime = LocalTime.now();
+    private LocalDate selectedDate = LocalDate.now();
+
+    private boolean groupModelSet = false;
 
     @FXML
     public HBox mainContentBox;
@@ -82,7 +86,7 @@ public class ChartController {
     }
 
     private void changeModel(CreateTable model){
-        createTable = model;
+        currentModel = model;
         createTable(currentSelectedDate);
     }
 
@@ -95,13 +99,19 @@ public class ChartController {
         mainTable.refresh();
     }
 
+    public void updateModel(Event event){
+        mainTable.getItems().clear();
+        currentModel.insertData(event, selectedDate, selectedTime);
+        mainTable.setItems(currentModel.createModel());
+    }
+
     private void createTable(LocalDate localDate) {
         mainTable.getColumns().clear();
-        mainTable.getColumns().add(createTable.createTimeColumn());
-        List<TableColumn<Map<String, Event>, String>> columns = createTable.createColumns(localDate);
+        mainTable.getColumns().add(currentModel.createTimeColumn());
+        List<TableColumn<Map<String, Event>, String>> columns = currentModel.createColumns(localDate);
         CustomCell.numberOfColumns = columns.size();
         mainTable.getColumns().addAll(columns);
-        mainTable.setItems(createTable.createModel());
+        mainTable.setItems(currentModel.createModel());
     }
 
     private void addCellClickListener(){
@@ -112,8 +122,15 @@ public class ChartController {
                     sceneController.showMeetingStage();
                     int y = ((CustomCell<?, ?>) event.getTarget()).getY();
                     int x = ((CustomCell<?, ?>) event.getTarget()).getX();
-                    System.out.println(x);
-                    System.out.println(y);
+
+                    System.out.println(((Event)((CustomCell<String, Event>) event.getTarget()).getItem()).getDate());
+
+                    System.out.println("Y" + y);
+                    System.out.println("X" + x);
+
+                    selectedTime = LocalTime.of(y,0);
+                    selectedDate = currentSelectedDate.plusDays(x);
+
                 }
             }
         });

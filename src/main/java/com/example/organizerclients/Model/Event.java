@@ -1,8 +1,6 @@
 package com.example.organizerclients.Model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Event {
     private String eventName;

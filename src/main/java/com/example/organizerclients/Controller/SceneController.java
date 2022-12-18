@@ -19,6 +19,8 @@ public class SceneController {
     private Scene confirmationScene;
     private Scene singleUserScene;
 
+    private ChartController chartController;
+
     public static SceneController getInstance() {
         if (sceneController == null) {
             sceneController = new SceneController();
@@ -63,6 +65,7 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("single-user-view.fxml"));
         try {
             singleUserScene = new Scene(fxmlLoader.load(), MAIN_STAGE_WIDTH, MAIN_STAGE_HEIGTH);
+            chartController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,6 +110,7 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-task-view.fxml"));
         try {
             meetingScene = new Scene(fxmlLoader.load());
+            fxmlLoader.getController();
             setCustomStage(meetingScene);
         }catch (IOException e){
             e.printStackTrace();
@@ -115,7 +119,7 @@ public class SceneController {
 
     private void setCustomStage(Scene scene) {
         setStylesheet(scene);
-        Stage stage = new Stage();
+        stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
@@ -156,5 +160,9 @@ public class SceneController {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public ChartController getChartController() {
+        return chartController;
     }
 }

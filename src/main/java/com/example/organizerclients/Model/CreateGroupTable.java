@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +32,10 @@ public class CreateGroupTable extends CreateTable{
     public ObservableList<Map<String, Event>> createModel() {
         TestModelGroupView testModelGroupView = new TestModelGroupView();
         return setObservableList(testModelGroupView.testContent);
+    }
+
+    @Override
+    public void insertData(Event event, LocalDate selectedDate, LocalTime selectedTime) {
+
     }
 }

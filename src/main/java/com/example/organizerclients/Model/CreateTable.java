@@ -17,6 +17,8 @@ public abstract class CreateTable {
 
     public abstract ObservableList <Map<String, Event>> createModel();
 
+    public abstract void insertData(Event event, LocalDate selectedDate, LocalTime selectedTime);
+
     public TableColumn<Map<String, Event>, String> createTimeColumn() {
         TableColumn<Map<String, Event>, String> timeColumn = new TableColumn<>(TIME_COLUMN);
         setColumns(timeColumn, "TIME", TIME_COLUMN);
@@ -55,4 +57,13 @@ public abstract class CreateTable {
                 model
         );
     }
+
+    public List<Map<String, Event>> getModel() {
+        return model;
+    }
+
+    public void setModel(List<Map<String, Event>> model) {
+        this.model = model;
+    }
+
 }

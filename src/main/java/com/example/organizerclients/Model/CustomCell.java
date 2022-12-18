@@ -37,6 +37,9 @@ public class CustomCell<String, Event> extends TableCell<String, Event>{
     }
 
     private void setValues(){
+        System.out.println(yIterator);
+        System.out.println(xIterator);
+        System.out.println("Number of columns : " + numberOfColumns);
         checkIfIndexesAreInRange();
         if (yIterator>23){
             int a = yIterator/24;

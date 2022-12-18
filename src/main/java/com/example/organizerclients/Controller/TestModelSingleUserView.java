@@ -43,7 +43,7 @@ public class TestModelSingleUserView {
 
     }
 
-    private void addData(LocalDate key, TreeMap<LocalTime, Event> eventTreeMap) {
+    public void addData(LocalDate key, TreeMap<LocalTime, Event> eventTreeMap) {
         if (testContent.containsKey(key)) {
             testContent.get(key).put(eventTreeMap.firstKey(), eventTreeMap.get(eventTreeMap.firstKey()));
         } else {
@@ -52,4 +52,5 @@ public class TestModelSingleUserView {
             testContent.put(key, temp);
         }
     }
+
 }
