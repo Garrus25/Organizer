@@ -45,9 +45,9 @@ public class AddTaskViewController {
 
     private void setFieldParameters(){
         titleView.setText(OrganizerProperties.ADD_TASK_VIEW_TITLE_VIEW_TEXT);
-        taskName.setText(OrganizerProperties.ADD_TASK_VIEW_TASK_NAME_TEXT);
+        taskName.setPromptText(OrganizerProperties.ADD_TASK_VIEW_TASK_NAME_TEXT);
         headerForChoiceBox.setText(OrganizerProperties.ADD_TASK_VIEW_HEADER_FOR_CHOICE_BOX_TEXT);
-        description.setText(OrganizerProperties.ADD_TASK_VIEW_DESCRIPTION_TEXT);
+        description.setPromptText(OrganizerProperties.ADD_TASK_VIEW_DESCRIPTION_TEXT);
         buttonCreateTask.setText(OrganizerProperties.ADD_TASK_VIEW_BUTTON_CREATE_TASK_TEXT);
 
         chooseTaskType.setItems(FXCollections.observableArrayList(
@@ -57,6 +57,10 @@ public class AddTaskViewController {
         ));
 
         chooseTaskType.setValue(OrganizerProperties.ADD_TASK_VIEW_CHOOSE_TASK_VALUE1_TEXT);
+
+        taskName.setText(event.getEventName());
+        description.setText(event.getDescription());
+        chooseTaskType.setValue(event.getType());
     }
 
     private void setListeners(){
@@ -78,4 +82,6 @@ public class AddTaskViewController {
         event.replaceData(meetingData);
         chartController.updateModel(event);
     }
+
+
 }

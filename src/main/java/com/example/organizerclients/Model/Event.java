@@ -60,6 +60,14 @@ public class Event {
         this.personName = personName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return eventName;
