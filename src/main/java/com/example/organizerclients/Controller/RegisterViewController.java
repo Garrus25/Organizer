@@ -38,12 +38,6 @@ public class RegisterViewController{
     private TextField surnameTextField;
 
     @FXML
-    private Label colorLabel;
-
-    @FXML
-    ColorPicker colorPicker;
-
-    @FXML
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
@@ -81,7 +75,6 @@ public class RegisterViewController{
         informationText.setText("");
         emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
-        colorLabel.setText("Choose color:");
     }
 
     protected void setButtonParameters(){

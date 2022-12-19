@@ -58,7 +58,8 @@ public class OrganizerProperties {
 
     public static final String GROUP_INFORMATION_VIEW_GROUP_NAME_TEXT = properties.getProperty("groupInformationView.groupName.text");
     public static final String GROUP_INFORMATION_VIEW_GROUP_CODE_TEXT = properties.getProperty("groupInformationView.groupCode.text");
-    public static final String GROUP_INFORMATION_VIEW_BUTTON_ADD_TO_GROUP_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.text");
+    public static final String GROUP_INFORMATION_VIEW_JOIN_GROUP_BUTTON_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.join.text");
+    public static final String GROUP_INFORMATION_VIEW_LEAVE_GROUP_BUTTON_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.leave.text");
 
     public static final String SHOW_GROUP_LIST_VIEW_TITLE_TEXT = properties.getProperty("showGroupListView.title.text");
 

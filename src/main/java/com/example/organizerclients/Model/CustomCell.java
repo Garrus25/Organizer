@@ -9,7 +9,7 @@ public class CustomCell<String, Event> extends TableCell<String, Event>{
         if(null!=event){
             setText(event.toString());
             if (!event.toString().equals("")) {
-                setStyle("-fx-background-color: red");
+                setStyle("-fx-background-color: red; -fx-alignment: center");
             }else {
                 setStyle("");
             }

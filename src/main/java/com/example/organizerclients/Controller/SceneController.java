@@ -123,6 +123,7 @@ public class SceneController {
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

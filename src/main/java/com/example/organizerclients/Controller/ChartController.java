@@ -162,9 +162,11 @@ public class ChartController {
         calendarPicker.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                currentSelectedDate = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                createTable(currentSelectedDate);
-                mainTable.refresh();
+                if (null != calendarPicker.getCalendar()){
+                    currentSelectedDate = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    createTable(currentSelectedDate);
+                    mainTable.refresh();
+                }
             }
         });
     }
