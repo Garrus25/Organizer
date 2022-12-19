@@ -6,24 +6,21 @@ import javafx.scene.control.TableColumn;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class CreateSingleUserTable extends CreateTable {
     private final TestModelSingleUserView testModelSingleUserView = new TestModelSingleUserView();
 
     @Override
-    public List<TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
+    public  LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
         LocalDate date = localDate;
-        List<TableColumn<Map<String, Event>, String>> tableColumns = new ArrayList<>();
+        LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
 
         for (int i = 0; i < 7; i++) {
             TableColumn<Map<String, Event>, String> tableColumn
                     = new TableColumn<>(date.toString());
-            setColumns(tableColumn, date.toString(), date.toString());
-            tableColumns.add(tableColumn);
+            setColumns(tableColumn, date.toString(), new GroupTableColumnKey("", date).toString());
+            tableColumns.put(new GroupTableColumnKey("", date), tableColumn);
             date = date.plusDays(1);
         }
 
@@ -31,15 +28,14 @@ public class CreateSingleUserTable extends CreateTable {
     }
 
     @Override
-    public ObservableList<Map<String, Event>> createModel() {
-        return setObservableList(testModelSingleUserView.testContent);
+    public ObservableList<Map<String, Event>> createModel(Set<GroupTableColumnKey> columnKeys) {
+        return setObservableList(testModelSingleUserView.testContent, columnKeys);
     }
 
     @Override
-    public void insertData(Event event, LocalDate selectedDate, LocalTime selectedTime) {
+    public void insertData(Event event) {
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
-        temp.put(selectedTime,event);
-
-        testModelSingleUserView.addData(selectedDate,temp);
+        temp.put(event.getDate().toLocalTime() ,event);
+        testModelSingleUserView.addData(new GroupTableColumnKey("", event.getDate().toLocalDate()),temp);
     }
 }

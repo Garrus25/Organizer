@@ -10,7 +10,9 @@ import javafx.scene.control.*;
 import java.time.LocalDateTime;
 
 public class AddTaskViewController {
-    SceneController sceneController = SceneController.getInstance();
+    private SceneController sceneController = SceneController.getInstance();
+    private final ChartController chartController;
+    private final Event event;
 
     @FXML
     private Label titleView;
@@ -34,6 +36,11 @@ public class AddTaskViewController {
     public void initialize() {
         setFieldParameters();
         setListeners();
+    }
+
+    public AddTaskViewController(ChartController chartController, Event event) {
+        this.chartController = chartController;
+        this.event = event;
     }
 
     private void setFieldParameters(){
@@ -61,11 +68,14 @@ public class AddTaskViewController {
 
     private Event getMeetingData(){
         String eventName = taskName.getText();
-        String description;
-        return new Event(eventName,"", LocalDateTime.now());
+        String description = this.description.getText();
+        String type = chooseTaskType.getValue();
+        return new Event(eventName,"", event.getDate(), description, type, event.getPersonName());
     }
 
     private void updateModel(){
-        sceneController.getChartController().updateModel(getMeetingData());
+        Event meetingData = getMeetingData();
+        event.replaceData(meetingData);
+        chartController.updateModel(event);
     }
 }

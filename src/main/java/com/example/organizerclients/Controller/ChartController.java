@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +26,6 @@ public class ChartController {
     private final CreateTable groupModel = new CreateGroupTable();
     private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
-
-    private LocalTime selectedTime = LocalTime.now();
-    private LocalDate selectedDate = LocalDate.now();
 
     private boolean groupModelSet = false;
 
@@ -100,37 +98,31 @@ public class ChartController {
     }
 
     public void updateModel(Event event){
-        mainTable.getItems().clear();
-        currentModel.insertData(event, selectedDate, selectedTime);
-        mainTable.setItems(currentModel.createModel());
+        mainTable.refresh();
+        currentModel.insertData(event);
     }
 
     private void createTable(LocalDate localDate) {
         mainTable.getColumns().clear();
         mainTable.getColumns().add(currentModel.createTimeColumn());
-        List<TableColumn<Map<String, Event>, String>> columns = currentModel.createColumns(localDate);
-        CustomCell.numberOfColumns = columns.size();
-        mainTable.getColumns().addAll(columns);
-        mainTable.setItems(currentModel.createModel());
+        LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> columns
+                = currentModel.createColumns(localDate);
+        columns.forEach((key, value) -> {
+            mainTable.getColumns().add(value);
+        });
+
+        mainTable.setItems(currentModel.createModel(columns.keySet()));
     }
 
     private void addCellClickListener(){
+        final ChartController chartController = this;
         mainTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getTarget() instanceof CustomCell){
-                    sceneController.showMeetingStage();
-                    int y = ((CustomCell<?, ?>) event.getTarget()).getY();
-                    int x = ((CustomCell<?, ?>) event.getTarget()).getX();
-
-                    System.out.println(((Event)((CustomCell<String, Event>) event.getTarget()).getItem()).getDate());
-
-                    System.out.println("Y" + y);
-                    System.out.println("X" + x);
-
-                    selectedTime = LocalTime.of(y,0);
-                    selectedDate = currentSelectedDate.plusDays(x);
-
+                    CustomCell<?, ?> target = (CustomCell<?, ?>) event.getTarget();
+                    Event item = ((Event) target.getItem());
+                    sceneController.showMeetingStage(chartController, item);
                 }
             }
         });

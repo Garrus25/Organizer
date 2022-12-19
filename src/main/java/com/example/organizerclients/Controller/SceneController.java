@@ -1,6 +1,7 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.MainApp;
+import com.example.organizerclients.Model.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -19,7 +20,6 @@ public class SceneController {
     private Scene confirmationScene;
     private Scene singleUserScene;
 
-    private ChartController chartController;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -65,7 +65,6 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("single-user-view.fxml"));
         try {
             singleUserScene = new Scene(fxmlLoader.load(), MAIN_STAGE_WIDTH, MAIN_STAGE_HEIGTH);
-            chartController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,9 +104,11 @@ public class SceneController {
         }
     }
 
-    public void showMeetingStage(){
+    public void showMeetingStage(ChartController chartController, Event event){
         Scene meetingScene;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-task-view.fxml"));
+        AddTaskViewController addTaskViewController = new AddTaskViewController(chartController, event);
+        fxmlLoader.setController(addTaskViewController);
         try {
             meetingScene = new Scene(fxmlLoader.load());
             fxmlLoader.getController();
@@ -162,7 +163,4 @@ public class SceneController {
         return stage;
     }
 
-    public ChartController getChartController() {
-        return chartController;
-    }
 }

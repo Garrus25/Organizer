@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.MapValueFactory;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -13,11 +14,11 @@ public abstract class CreateTable {
     protected final String TIME_COLUMN = "timeColumn";
     protected List<Map<String, Event>> model = new ArrayList<>();
 
-    public abstract  List<TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate);
+    public abstract LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate);
 
-    public abstract ObservableList <Map<String, Event>> createModel();
+    public abstract ObservableList <Map<String, Event>> createModel(Set<GroupTableColumnKey> columnKeys);
 
-    public abstract void insertData(Event event, LocalDate selectedDate, LocalTime selectedTime);
+    public abstract void insertData(Event event);
 
     public TableColumn<Map<String, Event>, String> createTimeColumn() {
         TableColumn<Map<String, Event>, String> timeColumn = new TableColumn<>(TIME_COLUMN);
@@ -36,20 +37,21 @@ public abstract class CreateTable {
         tableColumn.setMinWidth(163.5);
     }
 
-    protected <T> ObservableList<Map<String, Event>> setObservableList(HashMap<T, TreeMap<LocalTime, Event>> hashMapTasks) {
+    protected ObservableList<Map<String, Event>> setObservableList(HashMap<GroupTableColumnKey, TreeMap<LocalTime, Event>> hashMapTasks, Set<GroupTableColumnKey> columnKeys) {
         model.clear();
         for (int i = 0; i < 24; i++) {
             LocalTime time = LocalTime.of(i, 0);
             HashMap<String, Event> hashMap = new HashMap<>();
-            hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null));
+            hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null, "", ""));
 
-            hashMapTasks.forEach((key, value) -> {
-                if (value.containsKey(time)) {
-                    hashMap.put(key.toString(), value.get(time));
+            columnKeys.forEach(columnKey -> {
+                if (hashMapTasks.containsKey(columnKey) && hashMapTasks.get(columnKey).containsKey(time)) {
+                    hashMap.put(columnKey.toString(), hashMapTasks.get(columnKey).get(time));
                 } else {
-                    hashMap.put(key.toString(), new Event("", "", null));
+                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getName()));
                 }
             });
+
             model.add(hashMap);
         }
 
