@@ -11,12 +11,8 @@ import javafx.scene.layout.HBox;
 import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.temporal.TemporalUnit;
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChartController {
@@ -105,7 +101,7 @@ public class ChartController {
     private void createTable(LocalDate localDate) {
         mainTable.getColumns().clear();
         mainTable.getColumns().add(currentModel.createTimeColumn());
-        LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> columns
+        LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> columns
                 = currentModel.createColumns(localDate);
         columns.forEach((key, value) -> {
             mainTable.getColumns().add(value);
@@ -145,8 +141,9 @@ public class ChartController {
             sceneController.setAddGroupStage();
         });
 
+        final ChartController chartController = this;
         showGroupsButton.setOnAction(actionEvent -> {
-            sceneController.setShowGroupListStage();
+            sceneController.setShowGroupListStage(chartController);
         });
 
         switchViewButton.setOnAction(actionEvent -> {

@@ -1,7 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/groupTableColumnKey/**/target/
+!**/src/tableColumnKey/**/target/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -29,7 +29,7 @@ target/
 /.nb-gradle/
 build/
 !**/src/main/**/build/
-!**/src/groupTableColumnKey/**/build/
+!**/src/tableColumnKey/**/build/
 
 ### VS Code ###
 .vscode/

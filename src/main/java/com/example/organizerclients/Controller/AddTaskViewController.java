@@ -2,6 +2,8 @@ package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.Event;
 import com.example.organizerclients.Model.OrganizerProperties;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -61,6 +63,20 @@ public class AddTaskViewController {
         taskName.setText(event.getEventName());
         description.setText(event.getDescription());
         chooseTaskType.setValue(event.getType());
+
+        int maxLength = 20;
+
+        taskName.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(
+                    final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                if (taskName.getText().length() > maxLength) {
+                    String s = taskName.getText().substring(0, maxLength);
+                    taskName.setText(s);
+                }
+            }
+        });
+
     }
 
     private void setListeners(){

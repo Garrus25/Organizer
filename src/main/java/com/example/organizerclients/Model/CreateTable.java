@@ -14,9 +14,9 @@ public abstract class CreateTable {
     protected final String TIME_COLUMN = "timeColumn";
     protected List<Map<String, Event>> model = new ArrayList<>();
 
-    public abstract LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate);
+    public abstract LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate);
 
-    public abstract ObservableList <Map<String, Event>> createModel(Set<GroupTableColumnKey> columnKeys);
+    public abstract ObservableList <Map<String, Event>> createModel(Set<TableColumnKey> columnKeys);
 
     public abstract void insertData(Event event);
 
@@ -37,7 +37,7 @@ public abstract class CreateTable {
         tableColumn.setMinWidth(163.5);
     }
 
-    protected ObservableList<Map<String, Event>> setObservableList(HashMap<GroupTableColumnKey, TreeMap<LocalTime, Event>> hashMapTasks, Set<GroupTableColumnKey> columnKeys) {
+    protected ObservableList<Map<String, Event>> setObservableList(HashMap<TableColumnKey, TreeMap<LocalTime, Event>> hashMapTasks, Set<TableColumnKey> columnKeys) {
         model.clear();
         for (int i = 0; i < 24; i++) {
             LocalTime time = LocalTime.of(i, 0);

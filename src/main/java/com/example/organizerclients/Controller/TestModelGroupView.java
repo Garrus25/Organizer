@@ -1,7 +1,7 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.Event;
-import com.example.organizerclients.Model.GroupTableColumnKey;
+import com.example.organizerclients.Model.TableColumnKey;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 public class TestModelGroupView {
 
-    public HashMap<GroupTableColumnKey, TreeMap<LocalTime, Event>> testContent = new HashMap<>();
+    public HashMap<TableColumnKey, TreeMap<LocalTime, Event>> testContent = new HashMap<>();
 
     TreeMap<LocalTime, Event> test1 = new TreeMap<>();
     TreeMap<LocalTime, Event> test2 = new TreeMap<>();
@@ -34,17 +34,17 @@ public class TestModelGroupView {
         test3.put(LocalTime.of(14, 0), event3);
         test4.put(LocalTime.of(14, 0), event4);
 
-        addData(new GroupTableColumnKey( "Marek", date1) ,test1);
-        addData(new GroupTableColumnKey( "Marek", date4),test2);
-        addData(new GroupTableColumnKey( "Iwona", date4),test2);
-        addData(new GroupTableColumnKey( "Iwona", date1),test3);
-        addData(new GroupTableColumnKey( "Iwona", date2),test1);
-        addData(new GroupTableColumnKey( "Iwona", date4),test2);
-        addData(new GroupTableColumnKey( "Iwona", date3),test3);
+        addData(new TableColumnKey( "Marek", date1) ,test1);
+        addData(new TableColumnKey( "Marek", date4),test2);
+        addData(new TableColumnKey( "Iwona", date4),test2);
+        addData(new TableColumnKey( "Iwona", date1),test3);
+        addData(new TableColumnKey( "Iwona", date2),test1);
+        addData(new TableColumnKey( "Iwona", date4),test2);
+        addData(new TableColumnKey( "Iwona", date3),test3);
 
     }
 
-    public void addData(GroupTableColumnKey key, TreeMap<LocalTime, Event> eventTreeMap) {
+    public void addData(TableColumnKey key, TreeMap<LocalTime, Event> eventTreeMap) {
         if (testContent.containsKey(key)) {
             testContent.get(key).put(eventTreeMap.firstKey(), eventTreeMap.get(eventTreeMap.firstKey()));
         } else {

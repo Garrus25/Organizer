@@ -23,11 +23,19 @@ public class ShowGroupListViewController {
     @FXML
     private VBox listGroups;
 
+    private ChartController chartController;
+
     @FXML
-    public void initialize() {
+    private void initialize(){
+        System.out.println("Called12345");
+        addGroupInformationView(chartController);
         setFieldParameters();
         setModel();
-        addGroupInformationView();
+    }
+
+    public ShowGroupListViewController(ChartController chartController) {
+        this.chartController = chartController;
+
     }
 
     private final List<Group> groupList = new ArrayList<>();
@@ -38,14 +46,15 @@ public class ShowGroupListViewController {
     }
 
 
-    private void addGroupInformationView() {
+    private void addGroupInformationView(ChartController chartController) {
         groupList.forEach(group -> {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("group-information-view.fxml"));
 
             try {
-                AnchorPane anchorPane = fxmlLoader.load();
+                GroupInformationViewController groupInformationViewController = new GroupInformationViewController(chartController);
 
-                GroupInformationViewController groupInformationViewController = fxmlLoader.getController();
+                fxmlLoader.setController(group);
+                AnchorPane anchorPane = fxmlLoader.load();
 
                 groupInformationViewController.setData(group);
 

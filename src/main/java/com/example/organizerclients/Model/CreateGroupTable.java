@@ -1,7 +1,6 @@
 package com.example.organizerclients.Model;
 
 import com.example.organizerclients.Controller.TestModelGroupView;
-import com.example.organizerclients.Controller.TestModelSingleUserView;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 
@@ -13,15 +12,15 @@ public class CreateGroupTable extends CreateTable{
     private final TestModelGroupView testModelGroupView = new TestModelGroupView();
 
     @Override
-    public LinkedHashMap<GroupTableColumnKey,TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
-        List<GroupTableColumnKey> groupTableColumnKeys = new ArrayList<>();
-        groupTableColumnKeys.add(new GroupTableColumnKey("Marek", localDate));
-        groupTableColumnKeys.add(new GroupTableColumnKey("Iwona", localDate));
-        groupTableColumnKeys.add(new GroupTableColumnKey("Renata", localDate));
-        groupTableColumnKeys.add(new GroupTableColumnKey("Szymon", localDate));
-        LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
+    public LinkedHashMap<TableColumnKey,TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
+        List<TableColumnKey> tableColumnKeys = new ArrayList<>();
+        tableColumnKeys.add(new TableColumnKey("Marek", localDate));
+        tableColumnKeys.add(new TableColumnKey("Iwona", localDate));
+        tableColumnKeys.add(new TableColumnKey("Renata", localDate));
+        tableColumnKeys.add(new TableColumnKey("Szymon", localDate));
+        LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
 
-        groupTableColumnKeys.forEach(key -> {
+        tableColumnKeys.forEach(key -> {
             TableColumn<Map<String, Event>, String> tableColumn
                     = new TableColumn<>(key.getName());
             setColumns(tableColumn, key.getName(), key.toString());
@@ -32,7 +31,7 @@ public class CreateGroupTable extends CreateTable{
     }
 
     @Override
-    public ObservableList<Map<String, Event>> createModel(Set<GroupTableColumnKey> columnKeys) {
+    public ObservableList<Map<String, Event>> createModel(Set<TableColumnKey> columnKeys) {
         return setObservableList(testModelGroupView.testContent, columnKeys);
     }
 
@@ -41,7 +40,7 @@ public class CreateGroupTable extends CreateTable{
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
         temp.put(event.getDate().toLocalTime(), event);
         System.out.println(event);
-        testModelGroupView.addData(new GroupTableColumnKey(event.getPersonName(), event.getDate().toLocalDate() ),temp);
+        testModelGroupView.addData(new TableColumnKey(event.getPersonName(), event.getDate().toLocalDate() ),temp);
         System.out.println(testModelGroupView.testContent);
     }
 }

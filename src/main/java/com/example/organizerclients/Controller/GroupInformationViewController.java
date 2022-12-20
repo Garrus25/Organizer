@@ -23,17 +23,30 @@ public class GroupInformationViewController {
     @FXML
     private Button buttonAddToGroup;
 
-    private Boolean isSet = false;
     @FXML
-    public void initialize() {
+    private Button buttonSelectGroup;
+
+    private Boolean isSet = false;
+
+    private ChartController chartController;
+
+    @FXML
+    private void initialize(){
+        System.out.println("Called123");
         setFieldParameters();
         switchMode();
-        setButtonListener();
+        setAddToGroupButtonListener();
+    }
+
+    public GroupInformationViewController(ChartController chartController) {
+        this.chartController = chartController;
+
     }
 
     private void setFieldParameters(){
         groupCodeHeader.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_GROUP_CODE_TEXT);
         groupNameHeader.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_GROUP_NAME_TEXT);
+        buttonAddToGroup.setText(OrganizerProperties.ADD_TASK_VIEW_CHOOSE_GROUP_BUTTON_TEST);
     }
 
     public void setData(Group group) {
@@ -45,9 +58,15 @@ public class GroupInformationViewController {
     private void switchMode(){
         if (isSet){
             setLeaveGroupMode();
+            setSelectButtonState(true);
         }else {
             setJoinGroupMode();
+            setSelectButtonState(false);
         }
+    }
+
+    private void setSelectButtonState(Boolean disabled){
+        buttonSelectGroup.setVisible(disabled);
     }
 
     private void setJoinGroupMode(){
@@ -60,10 +79,16 @@ public class GroupInformationViewController {
         buttonAddToGroup.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_LEAVE_GROUP_BUTTON_TEXT);
     }
 
-    private void setButtonListener(){
+    private void setAddToGroupButtonListener(){
         buttonAddToGroup.setOnAction(actionEvent -> {
             isSet = !isSet;
             switchMode();
+        });
+    }
+
+    private void setChooseGroupButtonListener(){
+        buttonSelectGroup.setOnAction(actionEvent -> {
+
         });
     }
 }

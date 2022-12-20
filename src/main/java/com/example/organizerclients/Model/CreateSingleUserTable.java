@@ -12,15 +12,15 @@ public class CreateSingleUserTable extends CreateTable {
     private final TestModelSingleUserView testModelSingleUserView = new TestModelSingleUserView();
 
     @Override
-    public  LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
+    public  LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
         LocalDate date = localDate;
-        LinkedHashMap<GroupTableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
+        LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
 
         for (int i = 0; i < 7; i++) {
             TableColumn<Map<String, Event>, String> tableColumn
                     = new TableColumn<>(date.toString());
-            setColumns(tableColumn, date.toString(), new GroupTableColumnKey("", date).toString());
-            tableColumns.put(new GroupTableColumnKey("", date), tableColumn);
+            setColumns(tableColumn, date.toString(), new TableColumnKey("", date).toString());
+            tableColumns.put(new TableColumnKey("", date), tableColumn);
             date = date.plusDays(1);
         }
 
@@ -28,7 +28,7 @@ public class CreateSingleUserTable extends CreateTable {
     }
 
     @Override
-    public ObservableList<Map<String, Event>> createModel(Set<GroupTableColumnKey> columnKeys) {
+    public ObservableList<Map<String, Event>> createModel(Set<TableColumnKey> columnKeys) {
         return setObservableList(testModelSingleUserView.testContent, columnKeys);
     }
 
@@ -36,6 +36,6 @@ public class CreateSingleUserTable extends CreateTable {
     public void insertData(Event event) {
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
         temp.put(event.getDate().toLocalTime() ,event);
-        testModelSingleUserView.addData(new GroupTableColumnKey("", event.getDate().toLocalDate()),temp);
+        testModelSingleUserView.addData(new TableColumnKey("", event.getDate().toLocalDate()),temp);
     }
 }

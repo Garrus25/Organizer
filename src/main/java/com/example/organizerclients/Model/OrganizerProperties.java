@@ -76,6 +76,6 @@ public class OrganizerProperties {
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE1_TEXT = properties.getProperty("addTaskView.chooseTaskType.value1.text");
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE2_TEXT = properties.getProperty("addTaskView.chooseTaskType.value2.text");
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE3_TEXT = properties.getProperty("addTaskView.chooseTaskType.value3.text");
-
+    public static final String ADD_TASK_VIEW_CHOOSE_GROUP_BUTTON_TEST = properties.getProperty("addTaskView.chooseGroup.button.text");
 
 }

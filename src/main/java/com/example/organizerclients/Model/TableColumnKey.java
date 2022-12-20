@@ -3,11 +3,11 @@ package com.example.organizerclients.Model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class GroupTableColumnKey {
+public class TableColumnKey {
     private String name;
     private LocalDate localDate;
 
-    public GroupTableColumnKey(String name, LocalDate localDate) {
+    public TableColumnKey(String name, LocalDate localDate) {
         this.name = name;
         this.localDate = localDate;
     }
@@ -32,8 +32,8 @@ public class GroupTableColumnKey {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GroupTableColumnKey groupTableColumnKey = (GroupTableColumnKey) o;
-        return Objects.equals(name, groupTableColumnKey.name) && Objects.equals(localDate, groupTableColumnKey.localDate);
+        TableColumnKey tableColumnKey = (TableColumnKey) o;
+        return Objects.equals(name, tableColumnKey.name) && Objects.equals(localDate, tableColumnKey.localDate);
     }
 
     @Override

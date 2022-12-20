@@ -15,6 +15,4 @@ public class CustomCell<String, Event> extends TableCell<String, Event>{
             }
         }
     }
-
-
 }

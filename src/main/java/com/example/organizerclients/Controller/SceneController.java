@@ -76,18 +76,21 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-group-view.fxml"));
         try {
             addGroupScene = new Scene(fxmlLoader.load());
-            setCustomStage(addGroupScene);
+            setCustomStage(addGroupScene, "Add group");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void setShowGroupListStage(){
+    public void setShowGroupListStage(ChartController chartController){
         Scene showGroupListScene;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("show-group-list-view.fxml"));
         try {
+            ShowGroupListViewController showGroupListViewController = new ShowGroupListViewController(chartController);
+            fxmlLoader.setController(showGroupListViewController);
+
             showGroupListScene = new Scene(fxmlLoader.load());
-            setCustomStage(showGroupListScene);
+            setCustomStage(showGroupListScene, "Group list");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -98,7 +101,7 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("user-panel-view.fxml"));
         try {
             userPanelScene = new Scene(fxmlLoader.load());
-            setCustomStage(userPanelScene);
+            setCustomStage(userPanelScene, "User Panel");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -112,17 +115,18 @@ public class SceneController {
         try {
             meetingScene = new Scene(fxmlLoader.load());
             fxmlLoader.getController();
-            setCustomStage(meetingScene);
+            setCustomStage(meetingScene, "Task editor");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    private void setCustomStage(Scene scene) {
+    private void setCustomStage(Scene scene, String title) {
         setStylesheet(scene);
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.setTitle(title);
         stage.setResizable(false);
         stage.show();
     }
