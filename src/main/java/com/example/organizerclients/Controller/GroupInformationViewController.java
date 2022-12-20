@@ -32,21 +32,20 @@ public class GroupInformationViewController {
 
     @FXML
     private void initialize(){
-        System.out.println("Called123");
         setFieldParameters();
         switchMode();
         setAddToGroupButtonListener();
+        setChooseGroupButtonListener();
     }
 
     public GroupInformationViewController(ChartController chartController) {
         this.chartController = chartController;
-
     }
 
     private void setFieldParameters(){
         groupCodeHeader.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_GROUP_CODE_TEXT);
         groupNameHeader.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_GROUP_NAME_TEXT);
-        buttonAddToGroup.setText(OrganizerProperties.ADD_TASK_VIEW_CHOOSE_GROUP_BUTTON_TEST);
+        buttonSelectGroup.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_CHOOSE_GROUP_BUTTON_TEST);
     }
 
     public void setData(Group group) {
@@ -88,7 +87,7 @@ public class GroupInformationViewController {
 
     private void setChooseGroupButtonListener(){
         buttonSelectGroup.setOnAction(actionEvent -> {
-
+            chartController.changeGroup();
         });
     }
 }

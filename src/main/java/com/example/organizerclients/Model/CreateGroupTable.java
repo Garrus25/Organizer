@@ -10,21 +10,22 @@ import java.util.*;
 
 public class CreateGroupTable extends CreateTable{
     private final TestModelGroupView testModelGroupView = new TestModelGroupView();
+    private  List<String> personListInGroup = new ArrayList<>();
+
+    public CreateGroupTable() {
+        setPersonListInGroup();
+    }
 
     @Override
     public LinkedHashMap<TableColumnKey,TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate) {
-        List<TableColumnKey> tableColumnKeys = new ArrayList<>();
-        tableColumnKeys.add(new TableColumnKey("Marek", localDate));
-        tableColumnKeys.add(new TableColumnKey("Iwona", localDate));
-        tableColumnKeys.add(new TableColumnKey("Renata", localDate));
-        tableColumnKeys.add(new TableColumnKey("Szymon", localDate));
         LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
 
-        tableColumnKeys.forEach(key -> {
+        personListInGroup.forEach(key -> {
+            TableColumnKey tableColumnKey = new TableColumnKey(key, localDate);
             TableColumn<Map<String, Event>, String> tableColumn
-                    = new TableColumn<>(key.getName());
-            setColumns(tableColumn, key.getName(), key.toString());
-            tableColumns.put(key, tableColumn);
+                    = new TableColumn<>(key);
+            setColumns(tableColumn, key, tableColumnKey.toString());
+            tableColumns.put(tableColumnKey, tableColumn);
         });
 
         return tableColumns;
@@ -42,5 +43,16 @@ public class CreateGroupTable extends CreateTable{
         System.out.println(event);
         testModelGroupView.addData(new TableColumnKey(event.getPersonName(), event.getDate().toLocalDate() ),temp);
         System.out.println(testModelGroupView.testContent);
+    }
+
+    private void setPersonListInGroup() {
+        personListInGroup.add("Marek");
+        personListInGroup.add("Iwona");
+        personListInGroup.add("Renata");
+        personListInGroup.add("Szymon");
+    }
+
+    public void changeGroup(List<String> persons) {
+        personListInGroup = persons;
     }
 }

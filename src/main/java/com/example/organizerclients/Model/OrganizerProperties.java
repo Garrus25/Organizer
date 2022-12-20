@@ -60,6 +60,7 @@ public class OrganizerProperties {
     public static final String GROUP_INFORMATION_VIEW_GROUP_CODE_TEXT = properties.getProperty("groupInformationView.groupCode.text");
     public static final String GROUP_INFORMATION_VIEW_JOIN_GROUP_BUTTON_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.join.text");
     public static final String GROUP_INFORMATION_VIEW_LEAVE_GROUP_BUTTON_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.leave.text");
+    public static final String GROUP_INFORMATION_VIEW_CHOOSE_GROUP_BUTTON_TEST = properties.getProperty("groupInformationView.chooseGroup.button.text");
 
     public static final String SHOW_GROUP_LIST_VIEW_TITLE_TEXT = properties.getProperty("showGroupListView.title.text");
 
@@ -76,6 +77,6 @@ public class OrganizerProperties {
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE1_TEXT = properties.getProperty("addTaskView.chooseTaskType.value1.text");
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE2_TEXT = properties.getProperty("addTaskView.chooseTaskType.value2.text");
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE3_TEXT = properties.getProperty("addTaskView.chooseTaskType.value3.text");
-    public static final String ADD_TASK_VIEW_CHOOSE_GROUP_BUTTON_TEST = properties.getProperty("addTaskView.chooseGroup.button.text");
+
 
 }

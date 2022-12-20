@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane prefHeight="403.0" prefWidth="687.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <ScrollPane fitToWidth="true" pannable="true" style="-fx-background-color: #d5dde8;">
+<StackPane prefHeight="403.0" prefWidth="687.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <ScrollPane fitToWidth="true" pannable="true" prefWidth="657.0" style="-fx-background-color: #d5dde8;">
      <content>
-       <VBox alignment="TOP_CENTER" style="-fx-background-color: #d5dde8;">
+       <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="655.0" style="-fx-background-color: #d5dde8;">
            <Label fx:id="title" text="LIST OF GROUPS" textAlignment="CENTER">
                <font>
                    <Font name="System Bold" size="18.0" />

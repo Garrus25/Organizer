@@ -12,14 +12,15 @@ import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChartController {
 
     private final SceneController sceneController = SceneController.getInstance();
-    private final CreateTable singleUserModel = new CreateSingleUserTable();
-    private final CreateTable groupModel = new CreateGroupTable();
+    private final CreateSingleUserTable singleUserModel = new CreateSingleUserTable();
+    private final CreateGroupTable groupModel = new CreateGroupTable();
     private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
 
@@ -29,22 +30,22 @@ public class ChartController {
     public HBox mainContentBox;
 
     @FXML
-    TableView<Map<String, Event>> mainTable;
+    private TableView<Map<String, Event>> mainTable;
 
     @FXML
-    Button addGroupButton;
+    private Button addGroupButton;
 
     @FXML
-    Button showGroupsButton;
+    private Button showGroupsButton;
 
     @FXML
-    Button switchViewButton;
+    private Button switchViewButton;
 
     @FXML
-    Button userPanelButton;
+    private Button userPanelButton;
 
     @FXML
-    CalendarPicker calendarPicker;
+    private CalendarPicker calendarPicker;
 
     @FXML
     public void initialize(){
@@ -166,5 +167,13 @@ public class ChartController {
                 }
             }
         });
+    }
+
+    public void changeGroup() {
+        groupModel.changeGroup(new ArrayList<>());
+        if (groupModelSet) {
+            createTable(currentSelectedDate);
+            mainTable.refresh();
+        }
     }
 }

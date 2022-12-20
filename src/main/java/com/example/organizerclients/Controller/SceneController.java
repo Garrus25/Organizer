@@ -88,7 +88,6 @@ public class SceneController {
         try {
             ShowGroupListViewController showGroupListViewController = new ShowGroupListViewController(chartController);
             fxmlLoader.setController(showGroupListViewController);
-
             showGroupListScene = new Scene(fxmlLoader.load());
             setCustomStage(showGroupListScene, "Group list");
         }catch (IOException e){
