@@ -23,6 +23,8 @@ public class ChartController {
     private final CreateGroupTable groupModel = new CreateGroupTable();
     private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
+    private Integer currentGroupId = 10;
+    private Button currentGroupButton = null;
 
     private boolean groupModelSet = false;
 
@@ -169,11 +171,25 @@ public class ChartController {
         });
     }
 
-    public void changeGroup() {
+    public void changeGroup(int groupId, Button group) {
         groupModel.changeGroup(new ArrayList<>());
+        currentGroupId = groupId;
+        if (currentGroupButton != null) {
+            currentGroupButton.setVisible(true);
+        }
+        currentGroupButton = group;
+        currentGroupButton.setVisible(false);
         if (groupModelSet) {
             createTable(currentSelectedDate);
             mainTable.refresh();
         }
+    }
+
+    public Integer getCurrentGroupId() {
+        return currentGroupId;
+    }
+
+    public void setCurrentGroupButton(Button currentGroupButton) {
+        this.currentGroupButton = currentGroupButton;
     }
 }

@@ -26,6 +26,8 @@ public class GroupInformationViewController {
     @FXML
     private Button buttonSelectGroup;
 
+    private int groupId;
+
     private Boolean isSet = false;
 
     private ChartController chartController;
@@ -33,13 +35,14 @@ public class GroupInformationViewController {
     @FXML
     private void initialize(){
         setFieldParameters();
-        switchMode();
         setAddToGroupButtonListener();
         setChooseGroupButtonListener();
+        isActiveGroup();
     }
 
-    public GroupInformationViewController(ChartController chartController) {
+    public GroupInformationViewController(ChartController chartController, int groupId) {
         this.chartController = chartController;
+        this.groupId = groupId;
     }
 
     private void setFieldParameters(){
@@ -48,10 +51,18 @@ public class GroupInformationViewController {
         buttonSelectGroup.setText(OrganizerProperties.GROUP_INFORMATION_VIEW_CHOOSE_GROUP_BUTTON_TEST);
     }
 
+    private void isActiveGroup() {
+        if (chartController.getCurrentGroupId() != null && chartController.getCurrentGroupId() == groupId) {
+            chartController.setCurrentGroupButton(buttonSelectGroup);
+            setSelectButtonState(false);
+        }
+    }
+
     public void setData(Group group) {
         this.groupCode.setText(group.getCode());
         this.groupName.setText(group.getName());
         this.isSet = group.getIsSetFlag();
+        switchMode();
     }
 
     private void switchMode(){
@@ -87,7 +98,7 @@ public class GroupInformationViewController {
 
     private void setChooseGroupButtonListener(){
         buttonSelectGroup.setOnAction(actionEvent -> {
-            chartController.changeGroup();
+            chartController.changeGroup(groupId, buttonSelectGroup);
         });
     }
 }

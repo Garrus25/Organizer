@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ShowGroupListViewController {
 
@@ -44,16 +45,18 @@ public class ShowGroupListViewController {
 
 
     private void addGroupInformationView() {
+        AtomicInteger i = new AtomicInteger();
         groupList.forEach(group -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("group-information-view.fxml"));
 
-                GroupInformationViewController groupInformationViewController = new GroupInformationViewController(chartController);
+                GroupInformationViewController groupInformationViewController = new GroupInformationViewController(chartController, i.get());
                 fxmlLoader.setController(groupInformationViewController);
 
                 AnchorPane anchorPane = fxmlLoader.load();
                 groupInformationViewController.setData(group);
                 listGroups.getChildren().add(anchorPane);
+                i.getAndIncrement();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
