@@ -12,6 +12,8 @@ module com.example.organizerclients {
     requires com.almasb.fxgl.all;
     requires jfxtras.controls;
     requires jfxtras.agenda;
+    requires jasypt;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.organizerclients to javafx.fxml, javafx.graphics, javafx.base;
     exports com.example.organizerclients to javafx.fxml, javafx.graphics;
