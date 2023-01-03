@@ -9,9 +9,8 @@ public class Response {
     private String header;
 
 
-    public Response(){
+    public Response(){}
 
-    }
     public Response(String data, String header) {
         StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
         decryptor.setPassword("xD");
@@ -22,7 +21,6 @@ public class Response {
     public String getData() {
         StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
         decryptor.setPassword("xD");
-     //   this.data= decryptor.decrypt(data);
        return decryptor.decrypt(data);
     }
 
@@ -31,7 +29,6 @@ public class Response {
         StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
         decryptor.setPassword("xD");
         this.data= decryptor.encrypt(data);
-     //  this.data = encrypted;
     }
 
     public String getHeader() {

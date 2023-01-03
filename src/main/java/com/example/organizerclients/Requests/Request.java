@@ -3,8 +3,8 @@ package com.example.organizerclients.Requests;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 public class Request {
-    private String header;
 
+    private String header;
     private String data;
 
     public Request(String header, String data) {
@@ -12,13 +12,10 @@ public class Request {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         encryptor.setPassword("xD");
         String encrypted = encryptor.encrypt(data);
-        // encrypted=  "\""+encrypted+"\"";
         this.data = encrypted;
     }
 
-
-    public Request() {
-    }
+    public Request() {}
 
     public String getHeader() {
         return header;
@@ -44,7 +41,6 @@ public class Request {
         // encrypted=  "\""+encrypted+"\"";
         this.data = encrypted;
     }
-
 
     @Override
     public String toString() {

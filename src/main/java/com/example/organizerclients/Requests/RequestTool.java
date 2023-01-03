@@ -16,7 +16,6 @@ public class RequestTool {
             Future<Void> result = client.connect(
                     new InetSocketAddress("127.0.0.1", 2137));
             result.get();
-          //  String str= "Hello! How are you?";
             String str=SaveDataAsJson.saveDataAsJson(requestTool);
 
             for(int i=0;i<300;++i){
@@ -33,14 +32,12 @@ public class RequestTool {
             System.out.println("Received from server: "
                     +new String(buffer.array()).trim());
 
-
-
             buffer.flip();
             String rawDataRead=new String(buffer.array()).trim();
 
             System.out.println("Raw:"+rawDataRead);
             Response response= ReadObjectFromJson.read(rawDataRead,Response.class);
-         //   readval.get();
+
            buffer.clear();
            readval.get();
 
@@ -59,10 +56,7 @@ public class RequestTool {
        try (AsynchronousSocketChannel client = AsynchronousSocketChannel.open()) {
             Future<Void> result = client.connect(new InetSocketAddress("127.0.0.1", 2137));
 
-
            result.get();
-
-
 
            String str= "Hello! How are you?";
            ByteBuffer buffer = ByteBuffer.wrap(str.getBytes());
