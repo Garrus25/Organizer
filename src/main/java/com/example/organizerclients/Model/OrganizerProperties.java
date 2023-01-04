@@ -27,6 +27,7 @@ public class OrganizerProperties {
 
     public static final String PASSWORD_TEXTFIELD_PROMPT_TEXT = properties.getProperty("password.textField.prompt.text");
     public static final String EMAIL_TEXTFIELD_PROMPT_TEXT = properties.getProperty("email.textField.prompt.text");
+    public static final String LOGIN_TEXTFIELD_PROMPT_TEXT = properties.getProperty("login.textField.prompt.text");
 
     public static final String REGISTER_WRONG_CODE_TEXT = properties.getProperty("register.wrongCode.text");
     public static final String REGISTER_CORRECT_CODE_TEXT = properties.getProperty("register.correctCode.text");

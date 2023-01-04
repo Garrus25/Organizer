@@ -21,5 +21,7 @@ module com.example.organizerclients {
     opens com.example.organizerclients.Controller to javafx.base, javafx.fxml, javafx.graphics;
     exports com.example.organizerclients.Model to javafx.fxml, javafx.graphics;
     opens com.example.organizerclients.Model to javafx.base, javafx.fxml, javafx.graphics;
+    exports com.example.organizerclients.Requests to com.fasterxml.jackson.databind;
+    opens com.example.organizerclients.Requests to com.fasterxml.jackson.databind;
 
 }

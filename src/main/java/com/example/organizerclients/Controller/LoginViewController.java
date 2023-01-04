@@ -1,11 +1,15 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Requests.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+
+import java.util.Optional;
 
 public class LoginViewController{
     private final SceneController sceneController = SceneController.getInstance();
@@ -60,7 +64,7 @@ public class LoginViewController{
     protected void setFieldParameters(){
         loginText.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         informationText.setText("");
-        emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
+        emailTextField.setPromptText(OrganizerProperties.LOGIN_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
     }
 
@@ -82,11 +86,24 @@ public class LoginViewController{
     /**
      * TODO
      * Tutaj będzie wrzucony call do bazy sprawdzający dane pobrane z textfieldów
-
+     //TODO PODMIANA EMAILA NA LOGIN W LOGIN VIEW
      */
     private Boolean checkCredentials(String email, String password){
         System.out.println("email: " + emailTextField.getText());
-        System.out.println("password: " + emailTextField.getText());
-        return true;
+        System.out.println("password: " + passwordTextField.getText());
+
+        LoginAndPassword loginAndPassword = new LoginAndPassword(email,password);
+
+        try {
+            Request request = new Request(RequestType.USER_LOGIN_DATA_VALID.getNameRequest(), SaveDataAsJson.saveDataAsJson(loginAndPassword));
+            Optional<Response> response = RequestTool.sendRequest(request);
+            ValidLoginData responseData = ReadObjectFromJson.read(response.get().getData(),ValidLoginData.class);
+            return responseData.isLoginDataValid();
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

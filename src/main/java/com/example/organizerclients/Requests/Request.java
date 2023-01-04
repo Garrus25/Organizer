@@ -9,6 +9,7 @@ public class Request {
 
     public Request(String header, String data) {
         this.header = header;
+
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         encryptor.setPassword("xD");
         String encrypted = encryptor.encrypt(data);
@@ -29,7 +30,7 @@ public class Request {
 
         StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
         decryptor.setPassword("xD");
-        //  this.data=
+
         return decryptor.decrypt(data);
     }
 
@@ -38,7 +39,6 @@ public class Request {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         encryptor.setPassword("xD");
         String encrypted = encryptor.encrypt(data);
-        // encrypted=  "\""+encrypted+"\"";
         this.data = encrypted;
     }
 

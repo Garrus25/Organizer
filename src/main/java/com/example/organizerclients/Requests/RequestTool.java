@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 
 public class RequestTool {
 
-    public static Optional<Response> make2(RequestTool requestTool){
+    public static Optional<Response> sendRequest(Request requestTool){
         try (AsynchronousSocketChannel client =
                      AsynchronousSocketChannel.open()) {
             Future<Void> result = client.connect(
