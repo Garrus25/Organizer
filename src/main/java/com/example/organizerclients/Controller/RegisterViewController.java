@@ -1,10 +1,12 @@
 package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.MailerServices;
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Model.TokenAuthorizeGeneratorService;
 import com.example.organizerclients.Requests.*;
 import com.example.organizerclients.Requests.RequestObjects.RegisterData;
 import com.example.organizerclients.Requests.RequestObjects.UserID;
+import com.example.organizerclients.Requests.RequestObjects.UserLogin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -51,8 +55,10 @@ public class RegisterViewController{
         setButtonParameters();
     }
 
+    private Integer token;
+
     private void tempRegisterRequest(String login, String password, String email, String name, String surname){
-        int token = Integer.parseInt(TokenAuthorizeGeneratorService.createTokenAuthorizeUser());
+        this.token = Integer.parseInt(TokenAuthorizeGeneratorService.createTokenAuthorizeUser());
         RegisterData registerData = new RegisterData(1, login, password, email, name, surname, "", token , false);
         Request request = null;
 
@@ -67,17 +73,19 @@ public class RegisterViewController{
 
     }
 
-    private void registerRequest(String userId){
-        UserID idUser = new UserID(userId);
-        Request request= null;
+    public String getInsertedId(String login){
+        UserLogin userLogin = new UserLogin(login);
+        UserID responseData = null;
 
         try {
-            request = new Request(RequestType.REGISTER_USER.getNameRequest(), SaveDataAsJson.saveDataAsJson(idUser));
+            Request request=new Request(RequestType.GET_USER_ID_FROM_LOGIN.getNameRequest(), SaveDataAsJson.saveDataAsJson(userLogin));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            responseData= ReadObjectFromJson.read( response.get().getData(),UserID.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        Optional<Response> response = RequestTool.sendRequest(request);
+        return responseData.getUserID();
     }
 
     @FXML
@@ -88,12 +96,20 @@ public class RegisterViewController{
         String name = nameTextField.getText();
         String surname = surnameTextField.getText();
 
+        Map<String, String> confirmationViewData = new HashMap<>();
+
+
         if (emailAddress.length() > 0 && password.length() > 0){
             Boolean result = checkEmailAddress(emailAddress);
             if (result){
                 tempRegisterRequest(login, password, emailAddress, name, surname);
-                sendEmailMessage();
-                sceneController.setUserData(emailAddress);
+
+                confirmationViewData.put("emailAddress", emailAddress);
+                confirmationViewData.put("id", getInsertedId(login));
+                confirmationViewData.put("token", token.toString());
+
+                sendEmailMessage(emailAddress);
+                sceneController.setUserData(confirmationViewData);
                 sceneController.setConfirmationScene();
             }else {
                 informationText.setText(OrganizerProperties.REGISTER_WRONG_EMAIL_FORMAT_TEXT);
@@ -130,8 +146,8 @@ public class RegisterViewController{
                 .matches();
     }
 
-    //TODO
-    private void sendEmailMessage(){
-        String address = emailTextField.getText();
+    //TODO Do sprawdzenia czy emaile będą przychodziły gdy serwer wstanie
+    private void sendEmailMessage(String address){
+        //MailerServices.sendMail(address);
     }
 }

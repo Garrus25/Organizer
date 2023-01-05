@@ -2,6 +2,9 @@ package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.EmailSender;
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.UserID;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -9,6 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 public class ConfirmationViewController{
     private final SceneController sceneController = SceneController.getInstance();
@@ -48,12 +54,13 @@ public class ConfirmationViewController{
 
     @FXML
     public void onConfirmButtonClick(){
-        int test = 3333;
+        int token = Integer.parseInt(((HashMap<String, String>)sceneController.getUserData()).get("token"));
         if (codeTextField.getText().length() > 0){
-            if (Integer.parseInt(codeTextField.getText()) == test) {
-                System.out.println("GIT");
+            if (Integer.parseInt(codeTextField.getText()) == token) {
                 informationText.setText(OrganizerProperties.REGISTER_CORRECT_CODE_TEXT);
                 informationText.setTextFill(Color.GREEN);
+                sceneController.setSingleUserScene();
+                registerRequest(((HashMap<String, String>)sceneController.getUserData()).get("id"));
             }else {
                 informationText.setText(OrganizerProperties.REGISTER_WRONG_CODE_TEXT);
                 informationText.setTextFill(Color.RED);
@@ -66,7 +73,6 @@ public class ConfirmationViewController{
         sceneController.setRegisterScene();
     }
 
-    //TODO add sending messages here
     @FXML
     public void onResendButtonClick(){
         String emailAddress = emailTextField.getText();
@@ -74,7 +80,7 @@ public class ConfirmationViewController{
         if (emailAddress.length() > 0){
             Boolean result = emailSender.checkEmailAddress(emailAddress);
             if (result){
-                emailSender.sendMessage();
+                sendEmailMessage(((HashMap<String, String>)sceneController.getUserData()).get(emailAddress));
                 informationText.setText(OrganizerProperties.CODE_CONFIRMATION_MESSAGE_RESENT_TEXT);
                 informationText.setTextFill(Color.GREEN);
             }else {
@@ -90,7 +96,7 @@ public class ConfirmationViewController{
     protected void setFieldParameters(){
         informationText.setText("");
         codeTextField.setPromptText(OrganizerProperties.CODE_CONFIRMATION_PROMPT_TEXT);
-        emailTextField.setText(sceneController.getUserData().toString());
+        emailTextField.setText(((HashMap<String, String>)sceneController.getUserData()).get("emailAddress"));
         emailInformation.setText(OrganizerProperties.CODE_CONFIRMATION_EMAIL_INFO_TEXT);
     }
 
@@ -126,11 +132,22 @@ public class ConfirmationViewController{
         });
     }
 
-    /*
-    TODO
-    We need to remember generated codes and check them here.
-     */
-    public Boolean checkConfirmationCode(){
-        return true;
+    private void registerRequest(String userId){
+        UserID idUser = new UserID(userId);
+        Request request= null;
+
+        try {
+            request = new Request(RequestType.REGISTER_USER.getNameRequest(), SaveDataAsJson.saveDataAsJson(idUser));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response = RequestTool.sendRequest(request);
+    }
+
+
+    //TODO Odkomentować gdy serwer będzie działac
+    private void sendEmailMessage(String address){
+        //MailerServices.sendMail(address);
     }
 }

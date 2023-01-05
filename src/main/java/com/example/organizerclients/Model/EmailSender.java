@@ -7,10 +7,6 @@ public class EmailSender {
 
     }
 
-    public void checkMessage(){
-
-    }
-
     public Boolean checkEmailAddress(String address){
         String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
