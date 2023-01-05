@@ -1,17 +1,25 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Model.TokenAuthorizeGeneratorService;
+import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.RegisterData;
+import com.example.organizerclients.Requests.RequestObjects.UserID;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class RegisterViewController{
     private final SceneController sceneController = SceneController.getInstance();
+
+    @FXML
+    public TextField loginTextField;
 
     @FXML
     private Label registerText;
@@ -43,15 +51,47 @@ public class RegisterViewController{
         setButtonParameters();
     }
 
+    private void tempRegisterRequest(String login, String password, String email, String name, String surname){
+        int token = Integer.parseInt(TokenAuthorizeGeneratorService.createTokenAuthorizeUser());
+        RegisterData registerData = new RegisterData(1, login, password, email, name, surname, "", token , false);
+        Request request = null;
+
+        try {
+            request = new Request(RequestType.REGISTER_USER_TEMPORARY.getNameRequest(),
+                    SaveDataAsJson.saveDataAsJson(registerData));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response= RequestTool.sendRequest(request);
+
+    }
+
+    private void registerRequest(String userId){
+        UserID idUser = new UserID(userId);
+        Request request= null;
+
+        try {
+            request = new Request(RequestType.REGISTER_USER.getNameRequest(), SaveDataAsJson.saveDataAsJson(idUser));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response = RequestTool.sendRequest(request);
+    }
+
     @FXML
     public void onRegisterButtonClick(){
         String emailAddress = emailTextField.getText();
         String password = passwordTextField.getText();
-        System.out.println(emailAddress);
+        String login = loginTextField.getText();
+        String name = nameTextField.getText();
+        String surname = surnameTextField.getText();
 
         if (emailAddress.length() > 0 && password.length() > 0){
             Boolean result = checkEmailAddress(emailAddress);
             if (result){
+                tempRegisterRequest(login, password, emailAddress, name, surname);
                 sendEmailMessage();
                 sceneController.setUserData(emailAddress);
                 sceneController.setConfirmationScene();

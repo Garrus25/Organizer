@@ -2,6 +2,8 @@ package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.LoginAndPassword;
+import com.example.organizerclients.Requests.RequestObjects.ValidLoginData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -83,16 +85,11 @@ public class LoginViewController{
         }
     }
 
-    /**
-     * TODO
-     * Tutaj będzie wrzucony call do bazy sprawdzający dane pobrane z textfieldów
-     //TODO PODMIANA EMAILA NA LOGIN W LOGIN VIEW
-     */
     private Boolean checkCredentials(String email, String password){
         System.out.println("email: " + emailTextField.getText());
         System.out.println("password: " + passwordTextField.getText());
 
-        LoginAndPassword loginAndPassword = new LoginAndPassword(email,password);
+        LoginAndPassword loginAndPassword = new LoginAndPassword(email, password);
 
         try {
             Request request = new Request(RequestType.USER_LOGIN_DATA_VALID.getNameRequest(), SaveDataAsJson.saveDataAsJson(loginAndPassword));

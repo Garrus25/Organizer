@@ -1,12 +1,10 @@
-package com.example.organizerclients.Requests;
+package com.example.organizerclients.Requests.RequestObjects;
 
 public class LoginData {
     private String login;
 
+    public LoginData() {}
 
-    public LoginData(){
-
-    }
     public LoginData(String login) {
         this.login = login;
     }

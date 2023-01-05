@@ -1,11 +1,11 @@
-package com.example.organizerclients.Requests;
+package com.example.organizerclients.Requests.RequestObjects;
 
 import java.util.Objects;
 
 public class ValidLoginData {
     private String isValidLoginAndPassword;
 
-    public ValidLoginData(){}
+    public ValidLoginData() {}
 
     public ValidLoginData(String isValidLoginAndPassword) {
         this.isValidLoginAndPassword = isValidLoginAndPassword;
@@ -19,7 +19,7 @@ public class ValidLoginData {
         this.isValidLoginAndPassword = isValidLoginAndPassword;
     }
 
-    public Boolean isLoginDataValid(){
+    public Boolean isLoginDataValid() {
         return !getIsValidLoginAndPassword().equals("NO");
     }
 

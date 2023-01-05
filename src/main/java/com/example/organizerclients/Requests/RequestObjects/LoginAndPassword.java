@@ -1,10 +1,11 @@
-package com.example.organizerclients.Requests;
+package com.example.organizerclients.Requests.RequestObjects;
 
 public class LoginAndPassword {
-    private  String login;
+    private String login;
     private String password;
 
-    public LoginAndPassword(){}
+    public LoginAndPassword() {
+    }
 
     public LoginAndPassword(String login, String password) {
         this.login = login;

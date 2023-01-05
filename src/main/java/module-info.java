@@ -14,6 +14,8 @@ module com.example.organizerclients {
     requires jfxtras.agenda;
     requires jasypt;
     requires com.fasterxml.jackson.databind;
+    requires org.simplejavamail.core;
+    requires org.simplejavamail;
 
     opens com.example.organizerclients to javafx.fxml, javafx.graphics, javafx.base;
     exports com.example.organizerclients to javafx.fxml, javafx.graphics;
@@ -23,5 +25,7 @@ module com.example.organizerclients {
     opens com.example.organizerclients.Model to javafx.base, javafx.fxml, javafx.graphics;
     exports com.example.organizerclients.Requests to com.fasterxml.jackson.databind;
     opens com.example.organizerclients.Requests to com.fasterxml.jackson.databind;
+    exports com.example.organizerclients.Requests.RequestObjects to com.fasterxml.jackson.databind;
+    opens com.example.organizerclients.Requests.RequestObjects to com.fasterxml.jackson.databind;
 
 }
