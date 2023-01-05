@@ -23,10 +23,10 @@ public class TestModelGroupView {
     LocalDate date3 = LocalDate.of(2022,12,13);
     LocalDate date4 = LocalDate.of(2022,12,14);
 
-    Event event1 = new Event("test1","GRUPA1", LocalDateTime.now(), "", "");
-    Event event2 = new Event("test2","GRUPA1", LocalDateTime.now(), "", "");
-    Event event3 = new Event("test3","GRUPA1", LocalDateTime.now(), "", "");
-    Event event4 = new Event("test4","GRUPA1", LocalDateTime.now(), "", "");
+    Event event1 = new Event("test1","GRUPA1", LocalDateTime.now(), "", "", null);
+    Event event2 = new Event("test2","GRUPA1", LocalDateTime.now(), "", "", null);
+    Event event3 = new Event("test3","GRUPA1", LocalDateTime.now(), "", "", null);
+    Event event4 = new Event("test4","GRUPA1", LocalDateTime.now(), "", "", null);
 
     public TestModelGroupView(){
         test1.put(LocalTime.of(14, 0), event1);

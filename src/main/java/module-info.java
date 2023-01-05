@@ -16,6 +16,7 @@ module com.example.organizerclients {
     requires com.fasterxml.jackson.databind;
     requires org.simplejavamail.core;
     requires org.simplejavamail;
+    requires java.sql;
 
     opens com.example.organizerclients to javafx.fxml, javafx.graphics, javafx.base;
     exports com.example.organizerclients to javafx.fxml, javafx.graphics;

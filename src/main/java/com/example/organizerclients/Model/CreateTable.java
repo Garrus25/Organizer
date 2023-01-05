@@ -13,6 +13,7 @@ import java.util.*;
 public abstract class CreateTable {
     protected final String TIME_COLUMN = "timeColumn";
     protected List<Map<String, Event>> model = new ArrayList<>();
+    protected final HashMap<TableColumnKey, TreeMap<LocalTime, Event>> userTasks = new HashMap<>();
 
     public abstract LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> createColumns(LocalDate localDate);
 
@@ -42,13 +43,13 @@ public abstract class CreateTable {
         for (int i = 0; i < 24; i++) {
             LocalTime time = LocalTime.of(i, 0);
             HashMap<String, Event> hashMap = new HashMap<>();
-            hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null, "", ""));
+            hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null, "", "", null));
 
             columnKeys.forEach(columnKey -> {
                 if (hashMapTasks.containsKey(columnKey) && hashMapTasks.get(columnKey).containsKey(time)) {
                     hashMap.put(columnKey.toString(), hashMapTasks.get(columnKey).get(time));
                 } else {
-                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getName()));
+                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getName(), null));
                 }
             });
 
@@ -68,4 +69,13 @@ public abstract class CreateTable {
         this.model = model;
     }
 
+    protected void addData(TableColumnKey key, TreeMap<LocalTime, Event> eventTreeMap) {
+        if (userTasks.containsKey(key)) {
+            userTasks.get(key).put(eventTreeMap.firstKey(), eventTreeMap.get(eventTreeMap.firstKey()));
+        } else {
+            TreeMap<LocalTime, Event> temp = new TreeMap<>();
+            temp.put(eventTreeMap.firstKey(), eventTreeMap.get(eventTreeMap.firstKey()));
+            userTasks.put(key, temp);
+        }
+    }
 }
