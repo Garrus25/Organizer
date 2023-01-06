@@ -3,6 +3,7 @@ package com.example.organizerclients.Controller;
 import com.example.organizerclients.Model.Event;
 import com.example.organizerclients.Model.TableColumnKey;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

@@ -172,7 +172,7 @@ public class ChartController {
     }
 
     public void changeGroup(int groupId, Button group) {
-        groupModel.changeGroup(new ArrayList<>());
+        groupModel.changeGroup(groupId);
         currentGroupId = groupId;
         if (currentGroupButton != null) {
             currentGroupButton.setVisible(true);

@@ -8,7 +8,7 @@ public class Event {
     private String group;
     private LocalDateTime date;
     private String description;
-    private String personName;
+    private String login;
     private String type;
 
     public Event(String eventName, String group, LocalDateTime date, String description, String type, Integer taskId) {
@@ -17,18 +17,21 @@ public class Event {
         this.date = date;
         this.description = description;
         this.type = type;
-        this.personName = "";
+        this.login = "";
         this.taskId = taskId;
     }
 
-    public Event(String eventName, String group, LocalDateTime date, String description, String type, String personName,  Integer taskId) {
+    public Event(String eventName, String group, LocalDateTime date, String description, String type, String login,  Integer taskId) {
         this.eventName = eventName;
         this.group = group;
         this.date = date;
         this.description = description;
         this.type = type;
-        this.personName = personName;
+        this.login = login;
         this.taskId = taskId;
+    }
+
+    public Event() {
     }
 
     public String getEventName() {
@@ -55,12 +58,12 @@ public class Event {
         this.date = date;
     }
 
-    public String getPersonName() {
-        return personName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setPersonName(String personName) {
-        this.personName = personName;
+    public void setLogin(String personName) {
+        this.login = personName;
     }
 
     public String getDescription() {
@@ -98,7 +101,7 @@ public class Event {
         this.date = event.date;
         this.type = event.type;
         this.description = event.description;
-        this.personName = event.personName;
+        this.login = event.login;
         this.taskId = event.taskId;
     }
 }

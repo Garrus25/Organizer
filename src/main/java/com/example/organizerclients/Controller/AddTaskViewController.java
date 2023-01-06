@@ -90,7 +90,7 @@ public class AddTaskViewController {
         String eventName = taskName.getText();
         String description = this.description.getText();
         String type = chooseTaskType.getValue();
-        return new Event(eventName,"", event.getDate(), description, type, event.getPersonName(), null);
+        return new Event(eventName,"", event.getDate(), description, type, event.getLogin(), null);
     }
 
     private void updateModel(){
