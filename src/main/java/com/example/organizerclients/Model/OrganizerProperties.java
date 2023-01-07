@@ -33,6 +33,7 @@ public class OrganizerProperties {
     public static final String REGISTER_CORRECT_CODE_TEXT = properties.getProperty("register.correctCode.text");
     public static final String REGISTER_WRONG_EMAIL_FORMAT_TEXT = properties.getProperty("register.wrongEmailFormat.text");
     public static final String REGISTER_RETURN_BUTTON_TEXT = properties.getProperty("register.returnButton.text");
+    public static final String REGISTER_LOGIN_ALREADY_TAKEN_TEXT = properties.getProperty("register.loginAlreadyTaken.text");
 
     public static final String LOGIN_WRONG_CREDENTIALS_TEXT = properties.getProperty("login.wrongCredentials.text");
     public static final String LOGIN_CORRECT_CREDENTIALS_TEXT = properties.getProperty("login.correctCredentials.text");
@@ -51,7 +52,6 @@ public class OrganizerProperties {
     public static final String MAINVIEW_SWITCHGROUP_TEXT = properties.getProperty("mainview.switchtogroup.text");
     public static final String MAINVIEW_SWITCHTOSINGLE_TEXT = properties.getProperty("mainview.switchtosingle.text");
     public static final String MAINVIEW_USER_PANEL_BUTTON_TEXT = properties.getProperty("mainview.userPanelButton.text");
-
 
     public static final String ADD_GROUP_VIEW_GROUP_CREATE_BUTTON_TEXT = properties.getProperty("addGroupView.groupCreateButton.text");
     public static final String ADD_GROUP_VIEW_VIEW_TITLE_TEXT = properties.getProperty("addGroupView.viewTitle.text");

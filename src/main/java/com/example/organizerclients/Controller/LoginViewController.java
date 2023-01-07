@@ -3,6 +3,8 @@ package com.example.organizerclients.Controller;
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Requests.*;
 import com.example.organizerclients.Requests.RequestObjects.LoginAndPassword;
+import com.example.organizerclients.Requests.RequestObjects.UserID;
+import com.example.organizerclients.Requests.RequestObjects.UserLogin;
 import com.example.organizerclients.Requests.RequestObjects.ValidLoginData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
@@ -40,6 +42,21 @@ public class LoginViewController{
         setButtonParameters();
     }
 
+    public String getUserId(String login){
+        UserLogin userLogin = new UserLogin(login);
+        UserID responseData = null;
+
+        try {
+            Request request=new Request(RequestType.GET_USER_ID_FROM_LOGIN.getNameRequest(), SaveDataAsJson.saveDataAsJson(userLogin));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            responseData= ReadObjectFromJson.read( response.get().getData(),UserID.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return responseData.getUserID();
+    }
+
     @FXML
     public void onLoginButtonClick() {
         String emailAddress = emailTextField.getText();
@@ -48,6 +65,7 @@ public class LoginViewController{
         if (emailAddress.length() > 0 && password.length() > 0){
             if (checkCredentials(emailAddress,password)){
                 showCredentialsMessage(true);
+                sceneController.setId(Integer.parseInt(getUserId(emailAddress)));
                 sceneController.setSingleUserScene();
             }else {
                 showCredentialsMessage(false);

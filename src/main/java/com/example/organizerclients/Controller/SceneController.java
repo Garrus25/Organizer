@@ -20,6 +20,7 @@ public class SceneController {
     private Scene confirmationScene;
     private Scene singleUserScene;
 
+    private int id;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -31,7 +32,6 @@ public class SceneController {
     public void prepareScenes(){
         createRegisterScene();
         createLoginScene();
-        createSingleUserScene();
     }
 
     private void createLoginScene(){
@@ -144,6 +144,7 @@ public class SceneController {
     }
 
     public void setSingleUserScene(){
+        createSingleUserScene();
         stage.setScene(singleUserScene);
     }
 
@@ -165,6 +166,14 @@ public class SceneController {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

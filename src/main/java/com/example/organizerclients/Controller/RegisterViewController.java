@@ -1,12 +1,9 @@
 package com.example.organizerclients.Controller;
 
-import com.example.organizerclients.Model.MailerServices;
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Model.TokenAuthorizeGeneratorService;
 import com.example.organizerclients.Requests.*;
-import com.example.organizerclients.Requests.RequestObjects.RegisterData;
-import com.example.organizerclients.Requests.RequestObjects.UserID;
-import com.example.organizerclients.Requests.RequestObjects.UserLogin;
+import com.example.organizerclients.Requests.RequestObjects.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -57,6 +54,20 @@ public class RegisterViewController{
 
     private Integer token;
 
+    private Boolean checkIfLoginIsTaken(String login){
+        LoginData loginData=new LoginData(login);
+        Request request;
+        try {
+            request = new Request(RequestType.IF_USER_LOGIN_AVAILABLE.getNameRequest(), SaveDataAsJson.saveDataAsJson(loginData));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            ResponseLogin responseData= ReadObjectFromJson.read( response.get().getData(),ResponseLogin.class);
+            return responseData.getResponse().equals("YES");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private void tempRegisterRequest(String login, String password, String email, String name, String surname){
         this.token = Integer.parseInt(TokenAuthorizeGeneratorService.createTokenAuthorizeUser());
         RegisterData registerData = new RegisterData(1, login, password, email, name, surname, "", token , false);
@@ -73,7 +84,7 @@ public class RegisterViewController{
 
     }
 
-    public String getInsertedId(String login){
+    public String getUserId(String login){
         UserLogin userLogin = new UserLogin(login);
         UserID responseData = null;
 
@@ -98,24 +109,28 @@ public class RegisterViewController{
 
         Map<String, String> confirmationViewData = new HashMap<>();
 
-
         if (emailAddress.length() > 0 && password.length() > 0){
             Boolean result = checkEmailAddress(emailAddress);
             if (result){
-                tempRegisterRequest(login, password, emailAddress, name, surname);
+                if (checkIfLoginIsTaken(login)){
+                    tempRegisterRequest(login, password, emailAddress, name, surname);
 
-                confirmationViewData.put("emailAddress", emailAddress);
-                confirmationViewData.put("id", getInsertedId(login));
-                confirmationViewData.put("token", token.toString());
+                    confirmationViewData.put("emailAddress", emailAddress);
+                    confirmationViewData.put("id", getUserId(login));
+                    confirmationViewData.put("token", token.toString());
 
-                sendEmailMessage(emailAddress);
-                sceneController.setUserData(confirmationViewData);
-                sceneController.setConfirmationScene();
+                    sendEmailMessage(emailAddress);
+                    sceneController.setUserData(confirmationViewData);
+                    sceneController.setConfirmationScene();
+                }else{
+                    informationText.setText(OrganizerProperties.REGISTER_LOGIN_ALREADY_TAKEN_TEXT);
+                    informationText.setTextFill(Color.RED);
+                }
             }else {
                 informationText.setText(OrganizerProperties.REGISTER_WRONG_EMAIL_FORMAT_TEXT);
                 informationText.setTextFill(Color.RED);
             }
-        }else {
+        }else{
             informationText.setText(OrganizerProperties.LOGIN_EMPTY_FIELD_TEXT);
             informationText.setTextFill(Color.RED);
         }

@@ -59,7 +59,7 @@ public class ConfirmationViewController{
             if (Integer.parseInt(codeTextField.getText()) == token) {
                 informationText.setText(OrganizerProperties.REGISTER_CORRECT_CODE_TEXT);
                 informationText.setTextFill(Color.GREEN);
-                sceneController.setSingleUserScene();
+                sceneController.setLoginScene();
                 registerRequest(((HashMap<String, String>)sceneController.getUserData()).get("id"));
             }else {
                 informationText.setText(OrganizerProperties.REGISTER_WRONG_CODE_TEXT);
