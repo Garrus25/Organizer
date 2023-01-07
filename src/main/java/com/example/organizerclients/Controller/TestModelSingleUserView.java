@@ -23,10 +23,10 @@ public class TestModelSingleUserView {
     LocalDate date3 = LocalDate.of(2022,12,13);
     LocalDate date4 = LocalDate.of(2022,12,14);
 
-    Event event1 = new Event("test1","GRUPA1", LocalDateTime.now(), "", "", 1);
-    Event event2 = new Event("test2","GRUPA1", LocalDateTime.now(), "", "", 2);
-    Event event3 = new Event("test3","GRUPA1", LocalDateTime.now(), "", "", 3);
-    Event event4 = new Event("test4","GRUPA1", LocalDateTime.now(), "", "", 4);
+    Event event1 = new Event("test1","GRUPA1", LocalDateTime.now(), "", "", "", null, null, null);
+    Event event2 = new Event("test2","GRUPA1", LocalDateTime.now(), "", "", "", null, null, null);
+    Event event3 = new Event("test3","GRUPA1", LocalDateTime.now(), "", "", "", null, null, null);
+    Event event4 = new Event("test4","GRUPA1", LocalDateTime.now(), "", "", "", null, null, null);
 
     public TestModelSingleUserView(){
         test1.put(LocalTime.of(13,0), event1);

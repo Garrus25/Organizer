@@ -3,7 +3,6 @@ package com.example.organizerclients.Controller;
 import com.example.organizerclients.Model.Event;
 import com.example.organizerclients.Model.TableColumnKey;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,10 +23,10 @@ public class TestModelGroupView {
     LocalDate date3 = LocalDate.of(2022,12,13);
     LocalDate date4 = LocalDate.of(2022,12,14);
 
-    Event event1 = new Event("test1","GRUPA1", LocalDateTime.now(), "", "", null);
-    Event event2 = new Event("test2","GRUPA1", LocalDateTime.now(), "", "", null);
-    Event event3 = new Event("test3","GRUPA1", LocalDateTime.now(), "", "", null);
-    Event event4 = new Event("test4","GRUPA1", LocalDateTime.now(), "", "", null);
+    Event event1 = new Event("test1","GRUPA1", LocalDateTime.now(), "", "", null, null, null);
+    Event event2 = new Event("test2","GRUPA1", LocalDateTime.now(), "", "", null, null, null);
+    Event event3 = new Event("test3","GRUPA1", LocalDateTime.now(), "", "", null, null, null);
+    Event event4 = new Event("test4","GRUPA1", LocalDateTime.now(), "", "", null, null, null);
 
     public TestModelGroupView(){
         test1.put(LocalTime.of(14, 0), event1);

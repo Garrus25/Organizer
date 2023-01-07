@@ -2,14 +2,21 @@ package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.Event;
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.AddTaskToGroupData;
+import com.example.organizerclients.Requests.RequestObjects.AddTaskToUser;
+import com.example.organizerclients.Requests.RequestObjects.IdTask;
+import com.example.organizerclients.Requests.RequestObjects.TaskData;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class AddTaskViewController {
     private SceneController sceneController = SceneController.getInstance();
@@ -90,7 +97,7 @@ public class AddTaskViewController {
         String eventName = taskName.getText();
         String description = this.description.getText();
         String type = chooseTaskType.getValue();
-        return new Event(eventName,"", event.getDate(), description, type, event.getLogin(), null);
+        return new Event(eventName,event.getGroup(), event.getDate(), description, type, event.getLogin(), event.getTaskId(), event.getIdGroup(), event.getIdUser());
     }
 
     private void updateModel(){
@@ -99,5 +106,42 @@ public class AddTaskViewController {
         chartController.updateModel(event);
     }
 
+    private Integer addNewTask(Event event) {
+        TaskData taskData=new TaskData(event.getTaskId(), event.getEventName(), event.getDescription(), Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(event.getDate()));
+        Request request= null;
+        IdTask idNewTask = new IdTask();
+        try {
+            request = new Request(RequestType.ADD_NEW_TASK.getNameRequest(), SaveDataAsJson.saveDataAsJson(taskData));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            idNewTask= ReadObjectFromJson.read(response.orElseThrow().getData(),IdTask.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return idNewTask.getId_task();
+    }
+
+
+    private void addTaskToUser(Event event) {
+        AddTaskToUser addTaskToUser=new AddTaskToUser(event.getIdUser(),event.getTaskId(),0);
+        Request request= null;
+        try {
+            request = new Request(RequestType.ADD_TASK_TO_USER.getNameRequest(), SaveDataAsJson.saveDataAsJson(addTaskToUser));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        Optional<Response> response= RequestTool.sendRequest(request);
+    }
+
+    private void addTaskToGroup(Event event) {
+        AddTaskToGroupData addTaskToUser = new AddTaskToGroupData(event.getTaskId(),event.getIdGroup(),event.getIdUser());
+        Request request= null;
+        try {
+            request = new Request(RequestType.ADD_TASK_TO_GROUP.getNameRequest(), SaveDataAsJson.saveDataAsJson(addTaskToUser));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        Optional<Response> response= RequestTool.sendRequest(request);
+
+    }
 
 }

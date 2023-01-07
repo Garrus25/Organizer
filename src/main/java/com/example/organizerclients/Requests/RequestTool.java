@@ -1,83 +1,31 @@
 package com.example.organizerclients.Requests;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.AsynchronousSocketChannel;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class RequestTool {
+    private static final String IP_ADDRESS_SERVER = "127.0.0.1";
+    private static final Integer PORT_NUMBER = 2137;
 
-    public static Optional<Response> sendRequest(Request requestTool){
-        try (AsynchronousSocketChannel client =
-                     AsynchronousSocketChannel.open()) {
-            Future<Void> result = client.connect(
-                    new InetSocketAddress("127.0.0.1", 2137));
-            result.get();
-            String str=SaveDataAsJson.saveDataAsJson(requestTool);
+    public static Optional<Response> sendRequest(Request request) {
 
-            for(int i=0;i<300;++i){
-                str+=" ";
-            }
-            ByteBuffer buffer = ByteBuffer.wrap(str.getBytes());
-            Future<Integer> writeval = client.write(buffer);
-            System.out.println("Writing to server: "+str);
-            writeval.get();
-            buffer.flip();
-            Future<Integer> readval = client.read(buffer);
+        try (Socket clientSocket = new Socket(IP_ADDRESS_SERVER, PORT_NUMBER);
+             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        ) {
 
-            readval.get();
-            System.out.println("Received from server: "
-                    +new String(buffer.array()).trim());
+            out.println(SaveDataAsJson.saveDataAsJson(request));
+            String responseRawText = in.readLine();
 
-            buffer.flip();
-            String rawDataRead=new String(buffer.array()).trim();
-
-            System.out.println("Raw:"+rawDataRead);
-            Response response= ReadObjectFromJson.read(rawDataRead,Response.class);
-
-           buffer.clear();
-           readval.get();
-
-            return Optional.ofNullable(response);
-        }
-        catch (ExecutionException | IOException e) {
+            Response response = ReadObjectFromJson.read(responseRawText, Response.class);
+            return Optional.of(response);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        catch (InterruptedException e) {
-            System.out.println("Disconnected from the server.");
-        }
-        return Optional.empty();
-    }
-    public static Optional<Response> make(RequestTool requestTool){
-
-       try (AsynchronousSocketChannel client = AsynchronousSocketChannel.open()) {
-            Future<Void> result = client.connect(new InetSocketAddress("127.0.0.1", 2137));
-
-           result.get();
-
-           String str= "Hello! How are you?";
-           ByteBuffer buffer = ByteBuffer.wrap(str.getBytes());
-           Future<Integer> writeval = client.write(buffer);
-           System.out.println("Writing to server: "+str);
-           writeval.get();
-           buffer.flip();
-           Future<Integer> readval = client.read(buffer);
-           System.out.println("Received from server: "
-                   +new String(buffer.array()).trim());
-           readval.get();
-           buffer.clear();
-
-        }
-        catch (ExecutionException | IOException e) {
-            e.printStackTrace();
-        }
-        catch (InterruptedException e) {
-            System.out.println("Disconnected from the server");
-        }
-
         return Optional.empty();
     }
 }

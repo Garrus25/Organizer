@@ -1,9 +1,7 @@
 package com.example.organizerclients.Model;
 
-import com.example.organizerclients.Controller.TestModelGroupView;
 import com.example.organizerclients.Requests.*;
 import com.example.organizerclients.Requests.RequestObjects.GroupId;
-import com.example.organizerclients.Requests.RequestObjects.TaskData;
 import com.example.organizerclients.Requests.RequestObjects.UserData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.collections.ObservableList;

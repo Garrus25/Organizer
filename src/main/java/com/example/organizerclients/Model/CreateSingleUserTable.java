@@ -63,7 +63,7 @@ public class CreateSingleUserTable extends CreateTable {
         TableColumnKey tableColumnKey = new TableColumnKey("", taskData.getDateOfNotification().toLocalDateTime().toLocalDate());
         Event event = new Event(taskData.getName(), "",
                 taskData.getDateOfNotification().toLocalDateTime(),
-                taskData.getDescription(), "", taskData.getIdTask());
+                taskData.getDescription(), "", taskData.getIdTask(), null, null);
         treeMap.put(LocalTime.of(taskData.getDateOfNotification().toLocalDateTime().toLocalTime().getHour(), 0), event);
         return new TableModel(tableColumnKey, treeMap);
     }

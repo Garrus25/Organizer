@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.MapValueFactory;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -44,13 +43,13 @@ public abstract class CreateTable {
         for (int i = 0; i < 24; i++) {
             LocalTime time = LocalTime.of(i, 0);
             HashMap<String, Event> hashMap = new HashMap<>();
-            hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null, "", "", null));
+            hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null, "", "", null, null, null));
 
             columnKeys.forEach(columnKey -> {
                 if (hashMapTasks.containsKey(columnKey) && hashMapTasks.get(columnKey).containsKey(time)) {
                     hashMap.put(columnKey.toString(), hashMapTasks.get(columnKey).get(time));
                 } else {
-                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getName(), null));
+                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getName(), null, null, null));
                 }
             });
 
