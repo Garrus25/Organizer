@@ -4,20 +4,22 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class TableColumnKey {
-    private String name;
+    private Integer idUser;
     private LocalDate localDate;
+    private String login;
 
-    public TableColumnKey(String name, LocalDate localDate) {
-        this.name = name;
+    public TableColumnKey(Integer idUser, LocalDate localDate, String login) {
+        this.idUser = idUser;
         this.localDate = localDate;
+        this.login = login;
     }
 
-    public String getName() {
-        return name;
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public LocalDate getLocalDate() {
@@ -28,24 +30,37 @@ public class TableColumnKey {
         this.localDate = localDate;
     }
 
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TableColumnKey tableColumnKey = (TableColumnKey) o;
-        return Objects.equals(name, tableColumnKey.name) && Objects.equals(localDate, tableColumnKey.localDate);
+        return Objects.equals(idUser, tableColumnKey.idUser) && Objects.equals(localDate, tableColumnKey.localDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, localDate);
+        return Objects.hash(idUser, localDate);
     }
 
     @Override
     public String toString() {
-        return "Test{" +
-                "name='" + name + '\'' +
+        return "TableColumnKey{" +
+                "idUser=" + idUser +
                 ", localDate=" + localDate +
+                ", login='" + login + '\'' +
                 '}';
     }
 }

@@ -102,8 +102,37 @@ public class AddTaskViewController {
 
     private void updateModel(){
         Event meetingData = getMeetingData();
+        if (meetingData.getTaskId() == null) {
+            insertTask(meetingData);
+        } else {
+            updateTask(meetingData);
+        }
         event.replaceData(meetingData);
         chartController.updateModel(event);
+    }
+
+    private void insertTask(Event event) {
+        final Integer idTask = addNewTask(event);
+        event.setTaskId(idTask);
+        if (event.getIdGroup() != null) {
+            addTaskToGroup(event);
+        } else {
+            addTaskToUser(event);
+        }
+    }
+
+    private void updateTask(Event event) {
+        TaskData addTaskToUser = new TaskData(event.getTaskId(), event.getEventName(), event.getDescription(),
+                Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(event.getDate()));
+        Request request= null;
+        try {
+            request = new Request(RequestType.UPDATE_TASK.getNameRequest(), SaveDataAsJson.saveDataAsJson(addTaskToUser));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        Optional<Response> response = RequestTool.sendRequest(request);
+        System.out.println(response);
+
     }
 
     private Integer addNewTask(Event event) {
@@ -129,18 +158,19 @@ public class AddTaskViewController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        Optional<Response> response= RequestTool.sendRequest(request);
+        Optional<Response> response = RequestTool.sendRequest(request);
     }
 
     private void addTaskToGroup(Event event) {
-        AddTaskToGroupData addTaskToUser = new AddTaskToGroupData(event.getTaskId(),event.getIdGroup(),event.getIdUser());
-        Request request= null;
+        System.out.println("ID " + event.getTaskId());
+        AddTaskToGroupData addTaskToUser = new AddTaskToGroupData(event.getTaskId(), event.getIdGroup(), event.getIdUser());
+        Request request = null;
         try {
             request = new Request(RequestType.ADD_TASK_TO_GROUP.getNameRequest(), SaveDataAsJson.saveDataAsJson(addTaskToUser));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        Optional<Response> response= RequestTool.sendRequest(request);
+        Optional<Response> response = RequestTool.sendRequest(request);
 
     }
 

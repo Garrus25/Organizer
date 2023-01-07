@@ -12,10 +12,12 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class CreateGroupTable extends CreateTable{
-    private final List<String> personListInGroup = new ArrayList<>();
+    private  List<UserData> personListInGroup = new ArrayList<>();
+    private Integer groupId;
 
-    public CreateGroupTable() {
-        setPersonListInGroup();
+    public CreateGroupTable(Integer groupId) {
+        this.groupId = groupId;
+        changeGroup(groupId);
         setUserTasks();
     }
 
@@ -24,19 +26,18 @@ public class CreateGroupTable extends CreateTable{
         LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> tableColumns = new LinkedHashMap<>();
 
         personListInGroup.forEach(key -> {
-            TableColumnKey tableColumnKey = new TableColumnKey(key, localDate);
+            TableColumnKey tableColumnKey = new TableColumnKey(key.getIdUser(), localDate, key.getLogin());
             TableColumn<Map<String, Event>, String> tableColumn
-                    = new TableColumn<>(key);
-            setColumns(tableColumn, key, tableColumnKey.toString());
+                    = new TableColumn<>(key.getLogin());
+            setColumns(tableColumn, key.getLogin(), tableColumnKey.toString());
             tableColumns.put(tableColumnKey, tableColumn);
         });
-
         return tableColumns;
     }
 
     @Override
     public ObservableList<Map<String, Event>> createModel(Set<TableColumnKey> columnKeys) {
-        return setObservableList(userTasks, columnKeys);
+        return setObservableList(userTasks, columnKeys, groupId);
     }
 
     @Override
@@ -44,22 +45,12 @@ public class CreateGroupTable extends CreateTable{
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
         temp.put(event.getDate().toLocalTime(), event);
         System.out.println(event);
-        addData(new TableColumnKey(event.getLogin(), event.getDate().toLocalDate() ), temp);
-        System.out.println(userTasks);
+        addData(new TableColumnKey(event.getIdUser(), event.getDate().toLocalDate(), event.getLogin()), temp);
     }
 
-    private void setPersonListInGroup() {
-        getGroupMembers(1).forEach(userData -> {
-            personListInGroup.add(userData.getLogin());
-        });
-    }
 
     public void changeGroup(int groupId) {
-        personListInGroup.clear();
-        getGroupMembers(groupId).forEach(userData -> {
-            personListInGroup.add(userData.getLogin());
-        }) ;
-
+        personListInGroup = getGroupMembers(groupId);
     }
 
     private List<UserData> getGroupMembers(int groupId) {
@@ -77,7 +68,7 @@ public class CreateGroupTable extends CreateTable{
     }
 
     private List<Event> getAllGroupTask() {
-        GroupId idUser=new GroupId(1);
+        GroupId idUser = new GroupId(groupId);
         List<Event> result = null;
         try {
             Request request=new Request(RequestType.GET_ALL_TASK_FOR_GROUP.getNameRequest(), SaveDataAsJson.saveDataAsJson(idUser));
@@ -92,7 +83,7 @@ public class CreateGroupTable extends CreateTable{
 
     private TableModel convertTaskToGroupTableModel(Event event) {
         TreeMap<LocalTime, Event> treeMap = new TreeMap<>();
-        TableColumnKey tableColumnKey = new TableColumnKey(event.getLogin(), event.getDate().toLocalDate());
+        TableColumnKey tableColumnKey = new TableColumnKey(event.getIdUser(), event.getDate().toLocalDate(), event.getLogin());
 
         treeMap.put(LocalTime.of(event.getDate().toLocalTime().getHour(), 0), event);
         return new TableModel(tableColumnKey, treeMap);
@@ -100,9 +91,11 @@ public class CreateGroupTable extends CreateTable{
 
     private void setUserTasks() {
         List<Event> allUserTask = getAllGroupTask();
+
         allUserTask.forEach(taskData -> {
             TableModel tableModel = convertTaskToGroupTableModel(taskData);
             userTasks.put(tableModel.getKey(), tableModel.getTreeMap());
+            System.out.println(tableModel);
         });
 
     }

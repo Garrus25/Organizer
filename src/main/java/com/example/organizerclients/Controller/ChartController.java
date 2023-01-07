@@ -12,15 +12,14 @@ import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChartController {
 
     private final SceneController sceneController = SceneController.getInstance();
-    private final CreateSingleUserTable singleUserModel = new CreateSingleUserTable();
-    private final CreateGroupTable groupModel = new CreateGroupTable();
+    private final CreateSingleUserTable singleUserModel = new CreateSingleUserTable(1);
+    private final CreateGroupTable groupModel = new CreateGroupTable(1);
     private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
     private Integer currentGroupId = 10;
@@ -58,6 +57,7 @@ public class ChartController {
         setButtonListeners();
         setCalendarListener();
     }
+
 
     private void changeUIElements(){
         setChangeViewButtonName();
@@ -121,6 +121,9 @@ public class ChartController {
                 if (event.getTarget() instanceof CustomCell){
                     CustomCell<?, ?> target = (CustomCell<?, ?>) event.getTarget();
                     Event item = ((Event) target.getItem());
+                    System.out.println(item.getTaskId());
+                    System.out.println("ID USER " + item.getIdUser());
+                    System.out.println("ID GROUP " + item.getIdGroup());
                     sceneController.showMeetingStage(chartController, item);
                 }
             }
