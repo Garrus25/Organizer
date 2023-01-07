@@ -2,10 +2,7 @@ package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Requests.*;
-import com.example.organizerclients.Requests.RequestObjects.LoginAndPassword;
-import com.example.organizerclients.Requests.RequestObjects.UserID;
-import com.example.organizerclients.Requests.RequestObjects.UserLogin;
-import com.example.organizerclients.Requests.RequestObjects.ValidLoginData;
+import com.example.organizerclients.Requests.RequestObjects.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -61,9 +58,10 @@ public class LoginViewController{
     public void onLoginButtonClick() {
         String emailAddress = emailTextField.getText();
         String password = passwordTextField.getText();
+        sceneController.setId(Integer.parseInt(getUserId(emailAddress)));
 
         if (emailAddress.length() > 0 && password.length() > 0){
-            if (checkCredentials(emailAddress,password)){
+            if (checkCredentials(emailAddress,password) && isAccountActive()){
                 showCredentialsMessage(true);
                 sceneController.setId(Integer.parseInt(getUserId(emailAddress)));
                 sceneController.setSingleUserScene();
@@ -74,6 +72,29 @@ public class LoginViewController{
             informationText.setText(OrganizerProperties.LOGIN_EMPTY_FIELD_TEXT);
             informationText.setTextFill(Color.RED);
         }
+    }
+
+    private Boolean isAccountActive(){
+        UserID userId = new UserID(sceneController.getId().toString());
+        Request request= null;
+
+        try {
+            request = new Request(RequestType.GET_USER_DATA.getNameRequest(), SaveDataAsJson.saveDataAsJson(userId));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response = RequestTool.sendRequest(request);
+
+        try {
+            UserData userData = ReadObjectFromJson.read(response.get().getData(),UserData.class);
+            return userData.getIsActive() != 0;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
     }
 
     @FXML

@@ -1,6 +1,7 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.EmailSender;
+import com.example.organizerclients.Model.MailerServices;
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Requests.*;
 import com.example.organizerclients.Requests.RequestObjects.UserID;
@@ -146,8 +147,7 @@ public class ConfirmationViewController{
     }
 
 
-    //TODO Odkomentować gdy serwer będzie działac
     private void sendEmailMessage(String address){
-        //MailerServices.sendMail(address);
+        MailerServices.sendMail(address);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.MailerServices;
 import com.example.organizerclients.Model.OrganizerProperties;
 import com.example.organizerclients.Model.TokenAuthorizeGeneratorService;
 import com.example.organizerclients.Requests.*;
@@ -161,8 +162,7 @@ public class RegisterViewController{
                 .matches();
     }
 
-    //TODO Do sprawdzenia czy emaile będą przychodziły gdy serwer wstanie
     private void sendEmailMessage(String address){
-        //MailerServices.sendMail(address);
+        MailerServices.sendMail(address);
     }
 }
