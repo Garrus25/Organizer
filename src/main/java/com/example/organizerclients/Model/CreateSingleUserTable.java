@@ -37,6 +37,7 @@ public class CreateSingleUserTable extends CreateTable {
 
     @Override
     public ObservableList<Map<String, Event>> createModel(Set<TableColumnKey> columnKeys) {
+        setUserTasks();
         return setObservableList(userTasks, columnKeys, null);
     }
 
@@ -44,11 +45,11 @@ public class CreateSingleUserTable extends CreateTable {
     public void insertData(Event event) {
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
         temp.put(event.getDate().toLocalTime() ,event);
-        addData(new TableColumnKey(null, event.getDate().toLocalDate(), ""),temp);
+        addData(new TableColumnKey(idUser, event.getDate().toLocalDate(), ""),temp);
     }
 
     private List<TaskData> getAllUserTask() {
-        UserID idUser = new UserID("1");
+        UserID idUser = new UserID(String.valueOf(this.idUser));
         List<TaskData> result = null;
         try {
             Request request = new Request(RequestType.GET_ALL_TASK_FOR_USER.getNameRequest(), SaveDataAsJson.saveDataAsJson(idUser));
@@ -72,9 +73,11 @@ public class CreateSingleUserTable extends CreateTable {
 
     private void setUserTasks() {
         List<TaskData> allUserTask = getAllUserTask();
+        userTasks.clear();
         allUserTask.forEach(taskData -> {
             TableModel tableModel = convertTaskToTableModel(taskData);
-            userTasks.put(tableModel.getKey(), tableModel.getTreeMap());
+            addData(tableModel.getKey(), tableModel.getTreeMap());
         });
     }
+
 }

@@ -1,6 +1,8 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,16 +16,21 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class ChartController {
 
     private final SceneController sceneController = SceneController.getInstance();
-    private final CreateSingleUserTable singleUserModel = new CreateSingleUserTable(1);
-    private final CreateGroupTable groupModel = new CreateGroupTable(1);
+    private final CreateSingleUserTable singleUserModel = new CreateSingleUserTable(sceneController.getId());
+    private final CreateGroupTable groupModel = new CreateGroupTable();
     private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
     private Integer currentGroupId = 10;
     private Button currentGroupButton = null;
+    private final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1);
+    private final int REFRESH_TIME = 5;
 
     private boolean groupModelSet = false;
 
@@ -56,6 +63,7 @@ public class ChartController {
         setBasicButtonParameters();
         setButtonListeners();
         setCalendarListener();
+        refreshTableContent();
     }
 
 
@@ -111,6 +119,7 @@ public class ChartController {
         });
 
         mainTable.setItems(currentModel.createModel(columns.keySet()));
+        mainTable.refresh();
     }
 
     private void addCellClickListener(){
@@ -121,9 +130,6 @@ public class ChartController {
                 if (event.getTarget() instanceof CustomCell){
                     CustomCell<?, ?> target = (CustomCell<?, ?>) event.getTarget();
                     Event item = ((Event) target.getItem());
-                    System.out.println(item.getTaskId());
-                    System.out.println("ID USER " + item.getIdUser());
-                    System.out.println("ID GROUP " + item.getIdGroup());
                     sceneController.showMeetingStage(chartController, item);
                 }
             }
@@ -194,5 +200,27 @@ public class ChartController {
 
     public void setCurrentGroupButton(Button currentGroupButton) {
         this.currentGroupButton = currentGroupButton;
+    }
+
+    public void refreshTableContent() {
+        Task<Integer> task = new Task<Integer>() {
+            @Override
+            protected Integer call() throws Exception {
+                while (true) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("resrewf");
+                            createTable(currentSelectedDate);
+                        }
+                    });
+                    Thread.sleep(REFRESH_TIME * 1000);
+                }
+            }
+        };
+        scheduledExecutorService.schedule(task, REFRESH_TIME, TimeUnit.SECONDS);
+
+
+
     }
 }

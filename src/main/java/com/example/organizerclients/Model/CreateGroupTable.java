@@ -15,7 +15,7 @@ public class CreateGroupTable extends CreateTable{
     private  List<UserData> personListInGroup = new ArrayList<>();
     private Integer groupId;
 
-    public CreateGroupTable(Integer groupId) {
+    public CreateGroupTable() {
         this.groupId = groupId;
         changeGroup(groupId);
         setUserTasks();
@@ -37,6 +37,7 @@ public class CreateGroupTable extends CreateTable{
 
     @Override
     public ObservableList<Map<String, Event>> createModel(Set<TableColumnKey> columnKeys) {
+        setUserTasks();
         return setObservableList(userTasks, columnKeys, groupId);
     }
 
@@ -44,7 +45,6 @@ public class CreateGroupTable extends CreateTable{
     public void insertData(Event event) {
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
         temp.put(event.getDate().toLocalTime(), event);
-        System.out.println(event);
         addData(new TableColumnKey(event.getIdUser(), event.getDate().toLocalDate(), event.getLogin()), temp);
     }
 
@@ -91,12 +91,23 @@ public class CreateGroupTable extends CreateTable{
 
     private void setUserTasks() {
         List<Event> allUserTask = getAllGroupTask();
-
+        userTasks.clear();
         allUserTask.forEach(taskData -> {
             TableModel tableModel = convertTaskToGroupTableModel(taskData);
-            userTasks.put(tableModel.getKey(), tableModel.getTreeMap());
-            System.out.println(tableModel);
+            addData(tableModel.getKey(), tableModel.getTreeMap());
         });
 
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    private Integer getAllUserGroups() {
+        return 1;
+    }
+
+    private Integer getFirstGroup() {
+        return 1;
     }
 }

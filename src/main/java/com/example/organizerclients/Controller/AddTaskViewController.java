@@ -131,8 +131,6 @@ public class AddTaskViewController {
             e.printStackTrace();
         }
         Optional<Response> response = RequestTool.sendRequest(request);
-        System.out.println(response);
-
     }
 
     private Integer addNewTask(Event event) {
@@ -162,7 +160,6 @@ public class AddTaskViewController {
     }
 
     private void addTaskToGroup(Event event) {
-        System.out.println("ID " + event.getTaskId());
         AddTaskToGroupData addTaskToUser = new AddTaskToGroupData(event.getTaskId(), event.getIdGroup(), event.getIdUser());
         Request request = null;
         try {
