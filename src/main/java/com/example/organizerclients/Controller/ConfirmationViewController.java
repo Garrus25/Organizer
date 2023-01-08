@@ -148,6 +148,6 @@ public class ConfirmationViewController{
 
 
     private void sendEmailMessage(String address){
-        MailerServices.sendMail(address);
+        //MailerServices.sendMail(address);
     }
 }

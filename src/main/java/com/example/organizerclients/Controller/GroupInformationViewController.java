@@ -2,11 +2,24 @@ package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.Group;
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.GroupId;
+import com.example.organizerclients.Requests.RequestObjects.UserData;
+import com.example.organizerclients.Requests.RequestObjects.UserGroupData;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 public class GroupInformationViewController {
+    SceneController sceneController = SceneController.getInstance();
 
     @FXML
     private Label groupName;
@@ -58,11 +71,38 @@ public class GroupInformationViewController {
         }
     }
 
+    public void setMembership(){
+        System.out.println("Membership called");
+        GroupId groupData = new GroupId(groupId);
+        Request request = null;
+
+        try {
+            request = new Request(RequestType.GET_MEMBERSHIP_GROUP_ABOUT_UD.getNameRequest(), SaveDataAsJson.saveDataAsJson(groupData));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response= RequestTool.sendRequest(request);
+
+        try {
+            List<UserData> results = ReadObjectFromJson.<UserData>readListObject(response.get().getData(),UserData.class);
+            results.forEach(result -> {
+                if (result.getIdUser() == sceneController.getId()){
+                    isSet = true;
+                    switchMode();
+                }
+            });
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setData(Group group) {
         this.groupCode.setText(group.getCode());
         this.groupName.setText(group.getName());
         this.isSet = group.getIsSetFlag();
         switchMode();
+        setMembership();
     }
 
     private void switchMode(){
@@ -91,7 +131,12 @@ public class GroupInformationViewController {
 
     private void setAddToGroupButtonListener(){
         buttonAddToGroup.setOnAction(actionEvent -> {
-            isSet = !isSet;
+            if (isSet){
+                leaveGroup(groupId, sceneController.getId());
+            }else {
+                joinGroup(groupId, sceneController.getId());
+            }
+
             switchMode();
         });
     }
@@ -101,4 +146,33 @@ public class GroupInformationViewController {
             chartController.changeGroup(groupId, buttonSelectGroup);
         });
     }
+
+    private void joinGroup(int userId, int groupId){
+
+        UserGroupData groupData=new UserGroupData(groupId, userId);
+        Request request= null;
+        try {
+            request = new Request(RequestType.ADD_USER_TO_GROUP.getNameRequest(), SaveDataAsJson.saveDataAsJson(groupData));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        Optional<Response> response = RequestTool.sendRequest(request);
+
+        isSet = true;
+
+    }
+
+    private void leaveGroup(int userId, int groupId){
+        UserGroupData groupData=new UserGroupData(groupId,userId);
+        Request request= null;
+        try {
+            request = new Request(RequestType.REMOVE_USER_FROM_GROUP.getNameRequest(), SaveDataAsJson.saveDataAsJson(groupData));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        Optional<Response> response= RequestTool.sendRequest(request);
+
+        isSet = false;
+    }
+
 }
