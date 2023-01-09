@@ -20,7 +20,7 @@ public class SceneController {
     private Scene confirmationScene;
     private Scene singleUserScene;
 
-    private int id;
+    private Integer id;
 
     public static SceneController getInstance() {
         if (sceneController == null) {
@@ -168,11 +168,11 @@ public class SceneController {
         return stage;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
