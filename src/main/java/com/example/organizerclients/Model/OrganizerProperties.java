@@ -27,11 +27,13 @@ public class OrganizerProperties {
 
     public static final String PASSWORD_TEXTFIELD_PROMPT_TEXT = properties.getProperty("password.textField.prompt.text");
     public static final String EMAIL_TEXTFIELD_PROMPT_TEXT = properties.getProperty("email.textField.prompt.text");
+    public static final String LOGIN_TEXTFIELD_PROMPT_TEXT = properties.getProperty("login.textField.prompt.text");
 
     public static final String REGISTER_WRONG_CODE_TEXT = properties.getProperty("register.wrongCode.text");
     public static final String REGISTER_CORRECT_CODE_TEXT = properties.getProperty("register.correctCode.text");
     public static final String REGISTER_WRONG_EMAIL_FORMAT_TEXT = properties.getProperty("register.wrongEmailFormat.text");
     public static final String REGISTER_RETURN_BUTTON_TEXT = properties.getProperty("register.returnButton.text");
+    public static final String REGISTER_LOGIN_ALREADY_TAKEN_TEXT = properties.getProperty("register.loginAlreadyTaken.text");
 
     public static final String LOGIN_WRONG_CREDENTIALS_TEXT = properties.getProperty("login.wrongCredentials.text");
     public static final String LOGIN_CORRECT_CREDENTIALS_TEXT = properties.getProperty("login.correctCredentials.text");
@@ -51,14 +53,15 @@ public class OrganizerProperties {
     public static final String MAINVIEW_SWITCHTOSINGLE_TEXT = properties.getProperty("mainview.switchtosingle.text");
     public static final String MAINVIEW_USER_PANEL_BUTTON_TEXT = properties.getProperty("mainview.userPanelButton.text");
 
-
     public static final String ADD_GROUP_VIEW_GROUP_CREATE_BUTTON_TEXT = properties.getProperty("addGroupView.groupCreateButton.text");
     public static final String ADD_GROUP_VIEW_VIEW_TITLE_TEXT = properties.getProperty("addGroupView.viewTitle.text");
     public static final String ADD_GROUP_VIEW_GROUP_NAME_TEXT_FIELD_PROMPT_TEXT = properties.getProperty("addGroupView.groupNameTextField.prompt.text");
 
     public static final String GROUP_INFORMATION_VIEW_GROUP_NAME_TEXT = properties.getProperty("groupInformationView.groupName.text");
     public static final String GROUP_INFORMATION_VIEW_GROUP_CODE_TEXT = properties.getProperty("groupInformationView.groupCode.text");
-    public static final String GROUP_INFORMATION_VIEW_BUTTON_ADD_TO_GROUP_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.text");
+    public static final String GROUP_INFORMATION_VIEW_JOIN_GROUP_BUTTON_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.join.text");
+    public static final String GROUP_INFORMATION_VIEW_LEAVE_GROUP_BUTTON_TEXT = properties.getProperty("groupInformationView.buttonAddToGroup.leave.text");
+    public static final String GROUP_INFORMATION_VIEW_CHOOSE_GROUP_BUTTON_TEST = properties.getProperty("groupInformationView.chooseGroup.button.text");
 
     public static final String SHOW_GROUP_LIST_VIEW_TITLE_TEXT = properties.getProperty("showGroupListView.title.text");
 
@@ -75,6 +78,8 @@ public class OrganizerProperties {
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE1_TEXT = properties.getProperty("addTaskView.chooseTaskType.value1.text");
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE2_TEXT = properties.getProperty("addTaskView.chooseTaskType.value2.text");
     public static final String ADD_TASK_VIEW_CHOOSE_TASK_VALUE3_TEXT = properties.getProperty("addTaskView.chooseTaskType.value3.text");
+
+    public static final String ADD_GROUP_TOO_SHORT_NAME_TEXT = properties.getProperty("addGroup.nameTooShortLabel.txt");
 
 
 }

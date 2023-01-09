@@ -1,11 +1,16 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+
+import java.util.Optional;
 
 public class LoginViewController{
     private final SceneController sceneController = SceneController.getInstance();
@@ -34,14 +39,31 @@ public class LoginViewController{
         setButtonParameters();
     }
 
+    public String getUserId(String login){
+        UserLogin userLogin = new UserLogin(login);
+        UserID responseData = null;
+
+        try {
+            Request request=new Request(RequestType.GET_USER_ID_FROM_LOGIN.getNameRequest(), SaveDataAsJson.saveDataAsJson(userLogin));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            responseData= ReadObjectFromJson.read( response.get().getData(),UserID.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return responseData.getUserID();
+    }
+
     @FXML
     public void onLoginButtonClick() {
         String emailAddress = emailTextField.getText();
         String password = passwordTextField.getText();
+        sceneController.setId(Integer.parseInt(getUserId(emailAddress)));
 
         if (emailAddress.length() > 0 && password.length() > 0){
-            if (checkCredentials(emailAddress,password)){
+            if (checkCredentials(emailAddress,password) && isAccountActive()){
                 showCredentialsMessage(true);
+                sceneController.setId(Integer.parseInt(getUserId(emailAddress)));
                 sceneController.setSingleUserScene();
             }else {
                 showCredentialsMessage(false);
@@ -52,6 +74,29 @@ public class LoginViewController{
         }
     }
 
+    private Boolean isAccountActive(){
+        UserID userId = new UserID(sceneController.getId().toString());
+        Request request= null;
+
+        try {
+            request = new Request(RequestType.GET_USER_DATA.getNameRequest(), SaveDataAsJson.saveDataAsJson(userId));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response = RequestTool.sendRequest(request);
+
+        try {
+            UserData userData = ReadObjectFromJson.read(response.get().getData(),UserData.class);
+            return userData.getIsActive() != 0;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
     @FXML
     public void onRegisterButtonClick() {
         sceneController.setRegisterScene();
@@ -60,7 +105,7 @@ public class LoginViewController{
     protected void setFieldParameters(){
         loginText.setText(OrganizerProperties.LOGIN_BUTTON_TEXT);
         informationText.setText("");
-        emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
+        emailTextField.setPromptText(OrganizerProperties.LOGIN_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
     }
 
@@ -79,14 +124,22 @@ public class LoginViewController{
         }
     }
 
-    /**
-     * TODO
-     * Tutaj będzie wrzucony call do bazy sprawdzający dane pobrane z textfieldów
-
-     */
     private Boolean checkCredentials(String email, String password){
         System.out.println("email: " + emailTextField.getText());
-        System.out.println("password: " + emailTextField.getText());
-        return true;
+        System.out.println("password: " + passwordTextField.getText());
+
+        LoginAndPassword loginAndPassword = new LoginAndPassword(email, password);
+
+        try {
+            Request request = new Request(RequestType.USER_LOGIN_DATA_VALID.getNameRequest(), SaveDataAsJson.saveDataAsJson(loginAndPassword));
+            Optional<Response> response = RequestTool.sendRequest(request);
+            ValidLoginData responseData = ReadObjectFromJson.read(response.get().getData(),ValidLoginData.class);
+            return responseData.isLoginDataValid();
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

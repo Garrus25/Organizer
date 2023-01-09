@@ -1,7 +1,6 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.Model.*;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,41 +11,43 @@ import javafx.scene.layout.HBox;
 import jfxtras.scene.control.CalendarPicker;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChartController {
 
     private final SceneController sceneController = SceneController.getInstance();
-    private final CreateTable singleUserModel = new CreateSingleUserTable();
-    private final CreateTable groupModel = new CreateGroupTable();
-    private CreateTable createTable = singleUserModel;
+    private final CreateSingleUserTable singleUserModel = new CreateSingleUserTable();
+    private final CreateGroupTable groupModel = new CreateGroupTable();
+    private CreateTable currentModel = singleUserModel;
     private LocalDate currentSelectedDate = LocalDate.now();
+    private Integer currentGroupId = 10;
+    private Button currentGroupButton = null;
 
-    boolean groupModelSet = false;
+    private boolean groupModelSet = false;
 
     @FXML
     public HBox mainContentBox;
 
     @FXML
-    TableView<Map<String, Event>> mainTable;
+    private TableView<Map<String, Event>> mainTable;
 
     @FXML
-    Button addGroupButton;
+    private Button addGroupButton;
 
     @FXML
-    Button showGroupsButton;
+    private Button showGroupsButton;
 
     @FXML
-    Button switchViewButton;
+    private Button switchViewButton;
 
     @FXML
-    Button userPanelButton;
+    private Button userPanelButton;
 
     @FXML
-    CalendarPicker calendarPicker;
+    private CalendarPicker calendarPicker;
 
     @FXML
     public void initialize(){
@@ -82,7 +83,7 @@ public class ChartController {
     }
 
     private void changeModel(CreateTable model){
-        createTable = model;
+        currentModel = model;
         createTable(currentSelectedDate);
     }
 
@@ -95,25 +96,32 @@ public class ChartController {
         mainTable.refresh();
     }
 
+    public void updateModel(Event event){
+        mainTable.refresh();
+        currentModel.insertData(event);
+    }
+
     private void createTable(LocalDate localDate) {
         mainTable.getColumns().clear();
-        mainTable.getColumns().add(createTable.createTimeColumn());
-        List<TableColumn<Map<String, Event>, String>> columns = createTable.createColumns(localDate);
-        CustomCell.numberOfColumns = columns.size();
-        mainTable.getColumns().addAll(columns);
-        mainTable.setItems(createTable.createModel());
+        mainTable.getColumns().add(currentModel.createTimeColumn());
+        LinkedHashMap<TableColumnKey, TableColumn<Map<String, Event>, String>> columns
+                = currentModel.createColumns(localDate);
+        columns.forEach((key, value) -> {
+            mainTable.getColumns().add(value);
+        });
+
+        mainTable.setItems(currentModel.createModel(columns.keySet()));
     }
 
     private void addCellClickListener(){
+        final ChartController chartController = this;
         mainTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getTarget() instanceof CustomCell){
-                    sceneController.showMeetingStage();
-                    int y = ((CustomCell<?, ?>) event.getTarget()).getY();
-                    int x = ((CustomCell<?, ?>) event.getTarget()).getX();
-                    System.out.println(x);
-                    System.out.println(y);
+                    CustomCell<?, ?> target = (CustomCell<?, ?>) event.getTarget();
+                    Event item = ((Event) target.getItem());
+                    sceneController.showMeetingStage(chartController, item);
                 }
             }
         });
@@ -136,8 +144,9 @@ public class ChartController {
             sceneController.setAddGroupStage();
         });
 
+        final ChartController chartController = this;
         showGroupsButton.setOnAction(actionEvent -> {
-            sceneController.setShowGroupListStage();
+            sceneController.setShowGroupListStage(chartController);
         });
 
         switchViewButton.setOnAction(actionEvent -> {
@@ -153,10 +162,34 @@ public class ChartController {
         calendarPicker.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                currentSelectedDate = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                createTable(currentSelectedDate);
-                mainTable.refresh();
+                if (null != calendarPicker.getCalendar()){
+                    currentSelectedDate = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    createTable(currentSelectedDate);
+                    mainTable.refresh();
+                }
             }
         });
+    }
+
+    public void changeGroup(int groupId, Button group) {
+        groupModel.changeGroup(groupId);
+        currentGroupId = groupId;
+        if (currentGroupButton != null) {
+            currentGroupButton.setVisible(true);
+        }
+        currentGroupButton = group;
+        currentGroupButton.setVisible(false);
+        if (groupModelSet) {
+            createTable(currentSelectedDate);
+            mainTable.refresh();
+        }
+    }
+
+    public Integer getCurrentGroupId() {
+        return currentGroupId;
+    }
+
+    public void setCurrentGroupButton(Button currentGroupButton) {
+        this.currentGroupButton = currentGroupButton;
     }
 }

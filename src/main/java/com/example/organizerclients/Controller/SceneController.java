@@ -1,6 +1,7 @@
 package com.example.organizerclients.Controller;
 
 import com.example.organizerclients.MainApp;
+import com.example.organizerclients.Model.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -19,6 +20,8 @@ public class SceneController {
     private Scene confirmationScene;
     private Scene singleUserScene;
 
+    private Integer id;
+
     public static SceneController getInstance() {
         if (sceneController == null) {
             sceneController = new SceneController();
@@ -29,7 +32,6 @@ public class SceneController {
     public void prepareScenes(){
         createRegisterScene();
         createLoginScene();
-        createSingleUserScene();
     }
 
     private void createLoginScene(){
@@ -74,18 +76,20 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-group-view.fxml"));
         try {
             addGroupScene = new Scene(fxmlLoader.load());
-            setCustomStage(addGroupScene);
+            setCustomStage(addGroupScene, "Add group");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void setShowGroupListStage(){
+    public void setShowGroupListStage(ChartController chartController){
         Scene showGroupListScene;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("show-group-list-view.fxml"));
         try {
+            ShowGroupListViewController showGroupListViewController = new ShowGroupListViewController(chartController);
+            fxmlLoader.setController(showGroupListViewController);
             showGroupListScene = new Scene(fxmlLoader.load());
-            setCustomStage(showGroupListScene);
+            setCustomStage(showGroupListScene, "Group list");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -96,28 +100,33 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("user-panel-view.fxml"));
         try {
             userPanelScene = new Scene(fxmlLoader.load());
-            setCustomStage(userPanelScene);
+            setCustomStage(userPanelScene, "User Panel");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void showMeetingStage(){
+    public void showMeetingStage(ChartController chartController, Event event){
         Scene meetingScene;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("add-task-view.fxml"));
+        AddTaskViewController addTaskViewController = new AddTaskViewController(chartController, event);
+        fxmlLoader.setController(addTaskViewController);
         try {
             meetingScene = new Scene(fxmlLoader.load());
-            setCustomStage(meetingScene);
+            fxmlLoader.getController();
+            setCustomStage(meetingScene, "Task editor");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    private void setCustomStage(Scene scene) {
+    private void setCustomStage(Scene scene, String title) {
         setStylesheet(scene);
-        Stage stage = new Stage();
+        stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.setTitle(title);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -135,6 +144,7 @@ public class SceneController {
     }
 
     public void setSingleUserScene(){
+        createSingleUserScene();
         stage.setScene(singleUserScene);
     }
 
@@ -157,4 +167,13 @@ public class SceneController {
     public Stage getStage() {
         return stage;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }

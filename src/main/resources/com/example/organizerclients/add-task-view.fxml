@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane prefHeight="434.0" prefWidth="498.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.organizerclients.Controller.AddTaskViewController">
+<StackPane prefHeight="434.0" prefWidth="498.0" style="-fx-background-color: #d5dde8;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox alignment="TOP_CENTER" prefHeight="363.0" prefWidth="458.0" style="-fx-background-color: #d5dde8;" StackPane.alignment="CENTER">
         <Label fx:id="titleView" text="ADD TASK">

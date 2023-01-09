@@ -1,17 +1,27 @@
 package com.example.organizerclients.Controller;
 
+import com.example.organizerclients.Model.MailerServices;
 import com.example.organizerclients.Model.OrganizerProperties;
+import com.example.organizerclients.Model.TokenAuthorizeGeneratorService;
+import com.example.organizerclients.Requests.*;
+import com.example.organizerclients.Requests.RequestObjects.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class RegisterViewController{
     private final SceneController sceneController = SceneController.getInstance();
+
+    @FXML
+    public TextField loginTextField;
 
     @FXML
     private Label registerText;
@@ -38,34 +48,90 @@ public class RegisterViewController{
     private TextField surnameTextField;
 
     @FXML
-    private Label colorLabel;
-
-    @FXML
-    ColorPicker colorPicker;
-
-    @FXML
     public void initialize(){
         setFieldParameters();
         setButtonParameters();
+    }
+
+    private Integer token;
+
+    private Boolean checkIfLoginIsTaken(String login){
+        LoginData loginData=new LoginData(login);
+        Request request;
+        try {
+            request = new Request(RequestType.IF_USER_LOGIN_AVAILABLE.getNameRequest(), SaveDataAsJson.saveDataAsJson(loginData));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            ResponseLogin responseData= ReadObjectFromJson.read( response.get().getData(),ResponseLogin.class);
+            return responseData.getResponse().equals("YES");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void tempRegisterRequest(String login, String password, String email, String name, String surname){
+        this.token = Integer.parseInt(TokenAuthorizeGeneratorService.createTokenAuthorizeUser());
+        RegisterData registerData = new RegisterData(1, login, password, email, name, surname, "", token , false);
+        Request request = null;
+
+        try {
+            request = new Request(RequestType.REGISTER_USER_TEMPORARY.getNameRequest(),
+                    SaveDataAsJson.saveDataAsJson(registerData));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Response> response= RequestTool.sendRequest(request);
+
+    }
+
+    public String getUserId(String login){
+        UserLogin userLogin = new UserLogin(login);
+        UserID responseData = null;
+
+        try {
+            Request request=new Request(RequestType.GET_USER_ID_FROM_LOGIN.getNameRequest(), SaveDataAsJson.saveDataAsJson(userLogin));
+            Optional<Response> response= RequestTool.sendRequest(request);
+            responseData= ReadObjectFromJson.read( response.get().getData(),UserID.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return responseData.getUserID();
     }
 
     @FXML
     public void onRegisterButtonClick(){
         String emailAddress = emailTextField.getText();
         String password = passwordTextField.getText();
-        System.out.println(emailAddress);
+        String login = loginTextField.getText();
+        String name = nameTextField.getText();
+        String surname = surnameTextField.getText();
+
+        Map<String, String> confirmationViewData = new HashMap<>();
 
         if (emailAddress.length() > 0 && password.length() > 0){
             Boolean result = checkEmailAddress(emailAddress);
             if (result){
-                sendEmailMessage();
-                sceneController.setUserData(emailAddress);
-                sceneController.setConfirmationScene();
+                if (checkIfLoginIsTaken(login)){
+                    tempRegisterRequest(login, password, emailAddress, name, surname);
+
+                    confirmationViewData.put("emailAddress", emailAddress);
+                    confirmationViewData.put("id", getUserId(login));
+                    confirmationViewData.put("token", token.toString());
+
+                    sendEmailMessage(emailAddress);
+                    sceneController.setUserData(confirmationViewData);
+                    sceneController.setConfirmationScene();
+                }else{
+                    informationText.setText(OrganizerProperties.REGISTER_LOGIN_ALREADY_TAKEN_TEXT);
+                    informationText.setTextFill(Color.RED);
+                }
             }else {
                 informationText.setText(OrganizerProperties.REGISTER_WRONG_EMAIL_FORMAT_TEXT);
                 informationText.setTextFill(Color.RED);
             }
-        }else {
+        }else{
             informationText.setText(OrganizerProperties.LOGIN_EMPTY_FIELD_TEXT);
             informationText.setTextFill(Color.RED);
         }
@@ -81,7 +147,6 @@ public class RegisterViewController{
         informationText.setText("");
         emailTextField.setPromptText(OrganizerProperties.EMAIL_TEXTFIELD_PROMPT_TEXT);
         passwordTextField.setPromptText(OrganizerProperties.PASSWORD_TEXTFIELD_PROMPT_TEXT);
-        colorLabel.setText("Choose color:");
     }
 
     protected void setButtonParameters(){
@@ -97,8 +162,7 @@ public class RegisterViewController{
                 .matches();
     }
 
-    //TODO
-    private void sendEmailMessage(){
-        String address = emailTextField.getText();
+    private void sendEmailMessage(String address){
+        //MailerServices.sendMail(address);
     }
 }
