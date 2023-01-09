@@ -15,7 +15,7 @@ public class AddTaskToGroupData {
     private Integer idUser;
 
     public AddTaskToGroupData(){}
-    public AddTaskToGroupData(Integer idtask, Integer idGroup, Integer idUser) {
+    public AddTaskToGroupData(Integer idtask, Integer idGroup,Integer idUser) {
         this.idTask = idtask;
         this.idGroup = idGroup;
         this.idUser=idUser;

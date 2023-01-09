@@ -38,24 +38,22 @@ public abstract class CreateTable {
         tableColumn.setMinWidth(163.5);
     }
 
-    protected ObservableList<Map<String, Event>> setObservableList(HashMap<TableColumnKey, TreeMap<LocalTime, Event>> hashMapTasks, Set<TableColumnKey> columnKeys) {
+    protected ObservableList<Map<String, Event>> setObservableList(HashMap<TableColumnKey, TreeMap<LocalTime, Event>> hashMapTasks, Set<TableColumnKey> columnKeys, Integer groupId) {
         model.clear();
         for (int i = 0; i < 24; i++) {
             LocalTime time = LocalTime.of(i, 0);
             HashMap<String, Event> hashMap = new HashMap<>();
             hashMap.put(TIME_COLUMN, new Event(time.toString(), "", null, "", "", null, null, null));
-
             columnKeys.forEach(columnKey -> {
                 if (hashMapTasks.containsKey(columnKey) && hashMapTasks.get(columnKey).containsKey(time)) {
                     hashMap.put(columnKey.toString(), hashMapTasks.get(columnKey).get(time));
                 } else {
-                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getName(), null, null, null));
+                    hashMap.put(columnKey.toString(), new Event("", "", LocalDateTime.of(columnKey.getLocalDate(), time),  "", "", columnKey.getLogin(), null, groupId, columnKey.getIdUser()));
                 }
             });
 
             model.add(hashMap);
         }
-
         return FXCollections.observableArrayList(
                 model
         );

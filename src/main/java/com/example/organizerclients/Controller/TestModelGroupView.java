@@ -34,13 +34,13 @@ public class TestModelGroupView {
         test3.put(LocalTime.of(14, 0), event3);
         test4.put(LocalTime.of(14, 0), event4);
 
-        addData(new TableColumnKey( "Marek", date1) ,test1);
-        addData(new TableColumnKey( "Marek", date4),test2);
-        addData(new TableColumnKey( "Iwona", date4),test2);
-        addData(new TableColumnKey( "Iwona", date1),test3);
-        addData(new TableColumnKey( "Iwona", date2),test1);
-        addData(new TableColumnKey( "Iwona", date4),test2);
-        addData(new TableColumnKey( "Iwona", date3),test3);
+        addData(new TableColumnKey( 1, date1, "Marek") ,test1);
+        addData(new TableColumnKey( 2, date4, "Marek1"),test2);
+        addData(new TableColumnKey( 3, date4, "Marek2"),test2);
+        addData(new TableColumnKey( 4, date1, "Marek3"),test3);
+        addData(new TableColumnKey( 5, date2, "Marek4"),test1);
+        addData(new TableColumnKey( 6, date4 ,"Marek5"),test2);
+        addData(new TableColumnKey( 7, date3, "Marek6"),test3);
 
     }
 

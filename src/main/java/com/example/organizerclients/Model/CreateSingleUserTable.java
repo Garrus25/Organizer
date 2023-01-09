@@ -12,8 +12,10 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class CreateSingleUserTable extends CreateTable {
+    private final Integer idUser;
 
-    public CreateSingleUserTable() {
+    public CreateSingleUserTable(Integer idUser) {
+        this.idUser = idUser;
         setUserTasks();
     }
 
@@ -25,8 +27,8 @@ public class CreateSingleUserTable extends CreateTable {
         for (int i = 0; i < 7; i++) {
             TableColumn<Map<String, Event>, String> tableColumn
                     = new TableColumn<>(date.toString());
-            setColumns(tableColumn, date.toString(), new TableColumnKey("", date).toString());
-            tableColumns.put(new TableColumnKey("", date), tableColumn);
+            setColumns(tableColumn, date.toString(), new TableColumnKey(idUser, date, "").toString());
+            tableColumns.put(new TableColumnKey(idUser, date, ""), tableColumn);
             date = date.plusDays(1);
         }
 
@@ -35,18 +37,19 @@ public class CreateSingleUserTable extends CreateTable {
 
     @Override
     public ObservableList<Map<String, Event>> createModel(Set<TableColumnKey> columnKeys) {
-        return setObservableList(userTasks, columnKeys);
+        setUserTasks();
+        return setObservableList(userTasks, columnKeys, null);
     }
 
     @Override
     public void insertData(Event event) {
         TreeMap <LocalTime, Event> temp = new TreeMap<LocalTime, Event>();
         temp.put(event.getDate().toLocalTime() ,event);
-        addData(new TableColumnKey("", event.getDate().toLocalDate()),temp);
+        addData(new TableColumnKey(idUser, event.getDate().toLocalDate(), ""),temp);
     }
 
     private List<TaskData> getAllUserTask() {
-        UserID idUser = new UserID("1");
+        UserID idUser = new UserID(String.valueOf(this.idUser));
         List<TaskData> result = null;
         try {
             Request request = new Request(RequestType.GET_ALL_TASK_FOR_USER.getNameRequest(), SaveDataAsJson.saveDataAsJson(idUser));
@@ -60,20 +63,21 @@ public class CreateSingleUserTable extends CreateTable {
 
     private TableModel convertTaskToTableModel(TaskData taskData) {
         TreeMap<LocalTime, Event> treeMap = new TreeMap<>();
-        TableColumnKey tableColumnKey = new TableColumnKey("", taskData.getDateOfNotification().toLocalDateTime().toLocalDate());
+        TableColumnKey tableColumnKey = new TableColumnKey(idUser, taskData.getDateOfNotification().toLocalDateTime().toLocalDate(), "");
         Event event = new Event(taskData.getName(), "",
                 taskData.getDateOfNotification().toLocalDateTime(),
-                taskData.getDescription(), "", taskData.getIdTask(), null, null);
+                taskData.getDescription(), "", taskData.getIdTask(), null, idUser);
         treeMap.put(LocalTime.of(taskData.getDateOfNotification().toLocalDateTime().toLocalTime().getHour(), 0), event);
         return new TableModel(tableColumnKey, treeMap);
     }
 
     private void setUserTasks() {
         List<TaskData> allUserTask = getAllUserTask();
+        userTasks.clear();
         allUserTask.forEach(taskData -> {
             TableModel tableModel = convertTaskToTableModel(taskData);
-            userTasks.put(tableModel.getKey(), tableModel.getTreeMap());
+            addData(tableModel.getKey(), tableModel.getTreeMap());
         });
-
     }
+
 }

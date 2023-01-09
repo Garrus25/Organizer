@@ -19,4 +19,12 @@ public class TableModel {
     public TreeMap<LocalTime, Event> getTreeMap() {
         return treeMap;
     }
+
+    @Override
+    public String toString() {
+        return "TableModel{" +
+                "key=" + key +
+                ", treeMap=" + treeMap +
+                '}';
+    }
 }

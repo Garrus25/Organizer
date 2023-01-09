@@ -12,7 +12,6 @@ public class RequestTool {
     private static final Integer PORT_NUMBER = 2137;
 
     public static Optional<Response> sendRequest(Request request) {
-
         try (Socket clientSocket = new Socket(IP_ADDRESS_SERVER, PORT_NUMBER);
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

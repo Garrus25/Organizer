@@ -34,13 +34,13 @@ public class TestModelSingleUserView {
         test3.put(LocalTime.of(6,0), event3);
         test4.put(LocalTime.of(22,0), event4);
 
-        addData(new TableColumnKey("", date1) ,test1);
-        addData(new TableColumnKey("", date1) ,test2);
-        addData(new TableColumnKey("", date2) ,test2);
-        addData(new TableColumnKey("", date3) ,test3);
-        addData(new TableColumnKey("", date4) ,test1);
-        addData(new TableColumnKey("", date4) ,test2);
-        addData(new TableColumnKey("", date4) ,test3);
+        addData(new TableColumnKey(null, date1, "") ,test1);
+        addData(new TableColumnKey(null, date1, "") ,test2);
+        addData(new TableColumnKey(null, date2, "") ,test2);
+        addData(new TableColumnKey(null, date3, "") ,test3);
+        addData(new TableColumnKey(null, date4, "") ,test1);
+        addData(new TableColumnKey(null, date4, "") ,test2);
+        addData(new TableColumnKey(null, date4, "") ,test3);
 
     }
 
